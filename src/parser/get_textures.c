@@ -1,0 +1,1 @@
+// get_textures.c: Specifically handles the NO, SO, WE, EA lines.

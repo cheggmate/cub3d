@@ -1,0 +1,1 @@
+// render.c: Logic for drawing vertical stripes on the screen.

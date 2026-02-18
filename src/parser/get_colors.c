@@ -1,0 +1,1 @@
+// get_colors.c: Extracts and validates the F and C RGB values.

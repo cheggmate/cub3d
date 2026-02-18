@@ -1,0 +1,1 @@
+// get_map.c: Reads the map into a 2D array (char **map).

@@ -10,34 +10,38 @@
 #                                                                              #
 # **************************************************************************** #
 
-INC				= -Iinclude
-SRC_DIR			= src
-BUILTINS_DIR	= builtins
+INC					= -Iinclude
+SRC_DIR				= src
+HOOKS_DIR			= hooks
+PARSER_DIR			= parser
+RAYCASTING_DIR		= raycasting
+UTILS_DIR			= utils
 
 # Library folders
-LIBFT_DIR		= lib/libft
-LIBFT			= ${LIBFT_DIR}/libft.a
+LIBFT_DIR			= lib/libft
+LIBFT				= ${LIBFT_DIR}/libft.a
 
-OBJ_DIR			= obj
-FLAG			= -Wall -Wextra -Werror -I$(LIBFT_DIR) $(INC)
-NAME			= cub3d
+OBJ_DIR				= obj
+FLAG				= -Wall -Wextra -Werror -I$(LIBFT_DIR) $(INC)
+NAME				= cub3d
 
-BUILTINS_FILES	= $(SRC_DIR)/$(BUILTINS_DIR)/cd.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/echo.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/env.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/env2.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/env3.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/env4.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils2.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils3.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils4.c \
-					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils5.c
-REQ_SRC			:= $(SRC_DIR)/main.c $(SRC_DIR)/signals.c \
-					$(HISTORY_FILES) $(EXECUTOR_FILES) \
-					$(BUILTINS_FILES)
-HEADER			= cub3d.h
-OBJ 			= $(REQ_SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+HOOKS_FILES			= $(SRC_DIR)/$(HOOKS_DIR)/movement.c \
+						$(SRC_DIR)/$(HOOKS_DIR)/rotation.c
+PARSER_FILES		= $(SRC_DIR)/$(PARSER_DIR)/get_colours.c \
+						$(SRC_DIR)/$(PARSER_DIR)/get_map.c \
+						$(SRC_DIR)/$(PARSER_DIR)/get_textures.c \
+						$(SRC_DIR)/$(PARSER_DIR)/parser.c \
+						$(SRC_DIR)/$(PARSER_DIR)/validate_map.c
+RAYCASTING_FILES	= $(SRC_DIR)/$(PARSER_DIR)/dda.c \
+						$(SRC_DIR)/$(PARSER_DIR)/engine.c \
+						$(SRC_DIR)/$(PARSER_DIR)/render.c
+UTILS_FILES			= $(SRC_DIR)/$(UTILS_DIR)/cd.c  #change the filename
+					
+REQ_SRC				= $(SRC_DIR)/main.c \
+					$(UTILS_FILES) $(PARSER_FILES) \
+					$(RAYCASTING_FILES) $(HOOKS_FILES)
+HEADER				= cub3d.h
+OBJ 				= $(REQ_SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 $(info REQ_SRC = $(REQ_SRC))
 $(info OBJ = $(OBJ))
@@ -50,7 +54,7 @@ all: $(LIBFT) $(NAME)
 
 # Compile and archive .o files
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(OBJ) $(FLAG) $(LIBFT) -lreadline -o $(NAME)
+	$(CC) $(OBJ) $(FLAG) $(LIBFT) -o $(NAME)
 
 # Libft
 $(LIBFT):

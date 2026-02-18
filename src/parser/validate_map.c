@@ -1,0 +1,1 @@
+// validate_map.c: Contains the flood-fill logic to ensure the map is closed.
