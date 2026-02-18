@@ -12,8 +12,6 @@
 
 INC				= -Iinclude
 SRC_DIR			= src
-HISTORY_DIR		= history
-EXECUTOR_DIR	= executor
 BUILTINS_DIR	= builtins
 
 # Library folders
@@ -22,7 +20,7 @@ LIBFT			= ${LIBFT_DIR}/libft.a
 
 OBJ_DIR			= obj
 FLAG			= -Wall -Wextra -Werror -I$(LIBFT_DIR) $(INC)
-NAME			= minishell
+NAME			= cub3d
 
 BUILTINS_FILES	= $(SRC_DIR)/$(BUILTINS_DIR)/cd.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/echo.c \
@@ -35,25 +33,6 @@ BUILTINS_FILES	= $(SRC_DIR)/$(BUILTINS_DIR)/cd.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils3.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils4.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils5.c
-HISTORY_FILES	= $(SRC_DIR)/$(HISTORY_DIR)/history.c
-EXECUTOR_FILES	= $(SRC_DIR)/$(EXECUTOR_DIR)/executor.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/executor_utils.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/executor_utils2.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/cmd_exec.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/cmd_exec_helper.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/pipe_exec.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/redir_exec.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/logical_exec.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand2.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand3.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand4.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand5.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand6.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand7.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand8.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand9.c \
-					$(SRC_DIR)/$(EXECUTOR_DIR)/strip_expand10.c
 REQ_SRC			:= $(SRC_DIR)/main.c $(SRC_DIR)/signals.c \
 					$(HISTORY_FILES) $(EXECUTOR_FILES) \
 					$(BUILTINS_FILES)
