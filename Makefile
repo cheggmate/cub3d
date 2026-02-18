@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/01/21 09:57:59 by jotong           ###   ########.fr        #
+#    Updated: 2026/02/18 16:38:19 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ BUILTINS_FILES	= $(SRC_DIR)/$(BUILTINS_DIR)/cd.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils3.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils4.c \
 					$(SRC_DIR)/$(BUILTINS_DIR)/builtin-utils5.c
-REQ_SRC			:= $(SRC_DIR)/main.c $(SRC_DIR)/signals.c \
+REQ_SRC			:= $(SRC_DIR)/main.c \
 					$(HISTORY_FILES) $(EXECUTOR_FILES) \
-					$(BUILTINS_FILES)
+					$(UTILS_FILES)
 HEADER			= cub3d.h
 OBJ 			= $(REQ_SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

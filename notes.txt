@@ -1,22 +1,15 @@
 /src/parsing/
-parser.c: Orchestrates the reading of the .cub file.
-
-get_textures.c: Specifically handles the NO, SO, WE, EA lines.
-
-get_colors.c: Extracts and validates the F and C RGB values.
-
-get_map.c: Reads the map into a 2D array (char **map).
-
-validate_map.c: Contains the flood-fill logic to ensure the map is closed.
+- parser.c: Orchestrates the reading of the .cub file.
+- get_textures.c: Specifically handles the NO, SO, WE, EA lines.
+- get_colors.c: Extracts and validates the F and C RGB values.
+- get_map.c: Reads the map into a 2D array (char **map).
+- validate_map.c: Contains the flood-fill logic to ensure the map is closed.
 
 /src/raycasting/
-engine.c: The main game loop (mlx_loop_hook).
-
-dda.c: Implementation of the Digital Differential Analyzer algorithm.
-
-render.c: Logic for drawing vertical stripes on the screen.
+- engine.c: The main game loop (mlx_loop_hook).
+- dda.c: Implementation of the Digital Differential Analyzer algorithm.
+- render.c: Logic for drawing vertical stripes on the screen.
 
 /src/hooks/
-movement.c: Logic for updating player coordinates (W, A, S, D).
-
-rotation.c: Logic for updating the player's direction vector and camera plane.
+- movement.c: Logic for updating player coordinates (W, A, S, D).
+- rotation.c: Logic for updating the player's direction vector and camera plane.

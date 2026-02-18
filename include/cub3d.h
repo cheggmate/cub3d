@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
+/*   Updated: 2026/02/18 16:21:54 by jotong           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -34,6 +46,12 @@
 #  define KEY_ESC 53
 # endif
 
+typedef struct s_pool
+{
+	char	*head;
+	size_t	total;
+	size_t	used;	
+}	t_pool;
 
 typedef struct s_map // from solong
 {
