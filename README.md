@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by by jotong and ksng*
+*This project has been created as part of the 42 curriculum by by jotong, ksng*
 
 ## Description
 This assignment consists of a 3D graphical representation of the inside of a maze from a
