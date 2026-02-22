@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/18 16:26:01 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/22 12:24:18 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "minilibx-linux/mlx.h"
 #endif
 
-int	close_window(void *game)
+int	close_window(void *game) // from solong
 {
 	t_game	*game_tmp;
 
@@ -36,7 +36,7 @@ int	close_window(void *game)
 	return (0);
 }
 
-static void	*create_window(t_pool *mem_p, t_game **game, void *mlx)
+static void	*create_window(t_pool *mem_p, t_game **game, void *mlx) // from solong
 {
 	int		width;
 	int		height;
@@ -49,7 +49,7 @@ static void	*create_window(t_pool *mem_p, t_game **game, void *mlx)
 	return ((*game)->window);
 }
 
-void	show_images(t_game *game)
+void	show_images(t_game *game) // from solong
 {
 	show_background(game);
 	show_walls(game);
@@ -58,7 +58,7 @@ void	show_images(t_game *game)
 	show_player(game);
 }
 
-int	handle_close(void *game_in)
+int	handle_close(void *game_in) // from solong
 {
 	t_game	*game;
 
@@ -67,7 +67,7 @@ int	handle_close(void *game_in)
 	return (0);
 }
 
-void	render_map(t_pool **mem_p, t_game **game)
+void	render_map(t_pool **mem_p, t_game **game) // from solong
 {
 	(*game)->window = create_window(*mem_p, game, (*game)->mlx);
 	show_images((*game));
@@ -77,7 +77,7 @@ void	render_map(t_pool **mem_p, t_game **game)
 }
 
 
-void	calculate_viewable_area(t_game **game)
+void	calculate_viewable_area(t_game **game) // from solong
 {
 	if ((*game)->map->w > VIEWPORT_WIDTH)
 	{
@@ -101,7 +101,7 @@ void	calculate_viewable_area(t_game **game)
 		(*game)->v_x = 0;
 }
 
-static void	put_relevant_image(t_game **game, int *ctr, int *mp, char tile)
+static void	put_relevant_image(t_game **game, int *ctr, int *mp, char tile) // from solong
 {
 	if (tile == '1')
 		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->w_img,
@@ -121,7 +121,7 @@ static void	put_relevant_image(t_game **game, int *ctr, int *mp, char tile)
 			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
 }
 
-void	render_viewable_map(t_game **game)
+void	render_viewable_map(t_game **game) // from solong
 {
 	int		mp[2];
 	int		ctr[2];
@@ -147,7 +147,7 @@ void	render_viewable_map(t_game **game)
 	}
 }
 
-void	reload_map(t_game **game, int prev_x, int prev_y)
+void	reload_map(t_game **game, int prev_x, int prev_y) // from solong
 {
 	calculate_viewable_area(game);
 	if ((*game)->map->grid[prev_x][prev_y] == 'C')
@@ -172,7 +172,7 @@ void	set_view_dimensions(t_game **game)
 }
 
 
-void	show_background(t_game *game)
+void	show_background(t_game *game) // from solong
 {
 	void	*bg;
 	int		bg_edge;
@@ -194,7 +194,7 @@ void	show_walls(t_game *game)
 	game->w_img = wall;
 }
 
-void	show_exit(t_game *game, int state)
+void	show_exit(t_game *game, int state) // from solong
 {
 	void	*exit;
 	int		exit_edge;
@@ -211,7 +211,7 @@ void	show_exit(t_game *game, int state)
 	game->e_img = exit;
 }
 
-void	show_collectible(t_game *game)
+void	show_collectible(t_game *game) // from solong
 {
 	void	*c;
 	int		c_edge;
@@ -223,7 +223,7 @@ void	show_collectible(t_game *game)
 }
 
 
-void	check_update_element_ctr(t_pool *mem_p, t_game **game, char c, int *pos)
+void	check_update_element_ctr(t_pool *mem_p, t_game **game, char c, int *pos) // from solong
 {
 	if (c == 'C')
 		(*game)->map->c += 1;
@@ -245,7 +245,7 @@ void	check_update_element_ctr(t_pool *mem_p, t_game **game, char c, int *pos)
 		free_and_exit(mem_p, game, 1, "More than one exit found.\n");
 }
 
-void	print_map(t_map *map)
+void	print_map(t_map *map) // from solong
 {
 	int	i;
 	int	j;
@@ -264,7 +264,7 @@ void	print_map(t_map *map)
 	}
 }
 
-void	get_map_edges(t_game **game, char *f_map)
+void	get_map_edges(t_game **game, char *f_map) // from solong
 {
 	int		h;
 	int		w;
@@ -293,7 +293,7 @@ void	get_map_edges(t_game **game, char *f_map)
 	close(fd);
 }
 
-int	check_asset_exist(char *f_name)
+int	check_asset_exist(char *f_name) // from solong
 {
 	int	fd;
 	int	result;

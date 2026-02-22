@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/19 16:04:13 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/22 14:31:49 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,36 @@
 #  define KEY_ESC 53
 # endif
 
-typedef struct s_pool
+// typedef struct s_pool
+// {
+// 	char	*head;
+// 	size_t	total;
+// 	size_t	used;	
+// }	t_pool;
+
+typedef struct s_img {
+    void    *img_ptr;
+    char    *addr;        // The actual raw pixel data
+    int     bits_per_pixel;
+    int     line_length;  // Number of bytes in one row
+    int     endian;
+} t_img;
+
+typedef struct s_ray
 {
-	char	*head;
-	size_t	total;
-	size_t	used;	
-}	t_pool;
+    double  ray_dir_x;
+    double  ray_dir_y;
+    int     map_x;
+    int     map_y;
+    double  side_dist_x;
+    double  side_dist_y;
+    double  delta_dist_x;
+    double  delta_dist_y;
+    double  wall_dist;
+    int     step_x;
+    int     step_y;
+    int     side; // 0 for NS wall, 1 for EW wall
+}   t_ray;
 
 typedef struct s_map // from solong
 {
@@ -88,7 +112,7 @@ typedef struct s_game // from solong
 	char	*mp;
 	int		won;
 	t_map	*map;
-	t_pool	*mem_p;
+	// t_pool	*mem_p;
 }	t_game;
 
 typedef struct s_pos // from solong
@@ -117,11 +141,11 @@ typedef struct s_data {
 
 void		get_map_edges(t_game **game, char *f_map);
 void		calculate_viewable_area(t_game **game);
-t_pool		*init_mem_pool(size_t size);
-void		*alloc_mem(t_pool *mem_p, size_t size);
-void		free_pool(t_pool *mem_p);
-void		init_grid(t_pool *mem_p, char *f_map, t_game **game);
-void		init_game(t_pool *mem_p, t_game **game, char *f_map);
+// t_pool		*init_mem_pool(size_t size);
+// void		*alloc_mem(t_pool *mem_p, size_t size);
+// void		free_pool(t_pool *mem_p);
+void		init_grid( char *f_map, t_game **game);
+void		init_game(t_game **game, char *f_map);
 void		initialise_map_values(t_game **game, char *f_map);
 int			close_window(void *game);
 void		destroy_images(t_game **game);
@@ -139,14 +163,13 @@ void		show_player(t_game *game);
 void		redraw_player(t_game *game);
 void		show_walls(t_game *game);
 void		print_map(t_map *map);
-void		render_map(t_pool **mem_p, t_game **game);
+void		render_map(t_game **game);
 void		render_viewable_map(t_game **game);
 void		set_view_dimensions(t_game **game);
 int			handle_keypress(int keycode, void *game);
-void		check_update_element_ctr(t_pool *mem_p, t_game **game,
-				char c, int *pos);
-void		free_and_exit(t_pool *mem_p, t_game **game, int status, char *msg);
-int			path_check(char **grid, t_game **game, t_pool *mem_p);
+void		check_update_element_ctr(t_game **game, char c, int *pos);
+void		free_and_exit(t_game **game, int status, char *msg);
+int			path_check(char **grid, t_game **game);
 void		free_mlx(t_game **game);
 
 

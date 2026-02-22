@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:20:51 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/18 16:33:16 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/22 14:45:39 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ static void	init_vals(t_queue *q, int **checked, t_game **game, t_pool *mem_p)
 	int	i;
 
 	i = -1;
-	q->dir = alloc_mem(mem_p, 4 * sizeof(int *));
+	q->dir = ft_calloc(4, sizeof(int *));
 	if (!q->dir)
-		free_and_exit(mem_p, game, 1, "Failed to allocate memory.\n");
+		free_and_exit(game, 1, "Failed to allocate memory.\n");
 	while (++i < 4)
-		q->dir[i] = alloc_mem(mem_p, 2 * sizeof(int));
+		q->dir[i] = ft_calloc(2, sizeof(int));
 	i = -1;
 	q->dir[0][0] = 0;
 	q->dir[0][1] = 1;
@@ -70,7 +70,7 @@ static void	init_vals(t_queue *q, int **checked, t_game **game, t_pool *mem_p)
 	q->dir[3][1] = -1;
 	while (++i < (*game)->map->h)
 	{
-		checked[i] = alloc_mem((*game)->mem_p, sizeof(int) * (*game)->map->w);
+		checked[i] = ft_calloc(((*game)->map->w, sizeof(int));
 		if (!checked[i])
 			free_and_exit(mem_p, game, 1, "Failed to allocate memory\n");
 	}
@@ -85,8 +85,8 @@ int	path_check(char **grid, t_game **game, t_pool *mem_p)
 	int		c_num_found_e[2];
 	t_pos	curr;
 
-	q = (t_queue *)alloc_mem(mem_p, sizeof(t_queue));
-	checked = alloc_mem(mem_p, sizeof(int *) * (*game)->map->h);
+	q = (t_queue *)ft_calloc(1, sizeof(t_queue));
+	checked = ft_calloc(1, sizeof(int *) * (*game)->map->h);
 	c_num_found_e[0] = 0;
 	c_num_found_e[1] = 0;
 	if (!q || !checked)
