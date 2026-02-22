@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 14:31:49 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:51:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ typedef struct s_data {
 
 void		get_map_edges(t_game **game, char *f_map);
 void		calculate_viewable_area(t_game **game);
+void 		cleanup_game(t_game *game);
+void 		free_checked(int **checked, int height);
 // t_pool		*init_mem_pool(size_t size);
 // void		*alloc_mem(t_pool *mem_p, size_t size);
 // void		free_pool(t_pool *mem_p);

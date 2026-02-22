@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:20:51 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 14:45:39 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/22 16:44:20 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,88 +20,71 @@
 # include "minilibx-linux/mlx.h"
 #endif
 
-
-static int	is_valid(int x, int y, t_game **game, int **checked)
+static int is_valid(int x, int y, t_game *game, int **checked)
 {
-	return (x >= 0 && y >= 0 && x < (*game)->map->h && y < (*game)->map->w
-		&& (*game)->map->grid[x][y] != '1' && !checked[x][y]);
+    // 1. If we are OUTSIDE the map boundaries, the map is NOT closed.
+    if (x < 0 || y < 0 || x >= game->map->h || y >= game->map->w)
+        return (-1); // Special error code for "leaked"
+
+    // 2. If we hit a space, it's a hole in the map.
+    if (game->map->grid[x][y] == ' ')
+        return (-1);
+
+    // 3. If it's a wall or already checked, don't go there.
+    if (game->map->grid[x][y] == '1' || checked[x][y])
+        return (0);
+
+    return (1); // Valid floor space to explore
 }
 
-static void	queue_if_valid(t_pos *curr, t_queue *q, t_game **game, int **chkd)
+static int explore_neighbors(t_pos *curr, t_queue *q, t_game *game, int **chkd)
 {
-	int	i;
-	int	next_x;
-	int	next_y;
+    int i = 0;
+    int next_x, next_y;
+    int res;
 
-	i = 0;
-	next_x = 0;
-	next_y = 0;
-	while (i < 4)
-	{
-		next_x = curr->x + q->dir[i][0];
-		next_y = curr->y + q->dir[i][1];
-		if (is_valid(next_x, next_y, game, chkd))
-		{
-			chkd[next_x][next_y] = 1;
-			q->q[q->back++] = (t_pos){next_x, next_y};
-		}
-		i++;
-	}
+    while (i < 4)
+    {
+        next_x = curr->x + q->dir[i][0];
+        next_y = curr->y + q->dir[i][1];
+        res = is_valid(next_x, next_y, game, chkd);
+        
+        if (res == -1) // Map is open!
+            return (0);
+        if (res == 1)
+        {
+            chkd[next_x][next_y] = 1;
+            q->q[q->back++] = (t_pos){next_x, next_y};
+        }
+        i++;
+    }
+    return (1);
 }
 
-static void	init_vals(t_queue *q, int **checked, t_game **game, t_pool *mem_p)
+int is_map_closed(t_game *game)
 {
-	int	i;
+    t_queue q;
+    int     **checked;
+    t_pos   curr;
 
-	i = -1;
-	q->dir = ft_calloc(4, sizeof(int *));
-	if (!q->dir)
-		free_and_exit(game, 1, "Failed to allocate memory.\n");
-	while (++i < 4)
-		q->dir[i] = ft_calloc(2, sizeof(int));
-	i = -1;
-	q->dir[0][0] = 0;
-	q->dir[0][1] = 1;
-	q->dir[1][0] = 1;
-	q->dir[1][1] = 0;
-	q->dir[2][0] = -1;
-	q->dir[2][1] = 0;
-	q->dir[3][0] = 0;
-	q->dir[3][1] = -1;
-	while (++i < (*game)->map->h)
-	{
-		checked[i] = ft_calloc(((*game)->map->w, sizeof(int));
-		if (!checked[i])
-			free_and_exit(mem_p, game, 1, "Failed to allocate memory\n");
-	}
-	q->front = 0;
-	q->back = 0;
-}
-
-int	path_check(char **grid, t_game **game, t_pool *mem_p)
-{
-	t_queue	*q;
-	int		**checked;
-	int		c_num_found_e[2];
-	t_pos	curr;
-
-	q = (t_queue *)ft_calloc(1, sizeof(t_queue));
+    q = (t_queue *)ft_calloc(1, sizeof(t_queue));
 	checked = ft_calloc(1, sizeof(int *) * (*game)->map->h);
-	c_num_found_e[0] = 0;
-	c_num_found_e[1] = 0;
-	if (!q || !checked)
-		free_and_exit(mem_p, game, 1, "Failed to allocate memory\n");
-	init_vals(q, checked, game, mem_p);
-	q->q[q->back++] = (t_pos){(*game)->p_x, (*game)->p_y};
-	checked[(*game)->p_x][(*game)->p_y] = 1;
-	while (q->front < q->back)
-	{
-		curr = q->q[q->front++];
-		if (grid[curr.x][curr.y] == 'C')
-			c_num_found_e[0]++;
-		if (grid[curr.x][curr.y] == 'E')
-			c_num_found_e[1] = 1;
-		queue_if_valid(&curr, q, game, checked);
-	}
-	return (c_num_found_e[0] == (*game)->map->c && c_num_found_e[1]);
+    // Start BFS from player position
+    q.q[q.back++] = (t_pos){game->p_x, game->p_y};
+    checked[game->p_x][game->p_y] = 1;
+
+    while (q.front < q.back)
+    {
+        curr = q.q[q.front++];
+        
+        // If explore_neighbors returns 0, it found a leak to the outside
+        if (!explore_neighbors(&curr, &q, game, checked))
+        {
+			free_and_exit(game, 1, "Map is not enclosed by walls.");
+            // Free memory before returning!
+            return (0); // Map is INVALID
+        }
+    }
+	free_checked(checked, game->map->h);
+    return (1);
 }
