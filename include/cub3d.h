@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 16:51:43 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/23 16:56:52 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,28 +91,34 @@ typedef struct s_map // from solong
 	char	**grid;
 }	t_map;
 
+typedef struct s_texture { // TODO: initialize this
+    void    *img;          // Pointer from mlx_xpm_file_to_image
+    char    *addr;         // Pointer from mlx_get_data_addr
+    int     width;
+    int     height;
+    int     line_len;
+    int     bpp;
+    int     endian;
+} t_texture;
+
 typedef struct s_game // from solong
 {
-	void	*mlx;
-	void	*window;
-	void	*p_img;
-	void	*c_img;
-	void	*w_img;
-	void	*bg_img;
-	void	*e_img;
-	void	*e2_img;
-	int		c_count;
-	int		n_mvmts;
-	int		v_x;
-	int		v_y;
-	int		view_w;
-	int		view_h;
-	int		p_x;
-	int		p_y;
-	char	*mp;
-	int		won;
-	t_map	*map;
-	// t_pool	*mem_p;
+	void		*mlx;
+	void		*window;
+								// TODO: initialize this.
+	char        *tex_paths[4]; // Stores paths "./textures/north.xpm"
+    t_texture   textures[4];   // Stores the actual pixel data
+    int         floor_color;   // Hexadecimal color
+    int         ceiling_color; // Hexadecimal color
+
+	int			v_x; // from solong
+	int			v_y;
+	int			view_w;
+	int			view_h;
+	int			p_x;
+	int			p_y;
+	char		*mp;
+	t_map		*map;
 }	t_game;
 
 typedef struct s_pos // from solong
@@ -152,9 +158,9 @@ void		initialise_map_values(t_game **game, char *f_map);
 int			close_window(void *game);
 void		destroy_images(t_game **game);
 int			get_map_height(char	*f_map);
-int			check_asset_exist(char *f_name);
-void		check_asset_list(void);
-void		check_asset_list2(void);
+int			check_asset(char *f_str, t_game **game);
+// void		check_asset_list(void);
+// void		check_asset_list2(void);
 void		load_map(char *f_map, t_game **game);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);
@@ -173,6 +179,7 @@ void		check_update_element_ctr(t_game **game, char c, int *pos);
 void		free_and_exit(t_game **game, int status, char *msg);
 int			path_check(char **grid, t_game **game);
 void		free_mlx(t_game **game);
+int			parse_cub_file(char *file, t_game **game);
 
 
 #endif

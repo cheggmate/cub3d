@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:20:51 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 16:44:20 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/23 15:52:13 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,12 @@
 
 static int is_valid(int x, int y, t_game *game, int **checked)
 {
-    // 1. If we are OUTSIDE the map boundaries, the map is NOT closed.
-    if (x < 0 || y < 0 || x >= game->map->h || y >= game->map->w)
-        return (-1); // Special error code for "leaked"
-
-    // 2. If we hit a space, it's a hole in the map.
-    if (game->map->grid[x][y] == ' ')
+    if (x < 0 || y < 0 || x >= game->map->h || y >= game->map->w) // map not enclosed
+        return (-1); //  error code for "leaked"
+    if (game->map->grid[x][y] == ' ') // spaces
         return (-1);
-
-    // 3. If it's a wall or already checked, don't go there.
-    if (game->map->grid[x][y] == '1' || checked[x][y])
+    if (game->map->grid[x][y] == '1' || checked[x][y]) // already checked
         return (0);
-
     return (1); // Valid floor space to explore
 }
 
@@ -76,12 +70,9 @@ int is_map_closed(t_game *game)
     while (q.front < q.back)
     {
         curr = q.q[q.front++];
-        
-        // If explore_neighbors returns 0, it found a leak to the outside
-        if (!explore_neighbors(&curr, &q, game, checked))
+        if (!explore_neighbors(&curr, &q, game, checked)) // found a leak 
         {
 			free_and_exit(game, 1, "Map is not enclosed by walls.");
-            // Free memory before returning!
             return (0); // Map is INVALID
         }
     }

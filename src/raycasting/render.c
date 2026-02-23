@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 12:24:18 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/23 16:34:58 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,14 +293,4 @@ void	get_map_edges(t_game **game, char *f_map) // from solong
 	close(fd);
 }
 
-int	check_asset_exist(char *f_name) // from solong
-{
-	int	fd;
-	int	result;
-
-	fd = open(f_name, O_RDONLY);
-	result = fd;
-	close(fd);
-	return (result);
-}
 

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/18 16:38:51 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/23 16:11:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ int	main(int argc, char **argv)
 	game = NULL;
 	if (argc != 2)
 		return (write(2, "Error\nincorrect number of inputs!\n", 34), 1);
-	check_asset_list();
+	check_asset_list(); // TODO: check if this should be moved into parse_cub_file.
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
 		close(fd);
 		return (write(2, "Error\nInvalid file\n", 19), 1);
 	}
-	load_map(argv[1], &game);
+	parse_cub_file(argv[1], &game);
 	mlx_loop(game->mlx);
 	return (0);
 }
