@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 15:26:00 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/28 15:38:35 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	init_game(t_pool *mem_p, t_game **game, char *f_map)
 	(*game)->mlx = mlx_init();
 	if (!(*game)->mlx)
 		free_and_exit(game, 1, "Failed to init mlx.\n");
-	(*game)->c_count = 0;
+	floor_color = -1;
+	ceiling_color = -1;
 	(*game)->mp = f_map;
-	(*game)->n_mvmts = 0;
 	(*game)->v_x = 0;
 	(*game)->v_y = 0;
 	(*game)->view_w = 0;
 	(*game)->view_h = 0;
-	(*game)->won = 0;
 	(*game)->map = ft_calloc(1, sizeof(t_map));
 	if (!(*game)->map)
 		free_and_exit(game, 1, "Invalid map.\n");
 	initialise_map_values(game, f_map);
 }
+

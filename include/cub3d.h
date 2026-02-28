@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/23 16:56:52 by jotong           ###   ########.fr       */
+/*   Updated: 2026/02/28 15:49:40 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_map // from solong
 {
 	int		h;
 	int		w;
-	int		c;
 	int		start;
 	int		exit;
 	int		fd;
@@ -101,40 +100,6 @@ typedef struct s_texture { // TODO: initialize this
     int     endian;
 } t_texture;
 
-typedef struct s_game // from solong
-{
-	void		*mlx;
-	void		*window;
-								// TODO: initialize this.
-	char        *tex_paths[4]; // Stores paths "./textures/north.xpm"
-    t_texture   textures[4];   // Stores the actual pixel data
-    int         floor_color;   // Hexadecimal color
-    int         ceiling_color; // Hexadecimal color
-
-	int			v_x; // from solong
-	int			v_y;
-	int			view_w;
-	int			view_h;
-	int			p_x;
-	int			p_y;
-	char		*mp;
-	t_map		*map;
-}	t_game;
-
-typedef struct s_pos // from solong
-{
-	int	x;
-	int	y;
-}	t_pos;
-
-typedef struct s_queue // from solong
-{
-	t_pos	q[10000];
-	int		front;
-	int		back;
-	int		**dir;
-}	t_queue;
-
 typedef struct s_data {
     void    *mlx_ptr;
     void    *win_ptr;
@@ -143,7 +108,35 @@ typedef struct s_data {
     t_img    img;        // The frame buffer to push to the window
 } t_data;
 
+typedef struct s_game // from solong
+{
+	void		*mlx;
+	void		*window;
+								// TODO: initialize this.
+	char        *tex_paths[4]; // Stores paths "./textures/north.xpm". has 4 slots
+    t_texture   textures[4];   // Stores the actual pixel data. has 4 slots
+    int         floor_color;   // Hexadecimal color
+    int         ceiling_color; // Hexadecimal color
 
+	int			v_x; // from solong
+	int			v_y;
+	int			view_w;
+	int			view_h;
+	int			p_x;  // player current position (x_axis)
+	int			p_y; // player current position (y_axis)
+    
+	char		*mp;
+    t_data      *data; 
+	t_map		*map;
+}	t_game;
+
+typedef struct s_queue // from solong
+{
+	t_pos	q[10000];
+	int		front;
+	int		back;
+	int		**dir;
+}	t_queue;
 
 void		get_map_edges(t_game **game, char *f_map);
 void		calculate_viewable_area(t_game **game);
