@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:49:45 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 14:35:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,15 @@ typedef struct s_game // from solong
 {
 	void		*mlx;
 	void		*window;
-								// TODO: initialize this.
 	char        *tex_paths[4]; // Stores paths "./textures/north.xpm". has 4 slots
     t_texture   textures[4];   // Stores the actual pixel data. has 4 slots
     int         floor_color;   // Hexadecimal color
     int         ceiling_color; // Hexadecimal color
-
-	int			v_x; // from solong
-	int			v_y;
 	int			view_w;
 	int			view_h;
 	int			p_x;  // player current position (x_axis)
 	int			p_y; // player current position (y_axis)
+    int         p_dir;  // direction that the player is facing
     
 	char		*mp;
     t_data      *data;   
@@ -163,6 +160,8 @@ void		free_and_exit(t_game **game, int status, char *msg);
 int			path_check(char **grid, t_game **game);
 void		free_mlx(t_game **game);
 int			parse_cub_file(char *file, t_game **game);
+int	        check_asset_tex(char *f_str, t_game **game);
+int         check_asset_colour(char *f_str, t_game **game);
 
 
 #endif
