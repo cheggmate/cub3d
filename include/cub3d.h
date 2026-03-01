@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:23:16 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:49:45 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,6 @@
 #  define KEY_D 2
 #  define KEY_ESC 53
 # endif
-
-// typedef struct s_pool
-// {
-// 	char	*head;
-// 	size_t	total;
-// 	size_t	used;	
-// }	t_pool;
 
 typedef struct s_img {
     void    *img_ptr;
@@ -144,9 +137,6 @@ void		calculate_viewable_area(t_game **game);
 void 		cleanup_game(t_game *game);
 void 		free_checked(int **checked, int height);
 void	    free_array(char **arr);
-// t_pool		*init_mem_pool(size_t size);
-// void		*alloc_mem(t_pool *mem_p, size_t size);
-// void		free_pool(t_pool *mem_p);
 void		init_grid( char *f_map, t_game **game);
 void		init_game(t_game **game, char *f_map);
 void		initialise_map_values(t_game **game, char *f_map);
@@ -154,8 +144,6 @@ int			close_window(void *game);
 void		destroy_images(t_game **game);
 int			get_map_height(char	*f_map);
 int			check_asset(char *f_str, t_game **game);
-// void		check_asset_list(void);
-// void		check_asset_list2(void);
 void		load_map(char *f_map, t_game **game);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);

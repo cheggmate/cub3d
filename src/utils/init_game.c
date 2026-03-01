@@ -6,19 +6,18 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:35:02 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:44:16 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 
-void	init_game(t_pool *mem_p, t_game **game, char *f_map)
+void	init_game(t_game **game, char *f_map)
 {
 	*game = ft_calloc(1, sizeof(t_game));
 	if (!(*game))
 		free_and_exit(game, 1, "Failed to alloc mem for game.\n");
-	// (*game)->mem_p = mem_p;
 	(*game)->mlx = mlx_init();
 	if (!(*game)->mlx)
 		free_and_exit(game, 1, "Failed to init mlx.\n");

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/23 16:34:58 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:43:29 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	close_window(void *game) // from solong
 		ft_printf("freeing memory after destroying window\n");
 		game_tmp->window = NULL;
 	}
-	free_and_exit(game_tmp->mem_p, &game_tmp, 0, "Window closed.");
+	free_and_exit(&game_tmp, 0, "Window closed.");
 	return (0);
 }
 
-static void	*create_window(t_pool *mem_p, t_game **game, void *mlx) // from solong
+static void	*create_window(t_game **game, void *mlx) // from solong
 {
 	int		width;
 	int		height;
@@ -45,7 +45,7 @@ static void	*create_window(t_pool *mem_p, t_game **game, void *mlx) // from solo
 	height = ((*game)->view_h) * SPRITE_SIZE;
 	(*game)->window = mlx_new_window(mlx, width, height, "so_long");
 	if (!(*game)->window)
-		free_and_exit(mem_p, game, 1, "Failed to open new window.\n");
+		free_and_exit(game, 1, "Failed to open new window.\n");
 	return ((*game)->window);
 }
 
@@ -67,9 +67,9 @@ int	handle_close(void *game_in) // from solong
 	return (0);
 }
 
-void	render_map(t_pool **mem_p, t_game **game) // from solong
+void	render_map(t_game **game) // from solong
 {
-	(*game)->window = create_window(*mem_p, game, (*game)->mlx);
+	(*game)->window = create_window(game, (*game)->mlx);
 	show_images((*game));
 	render_viewable_map(game);
 	mlx_key_hook((*game)->window, handle_keypress, *game);
@@ -223,7 +223,7 @@ void	show_collectible(t_game *game) // from solong
 }
 
 
-void	check_update_element_ctr(t_pool *mem_p, t_game **game, char c, int *pos) // from solong
+void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 {
 	if (c == 'C')
 		(*game)->map->c += 1;
@@ -238,11 +238,11 @@ void	check_update_element_ctr(t_pool *mem_p, t_game **game, char c, int *pos) //
 	else if (c == 'E')
 		(*game)->map->exit += 1;
 	else if (!(c == '1' || c == '0' || c == 'E' || c == 'P' || c == 'C'))
-		free_and_exit(mem_p, game, 1, "Invalid item found in map.\n");
+		free_and_exit(game, 1, "Invalid item found in map.\n");
 	if ((*game)->map->start > 1)
-		free_and_exit(mem_p, game, 1, "More than one start pos found.\n");
+		free_and_exit(game, 1, "More than one start pos found.\n");
 	else if ((*game)->map->exit > 1)
-		free_and_exit(mem_p, game, 1, "More than one exit found.\n");
+		free_and_exit(game, 1, "More than one exit found.\n");
 }
 
 void	print_map(t_map *map) // from solong

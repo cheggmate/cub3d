@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:34:58 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:43:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	load_map(char *f_map, t_game **game)
 	char	*line;
 
 	line = NULL;
-	// mem_p = init_mem_pool(POOL_SIZE);
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
 	init_game(game, f_map);
@@ -92,8 +91,8 @@ void	load_map(char *f_map, t_game **game)
 	close((*game)->map->fd);
 	print_map((*game)->map);
 	set_view_dimensions(game);
-	if (!path_check((*game)->map->grid, game, (*game)->mem_p))
-		free_and_exit(game, 1, "Error: Map is not solvable.");
+	if (!path_check((*game)->map->grid, game))
+		free_and_exit(game, 1, "Map is not solvable.");
 	render_map(game);
 }
 
