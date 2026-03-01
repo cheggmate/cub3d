@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/23 17:11:18 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 09:11:55 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "cub3d.h"
 #include "libft.h"
+
+static int	check_file(int *fd, )
 
 int parse_cub_file(char *file, t_game **game)
 {
@@ -33,7 +35,7 @@ int parse_cub_file(char *file, t_game **game)
 		return (0);
 	while (line)
 	{
-		line_1 = line[0];
+		line_1 = line[0]; 
 		if (line[0] == '\n')
 		{
 			free(line);
@@ -41,13 +43,13 @@ int parse_cub_file(char *file, t_game **game)
 			continue ;
 		}
 		else if (!parsed_map && ft_strncmp(line, "NO ", 3) == 0 && check_asset(line))
-			// extract pixels ands store in game->textures[0]
+			check_asset(line, game); // extract pixels ands store in game->textures[0]
 		else if (!parsed_map && ft_strncmp(line, "SO ", 3) == 0 && check_asset(line))
-			// extract pixels ands store in game->textures[1]
+			check_asset(line, game); // extract pixels ands store in game->textures[1]
 		else if (!parsed_map && ft_strncmp(line, "EA ", 3) == 0 && check_asset(line))
-			// extract pixels ands store in game->textures[2]
+			check_asset(line, game); // extract pixels ands store in game->textures[2]
 		else if (!parsed_map && ft_strncmp(line, "WE ", 3) == 0 && check_asset(line))
-			// extract pixels ands store in game->textures[3]
+			check_asset(line, game); // extract pixels ands store in game->textures[3]
 		else if (!parsed_map && ft_strncmp(line, "F ", 2) == 0 && check_asset(line))
 			// extract colour ands store in game->floor_color
 		else if (!parsed_map && ft_strncmp(line, "C ", 2) == 0 && check_asset(line))

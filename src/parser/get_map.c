@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/22 15:22:51 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:34:58 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,7 @@ static void	populate_grid(t_game **game, int fd)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
 }
 
-void	initialise_map_values(t_game **game, char *f_map)
-{
-	get_map_edges(game, f_map);
-	(*game)->map->c = 0;
-	(*game)->map->exit = 0;
-	(*game)->map->start = 0;
-	(*game)->map->p_start_x = 0;
-	(*game)->map->p_start_y = 0;
-}
 
-void	init_grid(char *f_map, t_game **game)
-{
-	int		i;
-
-	i = 0;
-	(*game)->map->fd = open(f_map, O_RDONLY);
-	(*game)->map->grid = ft_calloc((*game)->map->h + 1), sizeof(char *);
-	if (!(*game)->map->grid)
-		free_and_exit(game, 1, "Failed to alloc mem for grid.\n");
-	while (i < (*game)->map->h)
-	{
-		(*game)->map->grid[i] = ft_calloc((*game)->map->w + 1), sizeof(char));
-		if (!((*game)->map->grid[i]))
-			free_and_exit(game, 1, "Failed to alloc mem for grid.\n");
-		i++;
-	}
-}
 
 void	load_map(char *f_map, t_game **game)
 {

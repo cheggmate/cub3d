@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/28 15:49:40 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/01 13:23:16 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ typedef struct s_game // from solong
 	int			p_y; // player current position (y_axis)
     
 	char		*mp;
-    t_data      *data; 
+    t_data      *data;   
 	t_map		*map;
 }	t_game;
 
@@ -138,10 +138,12 @@ typedef struct s_queue // from solong
 	int		**dir;
 }	t_queue;
 
+int	        char_arr_size(char **arr);
 void		get_map_edges(t_game **game, char *f_map);
 void		calculate_viewable_area(t_game **game);
 void 		cleanup_game(t_game *game);
 void 		free_checked(int **checked, int height);
+void	    free_array(char **arr);
 // t_pool		*init_mem_pool(size_t size);
 // void		*alloc_mem(t_pool *mem_p, size_t size);
 // void		free_pool(t_pool *mem_p);
