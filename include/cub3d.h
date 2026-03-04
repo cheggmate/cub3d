@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 14:35:27 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/04 16:41:48 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,8 @@ typedef struct s_map // from solong
 {
 	int		h;
 	int		w;
-	int		start;
-	int		exit;
 	int		fd;
-	int		p_start_x;
-	int		p_start_y;
-	char	**grid;
+	int	    **grid;
 }	t_map;
 
 typedef struct s_texture { // TODO: initialize this
@@ -111,9 +107,10 @@ typedef struct s_game // from solong
     int         ceiling_color; // Hexadecimal color
 	int			view_w;
 	int			view_h;
-	int			p_x;  // player current position (x_axis)
-	int			p_y; // player current position (y_axis)
-    int         p_dir;  // direction that the player is facing
+	double		p_x;  // player current position (x_axis)
+	double		p_y; // player current position (y_axis)
+    double      p_dir_x;  // x- direction that the player is facing
+    double      p_dir_y;  // y- direction that the player is facing
     
 	char		*mp;
     t_data      *data;   
@@ -136,7 +133,6 @@ void 		free_checked(int **checked, int height);
 void	    free_array(char **arr);
 void		init_grid( char *f_map, t_game **game);
 void		init_game(t_game **game, char *f_map);
-void		initialise_map_values(t_game **game, char *f_map);
 int			close_window(void *game);
 void		destroy_images(t_game **game);
 int			get_map_height(char	*f_map);
