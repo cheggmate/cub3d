@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/05 15:38:09 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/05 16:36:17 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,12 @@
 #  define KEY_D 2
 #  define KEY_ESC 53
 # endif
+
+typedef struct s_pos
+{
+    int x;
+    int y;
+}   t_pos;
 
 typedef struct s_img {
     void    *img_ptr;
