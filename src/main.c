@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/04 16:14:06 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/05 15:26:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	main(int argc, char **argv)
 	}
 	if (parse_cub_file(argv[1], &game) == 0)
 		return (1);
-	mlx_loop(game->mlx);
+	// mlx_loop(game->mlx);
+	printf("cub file ingestion done");
 	return (0);
 }

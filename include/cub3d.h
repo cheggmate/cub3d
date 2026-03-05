@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/04 16:41:48 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/05 15:38:09 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,35 @@ typedef struct s_texture { // TODO: initialize this
     int     bpp;
     int     endian;
 } t_texture;
+
+typedef struct s_player
+{
+    // Position on the map
+    double  pos_x;
+    double  pos_y;
+
+    // Direction vector (Where the player is looking)
+    // Always has a length of 1 (a unit vector)
+    double  dir_x;
+    double  dir_y;
+
+    // Camera plane vector (Determines the Field of View)
+    // Must be perpendicular to the direction vector
+    double  plane_x;
+    double  plane_y;
+
+    // Movement state (Optional, but great for smooth multi-key movement)
+    int     move_up;
+    int     move_down;
+    int     move_left;
+    int     move_right;
+    int     rotate_left;
+    int     rotate_right;
+
+    // Speed constants
+    double  move_speed;
+    double  rot_speed;
+}   t_player;
 
 typedef struct s_data {
     void    *mlx_ptr;

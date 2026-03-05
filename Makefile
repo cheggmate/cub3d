@@ -6,11 +6,12 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/01 13:38:34 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/05 15:28:52 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR         = src
+INC_DIR         = include
 
 LIBFT_DIR       = lib/libft
 LIBFT           = ${LIBFT_DIR}/libft.a
@@ -18,7 +19,7 @@ LIBFT           = ${LIBFT_DIR}/libft.a
 OBJ_DIR         = obj
 
 MLX_FLAGS       = -lmlx -lXext -lX11 -lm
-FLAG            = -Wall -Wextra -Werror -I$(LIBFT_DIR) $(INC)
+FLAG            = -Wall -Wextra -Werror -I$(LIBFT_DIR) -I$(INC_DIR)
 NAME            = cub3d
 
 # Organized by the subdirectories in your src folder

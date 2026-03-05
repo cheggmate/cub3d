@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/02/18 16:51:43 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/05 15:19:57 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ PARSER_FILES		= $(SRC_DIR)/$(PARSER_DIR)/get_colours.c \
 RAYCASTING_FILES	= $(SRC_DIR)/$(RAYCASTING_DIR)/dda.c \
 						$(SRC_DIR)/$(RAYCASTING_DIR)/engine.c \
 						$(SRC_DIR)/$(RAYCASTING_DIR)/render.c
-UTILS_FILES			= $(SRC_DIR)/$(UTILS_DIR)/cleanup_memory.c \
+UTILS_FILES			= (SRC_DIR)/$(UTILS_DIR)/array_utils.c \
+						$(SRC_DIR)/$(UTILS_DIR)/cleanup_memory.c \
 						$(SRC_DIR)/$(UTILS_DIR)/init_game.c \
 						$(SRC_DIR)/$(UTILS_DIR)/init_memory.c
 					
