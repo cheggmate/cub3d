@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/05 16:36:17 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 16:44:06 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_map // from solong
 	int		h;
 	int		w;
 	int		fd;
-	int	    **grid;
+	char	**grid;
 }	t_map;
 
 typedef struct s_texture { // TODO: initialize this
@@ -138,17 +138,17 @@ typedef struct s_game // from solong
 	void		*window;
 	char        *tex_paths[4]; // Stores paths "./textures/north.xpm". has 4 slots
     t_texture   textures[4];   // Stores the actual pixel data. has 4 slots
-    int         floor_color;   // Hexadecimal color
-    int         ceiling_color; // Hexadecimal color
+    int         floor_colour;   // Hexadecimal color
+    int         ceiling_colour; // Hexadecimal color
 	int			view_w;
 	int			view_h;
-	double		p_x;  // player current position (x_axis)
-	double		p_y; // player current position (y_axis)
-    double      p_dir_x;  // x- direction that the player is facing
-    double      p_dir_y;  // y- direction that the player is facing
+	// double		p_x;  // player current position (x_axis)
+	// double		p_y; // player current position (y_axis)
+    // double      p_dir_x;  // x- direction that the player is facing
+    // double      p_dir_y;  // y- direction that the player is facing
     
 	char		*mp;
-    t_data      *data;   
+    t_player	player;   
 	t_map		*map;
 }	t_game;
 
@@ -160,6 +160,7 @@ typedef struct s_queue // from solong
 	int		**dir;
 }	t_queue;
 
+int			arr_in_limit(int n, int min, int max);
 int	        char_arr_size(char **arr);
 void		get_map_edges(t_game **game, char *f_map);
 void		calculate_viewable_area(t_game **game);
@@ -193,6 +194,7 @@ void		free_mlx(t_game **game);
 int			parse_cub_file(char *file, t_game **game);
 int	        check_asset_tex(char *f_str, t_game **game);
 int         check_asset_colour(char *f_str, t_game **game);
+int 		move_player(t_game **game, double move_x, double move_y);
 
 
 #endif

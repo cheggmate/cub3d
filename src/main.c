@@ -6,18 +6,14 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/05 16:36:48 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 16:26:38 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "cub3d.h"
 #include "libft.h"
-#ifdef __APPLE__
-# include "minilibx_opengl_20191021/mlx.h"
-#elif __linux__
-# include "minilibx-linux/mlx.h"
-#endif
+#include "mlx.h"
 
 int	main(int argc, char **argv)
 {
@@ -27,7 +23,6 @@ int	main(int argc, char **argv)
 	game = NULL;
 	if (argc != 2)
 		return (write(2, "Error\nincorrect number of inputs!\n", 34), 1);
-	check_asset_list(); // TODO: check if this should be moved into parse_cub_file.
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{

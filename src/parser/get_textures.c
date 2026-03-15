@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 14:30:57 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 16:48:09 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 #include "cub3d.h"
 #include "libft.h"
-#ifdef __APPLE__
-# include "minilibx_opengl_20191021/mlx.h"
-#elif __linux__
-# include "minilibx-linux/mlx.h"
-#endif
+#include "mlx.h"
 
 static int	save_texture(char **split_f_str, int i, t_game **game)
 {
@@ -42,7 +38,7 @@ static int	save_texture(char **split_f_str, int i, t_game **game)
 		pos = 3;
 	else
 		return (-1);
-	(*game)->tex_path[pos] = f_name;
+	(*game)->tex_paths[pos] = f_name;
 	(*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx, f_name, &((*game)->textures[pos].width), &((*game)->textures[pos].height));
 	(*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, &pxl_data[0], &pxl_data[1], &pxl_data[2]);
 	return (0);
@@ -51,10 +47,9 @@ static int	save_texture(char **split_f_str, int i, t_game **game)
 // NO -> 0, SO -> 1, EA -> 2, WE -> 3
 int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full line from the .cub file
 {
-	int		fd;
+	// int		fd;
 	int		i;
 	char	**split_f_str;
-	// char	*f_name;
 	char	*texture_dir;
 
 	i = 0;
@@ -74,6 +69,6 @@ int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full 
 		}
 		i++;
 	}
-	close(fd);
+	// close(fd);
 	return (1);
 }

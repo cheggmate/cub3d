@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:56:03 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 16:42:56 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ void	load_map(char *f_map, t_game **game)
 	free(line);
 	line = NULL;
 	populate_grid(game, (*game)->map->fd);
-	if ((*game)->map->c == 0)
-		free_and_exit(game, 1, "No collectibles found.\n");
 	close((*game)->map->fd);
 	print_map((*game)->map);
 	set_view_dimensions(game);

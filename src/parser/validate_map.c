@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:20:51 by jotong            #+#    #+#             */
-/*   Updated: 2026/02/23 15:52:13 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 16:54:29 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 #include "cub3d.h"
 #include "libft.h"
-#ifdef __APPLE__
-# include "minilibx_opengl_20191021/mlx.h"
-#elif __linux__
-# include "minilibx-linux/mlx.h"
-#endif
+#include "mlx.h"
 
 static int is_valid(int x, int y, t_game *game, int **checked)
 {
