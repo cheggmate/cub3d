@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:20:51 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 16:54:29 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 16:59:01 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ static int explore_neighbors(t_pos *curr, t_queue *q, t_game *game, int **chkd)
 
 int is_map_closed(t_game *game)
 {
-    t_queue q;
+    t_queue *q;
     int     **checked;
     t_pos   curr;
 
     q = (t_queue *)ft_calloc(1, sizeof(t_queue));
-	checked = ft_calloc(1, sizeof(int *) * (*game)->map->h);
+	checked = ft_calloc(1, sizeof(int *) * game->map->h);
     // Start BFS from player position
-    q.q[q.back++] = (t_pos){game->p_x, game->p_y};
-    checked[game->p_x][game->p_y] = 1;
+    q->q[q->back++] = (t_pos){game->player.pos_x, game->player.pos_y};
+    checked[(int)game->player.pos_x][(int)game->player.pos_y] = 1;
 
-    while (q.front < q.back)
+    while (q->front < q->back)
     {
-        curr = q.q[q.front++];
-        if (!explore_neighbors(&curr, &q, game, checked)) // found a leak 
+        curr = q->q[q->front++];
+        if (!explore_neighbors(&curr, q, game, checked)) // found a leak 
         {
-			free_and_exit(game, 1, "Map is not enclosed by walls.");
+			free_and_exit(&game, 1, "Map is not enclosed by walls.");
             return (0); // Map is INVALID
         }
     }

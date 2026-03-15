@@ -6,20 +6,15 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:43:29 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 17:03:45 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // render.c: Logic for drawing vertical stripes on the screen.
 
-
-#include "so_long.h"
+#include "cub3d.h"
 #include "libft.h"
-#ifdef __APPLE__
-# include "minilibx_opengl_20191021/mlx.h"
-#elif __linux__
-# include "minilibx-linux/mlx.h"
-#endif
+#include "mlx.h"
 
 int	close_window(void *game) // from solong
 {
@@ -79,47 +74,44 @@ void	render_map(t_game **game) // from solong
 
 void	calculate_viewable_area(t_game **game) // from solong
 {
-	if ((*game)->map->w > VIEWPORT_WIDTH)
+	if ((*game)->map->w > WIDTH)
 	{
-		(*game)->v_y = (*game)->p_y - VIEWPORT_WIDTH / 2;
+		(*game)->v_y = (*game)->p_y - WIDTH / 2;
 		if ((*game)->v_y < 0)
 			(*game)->v_y = 0;
-		if ((*game)->v_y + VIEWPORT_WIDTH > (*game)->map->w)
-			(*game)->v_y = (*game)->map->w - VIEWPORT_WIDTH;
+		if ((*game)->v_y + WIDTH > (*game)->map->w)
+			(*game)->v_y = (*game)->map->w - WIDTH;
 	}
 	else
 		(*game)->v_y = 0;
-	if ((*game)->map->h > VIEWPORT_HEIGHT)
+	if ((*game)->map->h > HEIGHT)
 	{
-		(*game)->v_x = (*game)->p_x - VIEWPORT_HEIGHT / 2;
+		(*game)->v_x = (*game)->p_x - HEIGHT / 2;
 		if ((*game)->v_x < 0)
 			(*game)->v_x = 0;
-		if ((*game)->v_x + VIEWPORT_HEIGHT > (*game)->map->h)
-			(*game)->v_x = (*game)->map->h - VIEWPORT_HEIGHT;
+		if ((*game)->v_x + HEIGHT > (*game)->map->h)
+			(*game)->v_x = (*game)->map->h - HEIGHT;
 	}
 	else
 		(*game)->v_x = 0;
 }
 
-static void	put_relevant_image(t_game **game, int *ctr, int *mp, char tile) // from solong
-{
-	if (tile == '1')
-		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->w_img,
-			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
-	if (tile == 'C')
-		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->c_img,
-			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
-	if (tile == 'E' && (*game)->c_count == (*game)->map->c
-		&& mp[0] == (*game)->p_x && mp[1] == (*game)->p_y)
-		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->e2_img,
-			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
-	else if (tile == 'E')
-		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->e_img,
-			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
-	if (tile == '0')
-		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->bg_img,
-			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
-}
+// static void	put_relevant_image(t_game **game, int *ctr, int *mp, char tile) // from solong
+// {
+// 	if (tile == '1')
+// 		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->w_img,
+// 			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
+// 	if (tile == 'E' && (*game)->c_count == (*game)->map->c
+// 		&& mp[0] == (*game)->p_x && mp[1] == (*game)->p_y)
+// 		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->e2_img,
+// 			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
+// 	else if (tile == 'E')
+// 		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->e_img,
+// 			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
+// 	if (tile == '0')
+// 		mlx_put_image_to_window((*game)->mlx, (*game)->window, (*game)->bg_img,
+// 			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
+// }
 
 void	render_viewable_map(t_game **game) // from solong
 {
@@ -161,14 +153,14 @@ void	reload_map(t_game **game, int prev_x, int prev_y) // from solong
 
 void	set_view_dimensions(t_game **game)
 {
-	if ((*game)->map->w < VIEWPORT_WIDTH)
+	if ((*game)->map->w < WIDTH)
 		(*game)->view_w = (*game)->map->w;
 	else
-		(*game)->view_w = VIEWPORT_WIDTH;
-	if ((*game)->map->h < VIEWPORT_HEIGHT)
+		(*game)->view_w = WIDTH;
+	if ((*game)->map->h < HEIGHT)
 		(*game)->view_h = (*game)->map->h;
 	else
-		(*game)->view_h = VIEWPORT_HEIGHT;
+		(*game)->view_h = HEIGHT;
 }
 
 

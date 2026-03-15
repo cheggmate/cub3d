@@ -6,19 +6,19 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 16:44:06 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/15 17:01:42 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# ifndef VIEWPORT_HEIGHT
-#  define VIEWPORT_HEIGHT 6
+# ifndef HEIGHT
+#  define HEIGHT 6
 # endif
 
-# ifndef VIEWPORT_WIDTH
-#  define VIEWPORT_WIDTH 15
+# ifndef WIDTH
+#  define WIDTH 15
 # endif
 
 # ifndef SPRITE_SIZE
