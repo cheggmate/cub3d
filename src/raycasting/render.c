@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:19:59 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:26:36 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	close_window(void *game) // from solong
 	t_game	*game_tmp;
 
 	game_tmp = (t_game *)game;
-	if (game_tmp && game_tmp->mlx && game_tmp->window)
+	if (game_tmp && game_tmp->mlx_ptr && game_tmp->win_ptr)
 	{
-		mlx_destroy_window(game_tmp->mlx, game_tmp->window);
+		mlx_destroy_window(game_tmp->mlx_ptr, game_tmp->win_ptr);
 		ft_printf("freeing memory after destroying window\n");
-		game_tmp->window = NULL;
+		game_tmp->win_ptr = NULL;
 	}
 	free_and_exit(&game_tmp, 0, "Window closed.");
 	return (0);
@@ -38,10 +38,10 @@ void	*create_window(t_game **game, void *mlx) // from solong
 
 	width = ((*game)->view_w) * SPRITE_SIZE;
 	height = ((*game)->view_h) * SPRITE_SIZE;
-	(*game)->window = mlx_new_window(mlx, width, height, "so_long");
-	if (!(*game)->window)
+	(*game)->win_ptr = mlx_new_window(mlx, width, height, "so_long");
+	if (!(*game)->win_ptr)
 		free_and_exit(game, 1, "Failed to open new window.\n");
-	return ((*game)->window);
+	return ((*game)->win_ptr);
 }
 
 void	show_images(t_game *game) // TODO: add flows to render here
@@ -63,11 +63,11 @@ int	handle_close(void *game_in) // from solong
 
 void	render_map(t_game **game) // from solong
 {
-	(*game)->window = create_window(game, (*game)->mlx);
+	(*game)->win_ptr = create_window(game, (*game)->mlx_ptr);
 	show_images((*game));
 	render_viewable_map(game);
-	mlx_key_hook((*game)->window, handle_keypress, *game);
-	mlx_hook((*game)->window, 17, 0, handle_close, *game);
+	mlx_key_hook((*game)->win_ptr, handle_keypress, *game);
+	mlx_hook((*game)->win_ptr, 17, 0, handle_close, *game);
 }
 
 

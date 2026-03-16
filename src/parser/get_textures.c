@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:03:52 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:24:41 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	save_texture(char **split_f_str, int i, t_game **game)
 	else
 		return (-1);
 	(*game)->tex_paths[pos] = f_name;
-	(*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx, f_name, &((*game)->textures[pos].width), &((*game)->textures[pos].height));
+	(*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx_ptr, f_name, &((*game)->textures[pos].width), &((*game)->textures[pos].height));
 	(*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, &pxl_data[0], &pxl_data[1], &pxl_data[2]);
 	return (0);
 }

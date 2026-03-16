@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 16:29:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:24:25 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ typedef struct s_data {
 
 typedef struct s_game // from solong
 {
-	void		*mlx;
-	void		*window;
+	void		*mlx_ptr;
+	void		*win_ptr;
 	char        *tex_paths[4]; // Stores paths "./textures/north.xpm". has 4 slots
     t_texture   textures[4];   // Stores the actual pixel data. has 4 slots
     int         floor_colour;   // Hexadecimal color

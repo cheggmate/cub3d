@@ -6,30 +6,31 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/01 13:43:48 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:30:29 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
+#include "mlx.h"
 
-static void destroy_images(t_game **game)
+void destroy_images(t_game **game)
 {
-	if (game->mlx_ptr)
+	if ((*game)->mlx_ptr)
     {
         // Destroy loaded wall textures if they exist
-        if (game->tex_north)
-			mlx_destroy_image(game->mlx_ptr, game->tex_north);
-        if (game->tex_south)
-			mlx_destroy_image(game->mlx_ptr, game->tex_south);
-		if (game->tex_east)
-			mlx_destroy_image(game->mlx_ptr, game->tex_east);
-		if (game->tex_west)
-			mlx_destroy_image(game->mlx_ptr, game->tex_east);
+        if ((*game)->textures[0].img)
+			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[0].img);
+        if ((*game)->textures[1].img)
+			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[1].img);
+		if ((*game)->textures[2].img)
+			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[2].img);
+		if ((*game)->textures[3].img)
+			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[3].img);
         // TODO: destroy main frame buffer here
         
-        if (game->win_ptr) // check if this is possible for Linux
-            mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+        if ((*game)->win_ptr) // check if this is possible for Linux
+            mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
     }
 }
 
@@ -50,6 +51,8 @@ void	free_array(char **arr)
 
 void	free_and_exit(t_game **game, int status, char *msg)
 {
+	int	i;
+
 	if (!game)
 		return ;
 	if (game && *game && (*game)->map && (*game)->map->fd >= 0)
@@ -57,16 +60,16 @@ void	free_and_exit(t_game **game, int status, char *msg)
 		close((*game)->map->fd);
 		(*game)->map->fd = -1;
 	}
-	if (game->map && game->map->grid)
+	if ((*game)->map && (*game)->map->grid)
     {
         i = 0;
-        while (i < game->map->h)
-            free(game->map->grid[i++]);
-        free(game->map->grid);
+        while (i < (*game)->map->h)
+            free((*game)->map->grid[i++]);
+        free((*game)->map->grid);
     }
 	destroy_images(game);
-	free(game);
 	free_mlx(game);
+	free(game);
 	if (status == 1)
 	{
 		write(2, "Error\n", 6);
