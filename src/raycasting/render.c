@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 17:03:45 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:19:59 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	close_window(void *game) // from solong
 	return (0);
 }
 
-static void	*create_window(t_game **game, void *mlx) // from solong
+void	*create_window(t_game **game, void *mlx) // from solong
 {
 	int		width;
 	int		height;
@@ -44,13 +44,12 @@ static void	*create_window(t_game **game, void *mlx) // from solong
 	return ((*game)->window);
 }
 
-void	show_images(t_game *game) // from solong
+void	show_images(t_game *game) // TODO: add flows to render here
 {
-	show_background(game);
-	show_walls(game);
-	show_exit(game, 1);
-	show_collectible(game);
-	show_player(game);
+	(void)game;
+	// show_walls(game);
+	// show_exit(game, 1);
+	// show_player(game);
 }
 
 int	handle_close(void *game_in) // from solong
@@ -72,29 +71,29 @@ void	render_map(t_game **game) // from solong
 }
 
 
-void	calculate_viewable_area(t_game **game) // from solong
-{
-	if ((*game)->map->w > WIDTH)
-	{
-		(*game)->v_y = (*game)->p_y - WIDTH / 2;
-		if ((*game)->v_y < 0)
-			(*game)->v_y = 0;
-		if ((*game)->v_y + WIDTH > (*game)->map->w)
-			(*game)->v_y = (*game)->map->w - WIDTH;
-	}
-	else
-		(*game)->v_y = 0;
-	if ((*game)->map->h > HEIGHT)
-	{
-		(*game)->v_x = (*game)->p_x - HEIGHT / 2;
-		if ((*game)->v_x < 0)
-			(*game)->v_x = 0;
-		if ((*game)->v_x + HEIGHT > (*game)->map->h)
-			(*game)->v_x = (*game)->map->h - HEIGHT;
-	}
-	else
-		(*game)->v_x = 0;
-}
+// void	calculate_viewable_area(t_game **game) // from solong
+// {
+// 	if ((*game)->map->w > WIDTH)
+// 	{
+// 		(*game)->v_y = (*game)->p_y - WIDTH / 2;
+// 		if ((*game)->v_y < 0)
+// 			(*game)->v_y = 0;
+// 		if ((*game)->v_y + WIDTH > (*game)->map->w)
+// 			(*game)->v_y = (*game)->map->w - WIDTH;
+// 	}
+// 	else
+// 		(*game)->v_y = 0;
+// 	if ((*game)->map->h > HEIGHT)
+// 	{
+// 		(*game)->v_x = (*game)->p_x - HEIGHT / 2;
+// 		if ((*game)->v_x < 0)
+// 			(*game)->v_x = 0;
+// 		if ((*game)->v_x + HEIGHT > (*game)->map->h)
+// 			(*game)->v_x = (*game)->map->h - HEIGHT;
+// 	}
+// 	else
+// 		(*game)->v_x = 0;
+// }
 
 // static void	put_relevant_image(t_game **game, int *ctr, int *mp, char tile) // from solong
 // {
@@ -113,42 +112,45 @@ void	calculate_viewable_area(t_game **game) // from solong
 // 			SPRITE_SIZE * ctr[1], SPRITE_SIZE * ctr[0]);
 // }
 
-void	render_viewable_map(t_game **game) // from solong
-{
-	int		mp[2];
-	int		ctr[2];
-	char	tile;
+// void	render_viewable_map(t_game **game) // from solong
+// {
+// 	int		mp[2];
+// 	int		ctr[2];
+// 	char	tile;
 
-	ctr[0] = 0;
-	while (ctr[0] < (*game)->view_h)
-	{
-		ctr[1] = 0;
-		while (ctr[1] < (*game)->view_w)
-		{
-			mp[0] = (*game)->v_x + ctr[0];
-			mp[1] = (*game)->v_y + ctr[1];
-			if (mp[0] >= 0 && mp[0] < (*game)->map->h && mp[1] >= 0
-				&& mp[1] < (*game)->map->w)
-			{
-				tile = (*game)->map->grid[mp[0]][mp[1]];
-				put_relevant_image(game, ctr, mp, tile);
-			}
-			ctr[1]++;
-		}
-		ctr[0]++;
-	}
-}
+// 	ctr[0] = 0;
+// 	while (ctr[0] < (*game)->view_h)
+// 	{
+// 		ctr[1] = 0;
+// 		while (ctr[1] < (*game)->view_w)
+// 		{
+// 			mp[0] = (*game)->v_x + ctr[0];
+// 			mp[1] = (*game)->v_y + ctr[1];
+// 			if (mp[0] >= 0 && mp[0] < (*game)->map->h && mp[1] >= 0
+// 				&& mp[1] < (*game)->map->w)
+// 			{
+// 				tile = (*game)->map->grid[mp[0]][mp[1]];
+// 				put_relevant_image(game, ctr, mp, tile);
+// 			}
+// 			ctr[1]++;
+// 		}
+// 		ctr[0]++;
+// 	}
+// }
 
 void	reload_map(t_game **game, int prev_x, int prev_y) // from solong
 {
-	calculate_viewable_area(game);
-	if ((*game)->map->grid[prev_x][prev_y] == 'C')
-	{
-		(*game)->c_count += 1;
-		(*game)->map->grid[prev_x][prev_y] = '0';
-	}
-	render_viewable_map(game);
-	redraw_player(*game);
+	(void)game;
+	(void)prev_x;
+	(void)prev_y;
+	// calculate_viewable_area(game);
+	// if ((*game)->map->grid[prev_x][prev_y] == 'C')
+	// {
+	// 	(*game)->c_count += 1;
+	// 	(*game)->map->grid[prev_x][prev_y] = '0';
+	// }
+	// // render_viewable_map(game);
+	// redraw_player(*game);
 }
 
 void	set_view_dimensions(t_game **game)
@@ -163,126 +165,61 @@ void	set_view_dimensions(t_game **game)
 		(*game)->view_h = HEIGHT;
 }
 
-
-void	show_background(t_game *game) // from solong
-{
-	void	*bg;
-	int		bg_edge;
-
-	bg_edge = 32;
-	bg = mlx_xpm_file_to_image(game->mlx, "assets/floor.xpm",
-			&bg_edge, &bg_edge);
-	game->bg_img = bg;
-}
-
 void	show_walls(t_game *game)
 {
-	void	*wall;
-	int		wall_edge;
+	(void)game;
+// 	void	*wall;
+// 	int		wall_edge;
 
-	wall_edge = 32;
-	wall = mlx_xpm_file_to_image(game->mlx, "assets/wall.xpm",
-			&wall_edge, &wall_edge);
-	game->w_img = wall;
+// 	wall_edge = 32;
+// 	wall1 = mlx_xpm_file_to_image(game->mlx, game->textures[0]->img,
+// 			&wall_edge, &wall_edge);
+// 	game->w_img = wall;
 }
 
-void	show_exit(t_game *game, int state) // from solong
-{
-	void	*exit;
-	int		exit_edge;
+// void	show_exit(t_game *game, int state) // from solong
+// {
+// 	void	*exit;
+// 	int		exit_edge;
 
-	exit_edge = 32;
-	if (state == 1)
-		exit = mlx_xpm_file_to_image(game->mlx, "assets/door.xpm",
-				&exit_edge, &exit_edge);
-	else
-		exit = mlx_xpm_file_to_image(game->mlx, "assets/door_open.xpm",
-				&exit_edge, &exit_edge);
-	game->e2_img = mlx_xpm_file_to_image(game->mlx, "assets/player_door_c.xpm",
-			&exit_edge, &exit_edge);
-	game->e_img = exit;
-}
-
-void	show_collectible(t_game *game) // from solong
-{
-	void	*c;
-	int		c_edge;
-
-	c_edge = 32;
-	c = mlx_xpm_file_to_image(game->mlx, "assets/collectible.xpm",
-			&c_edge, &c_edge);
-	game->c_img = c;
-}
+// 	exit_edge = 32;
+// 	if (state == 1)
+// 		exit = mlx_xpm_file_to_image(game->mlx, "assets/door.xpm",
+// 				&exit_edge, &exit_edge);
+// 	else
+// 		exit = mlx_xpm_file_to_image(game->mlx, "assets/door_open.xpm",
+// 				&exit_edge, &exit_edge);
+// 	game->e2_img = mlx_xpm_file_to_image(game->mlx, "assets/player_door_c.xpm",
+// 			&exit_edge, &exit_edge);
+// 	game->e_img = exit;
+// }
 
 
-void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
-{
-	if (c == 'C')
-		(*game)->map->c += 1;
-	else if (c == 'P')
-	{
-		(*game)->map->start += 1;
-		(*game)->map->p_start_x = pos[0];
-		(*game)->map->p_start_y = pos[1];
-		(*game)->p_x = pos[0];
-		(*game)->p_y = pos[1];
-	}
-	else if (c == 'E')
-		(*game)->map->exit += 1;
-	else if (!(c == '1' || c == '0' || c == 'E' || c == 'P' || c == 'C'))
-		free_and_exit(game, 1, "Invalid item found in map.\n");
-	if ((*game)->map->start > 1)
-		free_and_exit(game, 1, "More than one start pos found.\n");
-	else if ((*game)->map->exit > 1)
-		free_and_exit(game, 1, "More than one exit found.\n");
-}
+// void	get_map_edges(t_game **game, char *f_map) // from solong
+// {
+// 	int		h;
+// 	int		w;
+// 	int		fd;
+// 	char	*line;
 
-void	print_map(t_map *map) // from solong
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->h)
-	{
-		j = 0;
-		while (j < map->w)
-		{
-			ft_printf("%c", map->grid[i][j]);
-			j++;
-		}
-		i++;
-		ft_printf("\n");
-	}
-}
-
-void	get_map_edges(t_game **game, char *f_map) // from solong
-{
-	int		h;
-	int		w;
-	int		fd;
-	char	*line;
-
-	h = 0;
-	w = 0;
-	if (!f_map)
-		return ;
-	fd = open(f_map, O_RDONLY);
-	line = get_next_line(fd);
-	while (line != NULL && *line != '\n')
-	{
-		w = ft_strlen(line);
-		if (line[w - 1] != '\n')
-			w += 1;
-		h++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	(*game)->map->h = h;
-	(*game)->map->w = w;
-	free(line);
-	line = NULL;
-	close(fd);
-}
-
-
+// 	h = 0;
+// 	w = 0;
+// 	if (!f_map)
+// 		return ;
+// 	fd = open(f_map, O_RDONLY);
+// 	line = get_next_line(fd);
+// 	while (line != NULL && *line != '\n')
+// 	{
+// 		w = ft_strlen(line);
+// 		if (line[w - 1] != '\n')
+// 			w += 1;
+// 		h++;
+// 		free(line);
+// 		line = get_next_line(fd);
+// 	}
+// 	(*game)->map->h = h;
+// 	(*game)->map->w = w;
+// 	free(line);
+// 	line = NULL;
+// 	close(fd);
+// }

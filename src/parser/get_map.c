@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 16:42:56 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:19:31 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,49 @@
 
 #include "cub3d.h"
 #include "libft.h"
+
+void	update_player_direction(t_game **game, char c)
+{
+	if (c == 'N' || c == 'S')
+	{
+		(*game)->player.dir_x = 0;
+		(*game)->player.dir_y = 1;
+		(*game)->player.plane_x = -0.66;
+		(*game)->player.plane_y = 0;
+		if (c == 'N')
+		{
+			(*game)->player.dir_y *= -1;
+			(*game)->player.plane_x *= -1;
+		}
+	}
+	else if (c == 'E' || c == 'W')
+	{
+		(*game)->player.dir_x = 1;
+		(*game)->player.dir_y = 0;
+		(*game)->player.plane_x = 0;
+		(*game)->player.plane_y = 0.66;
+		if (c == 'W')
+		{
+			(*game)->player.dir_x *= -1;
+			(*game)->player.plane_y *= -1;
+		}
+	}
+}
+
+void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+	{
+		(*game)->map->start += 1;
+		(*game)->player.pos_x = pos[0];
+		(*game)->player.pos_y = pos[1];
+		update_player_direction(game, c);
+	}
+	else if (!(c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W'))
+		free_and_exit(game, 1, "Invalid item found in map.\n");
+	if ((*game)->map->start > 1)
+		free_and_exit(game, 1, "More than one start pos found.\n");
+}
 
 void	populate_row(t_game **game, int row, char *line)
 {
@@ -68,7 +111,24 @@ static void	populate_grid(t_game **game, int fd)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
 }
 
+void	print_map(t_map *map) // from solong
+{
+	int	i;
+	int	j;
 
+	i = 0;
+	while (i < map->h)
+	{
+		j = 0;
+		while (j < map->w)
+		{
+			ft_printf("%c", map->grid[i][j]);
+			j++;
+		}
+		i++;
+		ft_printf("\n");
+	}
+}
 
 void	load_map(char *f_map, t_game **game)
 {

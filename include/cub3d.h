@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 17:01:42 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 16:29:46 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_map // from solong
 	int		h;
 	int		w;
 	int		fd;
+    int     start;
 	char	**grid;
 }	t_map;
 
@@ -176,7 +177,6 @@ int			check_asset(char *f_str, t_game **game);
 void		load_map(char *f_map, t_game **game);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);
-void		show_background(t_game *game);
 void		show_collectible(t_game *game);
 void		show_exit(t_game *game, int state);
 void		show_player(t_game *game);
@@ -195,6 +195,8 @@ int			parse_cub_file(char *file, t_game **game);
 int	        check_asset_tex(char *f_str, t_game **game);
 int         check_asset_colour(char *f_str, t_game **game);
 int 		move_player(t_game **game, double move_x, double move_y);
+void        *create_window(t_game **game, void *mlx);
+void	    update_player_direction(t_game **game, char c);
 
 
 #endif

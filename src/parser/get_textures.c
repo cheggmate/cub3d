@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 16:48:09 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/16 17:03:52 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full 
 	// int		fd;
 	int		i;
 	char	**split_f_str;
-	char	*texture_dir;
+	char	*tmp;
 
 	i = 0;
 	split_f_str = ft_split(f_str, ' ');
@@ -61,9 +61,14 @@ int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full 
 			|| ft_strncmp(split_f_str[i], "EA", 2) == 0
 			|| ft_strncmp(split_f_str[i], "WE", 2) == 0)
 		{
-			texture_dir = ft_strdup(split_f_str[i]);
-			if (texture_dir == NULL)
-				return (free_array(split_f_str), -1);
+			if (ft_strcmp(split_f_str[1], "./") == 0)
+			{
+				tmp = split_f_str[1];
+				split_f_str[1] = ft_strdup(split_f_str[1] + 2); // remove the ./
+				if (!split_f_str[1])
+					return (free_array(split_f_str), -1);
+				free(tmp);
+			}
 			if (save_texture(split_f_str, i, game) != 0)
 				return (free_array(split_f_str), -1);
 		}
