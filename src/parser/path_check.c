@@ -6,11 +6,12 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 08:15:32 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 08:15:47 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:10:01 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include "cub3d.h"
+#include "libft.h"
 #include "mlx.h"
 
 static int	is_valid(int x, int y, t_game **game, int **checked)
