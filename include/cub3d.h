@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 14:43:06 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 16:52:28 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct s_queue // from solong
 	int		**dir;
 }	t_queue;
 
+void	    close_file(int fd);
 int			arr_in_limit(int n, int min, int max);
 int	        char_arr_size(char **arr);
 void		get_map_edges(t_game **game, char *f_map);

@@ -311,14 +311,14 @@ void	*mlx_xpm_file_to_image(mlx_ptr_t *xvar,char *file,int *width,int *height)
       (void *)MAP_FAILED)
     {
       if (fd>=0)
-	close(fd);
+	      close(fd);
       return ((void *)0);
     }
-  mlx_int_file_get_rid_comment(ptr, size);
-  if ((img = mlx_int_parse_xpm(xvar,ptr,size,mlx_int_get_line)))
+	mlx_int_file_get_rid_comment(ptr, size);
+	if ((img = mlx_int_parse_xpm(xvar,ptr,size,mlx_int_get_line)))
     {
-      *width = img->width;
-      *height = img->height;
+		*width = img->width;
+		*height = img->height;
     }
   munmap(ptr,size);
   close(fd);

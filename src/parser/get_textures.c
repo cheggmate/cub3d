@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:24:41 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 16:59:01 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	save_texture(char **split_f_str, int i, t_game **game)
 	
 	f_name = split_f_str[i+1];
 	fd = open(f_name, O_RDONLY);
-	close(fd);
+	close_file(fd);
 	if (fd < 1)
 		return (-1);
 	if (ft_strncmp(split_f_str[i], "NO", 2) == 0)

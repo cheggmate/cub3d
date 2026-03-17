@@ -317,7 +317,7 @@ void	*mlx_xpm_file_to_image(t_xvar *xvar,char *file,int *width,int *height)
 						(ptr = mmap(0,size,PROT_WRITE|PROT_READ,MAP_PRIVATE,fd,0))==
 						(void *)MAP_FAILED)
 		{
-				if (fd>=0)
+				if (fd > 2)
 						close(fd);
 				return ((void *)0);
 		}

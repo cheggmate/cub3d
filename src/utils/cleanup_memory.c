@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 15:10:06 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 16:39:37 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	free_and_exit(t_game **game, int status, char *msg)
 
 	if (!game)
 		return ;
-	if (game && *game && (*game)->map && (*game)->map->fd >= 0)
+	if (game && *game && (*game)->map && (*game)->map->fd > 2)
 	{
 		close((*game)->map->fd);
 		(*game)->map->fd = -1;
@@ -84,7 +84,7 @@ void	free_and_exit(t_game **game, int status, char *msg)
     }
 	destroy_images(game);
 	free_mlx(game);
-	free(game);
+	free((*game));
 	if (status == 1)
 	{
 		write(2, "Error\n", 6);
