@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:19:31 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:05:46 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	populate_row(t_game **game, int row, char *line)
 			(*game)->map->grid[row][pos[1]] = '\0';
 			break ;
 		}
-		check_update_element_ctr(game, *line, pos);
+		check_update_element_ctr(game, *line, pos); // TODO: Update map with 0 for player's position.
 		pos[1]++;
 		line++;
 	}
@@ -149,7 +149,7 @@ void	load_map(char *f_map, t_game **game)
 	close((*game)->map->fd);
 	print_map((*game)->map);
 	set_view_dimensions(game);
-	if (!path_check((*game)->map->grid, game))
+	if (!path_check(game))
 		free_and_exit(game, 1, "Map is not solvable.");
 	render_map(game);
 }

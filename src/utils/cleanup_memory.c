@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:30:29 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:10:06 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@ void destroy_images(t_game **game)
         if ((*game)->win_ptr) // check if this is possible for Linux
             mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
     }
+}
+
+void	free_mlx(t_game **game)
+{
+	if ((*game)->mlx_ptr && (*game)->win_ptr)
+	{
+		mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
+		(*game)->win_ptr = NULL;
+	}
+	if ((*game)->mlx_ptr)
+	{
+		mlx_destroy_display((*game)->mlx_ptr);
+		free((*game)->mlx_ptr);
+		(*game)->mlx_ptr = NULL;
+	}
 }
 
 void	free_array(char **arr)

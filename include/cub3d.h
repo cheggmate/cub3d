@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:24:25 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:43:06 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ typedef struct s_queue // from solong
 int			arr_in_limit(int n, int min, int max);
 int	        char_arr_size(char **arr);
 void		get_map_edges(t_game **game, char *f_map);
-void		calculate_viewable_area(t_game **game);
+// void		calculate_viewable_area(t_game **game);
 void 		cleanup_game(t_game *game);
 void 		free_checked(int **checked, int height);
 void	    free_array(char **arr);
@@ -177,19 +177,19 @@ int			check_asset(char *f_str, t_game **game);
 void		load_map(char *f_map, t_game **game);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);
-void		show_collectible(t_game *game);
-void		show_exit(t_game *game, int state);
+// void		show_collectible(t_game *game);
+// void		show_exit(t_game *game, int state);
 void		show_player(t_game *game);
 void		redraw_player(t_game *game);
 void		show_walls(t_game *game);
 void		print_map(t_map *map);
 void		render_map(t_game **game);
-void		render_viewable_map(t_game **game);
+// void		render_viewable_map(t_game **game);
 void		set_view_dimensions(t_game **game);
 int			handle_keypress(int keycode, void *game);
 void		check_update_element_ctr(t_game **game, char c, int *pos);
 void		free_and_exit(t_game **game, int status, char *msg);
-int			path_check(char **grid, t_game **game);
+int			path_check(t_game **game);
 void		free_mlx(t_game **game);
 int			parse_cub_file(char *file, t_game **game);
 int	        check_asset_tex(char *f_str, t_game **game);

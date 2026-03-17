@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:26:36 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:43:45 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	render_map(t_game **game) // from solong
 {
 	(*game)->win_ptr = create_window(game, (*game)->mlx_ptr);
 	show_images((*game));
-	render_viewable_map(game);
+	// render_viewable_map(game);
 	mlx_key_hook((*game)->win_ptr, handle_keypress, *game);
 	mlx_hook((*game)->win_ptr, 17, 0, handle_close, *game);
 }

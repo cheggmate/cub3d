@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/16 17:33:38 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:08:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 
 static int	initialise_map_values(t_game **game, char *f_map)
 {
+	(void)f_map;
 	(*game)->map = ft_calloc(1, sizeof(t_map));
 	if (!(*game)->map)
 		return (-1);
-	get_map_edges(game, f_map);
+	// get_map_edges(game, f_map);
 	// (*game)->map->start = 0;
 	// (*game)->map->p_start_x = 0;
 	// (*game)->map->p_start_y = 0;

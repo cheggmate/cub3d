@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 16:34:50 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:07:03 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,24 @@ int move_player(t_game **game, double move_x, double move_y)
     if ((*game)->map->grid[(int)((*game)->player.pos_y + move_y)][(int)(*game)->player.pos_x] == '0')
         (*game)->player.pos_y += move_y;
     return (0);
+}
+
+int	handle_keypress(int keycode, void *game_in)
+{
+	int		prev_x;
+	int		prev_y;
+	t_game	*game;
+
+	game = (t_game *)game_in;
+	prev_x = game->player.pos_x;
+	prev_y = game->player.pos_y;
+	if (keycode == KEY_ESC)
+		close_window(game);
+	else if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S
+			|| keycode == KEY_D)
+	{
+		if (game->player.pos_x != prev_x || game->player.pos_y != prev_y)
+			reload_map(&game, prev_x, prev_y);
+	}
+	return (0);
 }
