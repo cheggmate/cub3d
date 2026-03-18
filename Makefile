@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/17 16:55:45 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/18 16:21:36 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC         = src/main.c \
               src/parser/get_colours.c src/parser/get_map.c \
               src/parser/get_textures.c src/parser/parser.c \
               src/parser/path_check.c src/parser/validate_map.c \
+			  src/parser/get_tmp_map.c \
               src/raycasting/dda.c src/raycasting/engine.c \
               src/raycasting/render.c \
               src/hooks/movement.c src/hooks/rotation.c
@@ -41,7 +42,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_LIB) -lXext -lX11 -lm -lbsd -o $(NAME)
 
 $(LIBFT):
-	@make -C lib/libft
+	@make bonus -C lib/libft
 
 $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)

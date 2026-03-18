@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 15:08:27 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/18 14:29:11 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	init_game(t_game **game, char *f_map)
 	*game = ft_calloc(1, sizeof(t_game));
 	if (!(*game))
 		free_and_exit(game, 1, "Failed to alloc mem for game.\n");
-	(*game)->mlx_ptr = mlx_init();
-	if (!(*game)->mlx_ptr)
-		free_and_exit(game, 1, "Failed to init mlx.\n");
+	// (*game)->mlx_ptr = mlx_init();	// TODO: uncomment later
+	// if (!(*game)->mlx_ptr)
+	// 	free_and_exit(game, 1, "Failed to init mlx.\n");
 	(*game)->floor_colour = -1;
 	(*game)->ceiling_colour = -1;
 	(*game)->mp = f_map;

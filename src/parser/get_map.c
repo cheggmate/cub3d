@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 15:05:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/18 16:59:24 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ void	update_player_direction(t_game **game, char c)
 	}
 }
 
+static void set_player_pos_in_grid_to_zero(t_game **game)
+{
+	t_list	*last;
+
+	last = (*game)->tmp_list;
+	while (last->next)
+		last = last->next;
+	((char *)last->content)[(int)(*game)->player.pos_x] = '0';
+}
+
 void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
@@ -50,10 +60,15 @@ void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 		(*game)->map->start += 1;
 		(*game)->player.pos_x = pos[0];
 		(*game)->player.pos_y = pos[1];
+		set_player_pos_in_grid_to_zero(game);
 		update_player_direction(game, c);
 	}
-	else if (!(c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W'))
+	else if (!(c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' '))
+	{
+		printf("found %c\n", c);
 		free_and_exit(game, 1, "Invalid item found in map.\n");
+	}
+		
 	if ((*game)->map->start > 1)
 		free_and_exit(game, 1, "More than one start pos found.\n");
 }
@@ -62,27 +77,38 @@ void	populate_row(t_game **game, int row, char *line)
 {
 	int		pos[2];
 
-	pos[0] = row;
-	pos[1] = 0;
-	if (!((*game)->map->grid[row]))
-		free_and_exit(game, 1, "Failed to alloc mem for grid.\n");
-	while (*line && *line != '\n')
+	pos[0] = 0;
+	pos[1] = row;
+	if (!(*game)->tmp_list)
+		(*game)->tmp_list = create_tmp_list(line);
+	while (*line)
 	{
-		if (((row == 0 || row == (*game)->map->h -  1) && *line != '1'
-				&& pos[1] <= (*game)->map->w - 1)
-			|| ((pos[1] == 0 || pos[1] == (*game)->map->w - 1) && *line != '1'))
-				free_and_exit(game, 1, "Map not enclosed by walls.\n");	
-		if (*line != '\n')
-			(*game)->map->grid[row][pos[1]] = *line;
-		else if (*line == '\n')
-		{
-			(*game)->map->grid[row][pos[1]] = '\0';
-			break ;
-		}
 		check_update_element_ctr(game, *line, pos); // TODO: Update map with 0 for player's position.
-		pos[1]++;
-		line++;
+		line++ ;
+		pos[1]++ ;
 	}
+	(*game)->map->h += 1;
+	if ((*game)->map->w < pos[0])
+		(*game)->map->w = pos[0];
+	// if (!((*game)->map->grid[row]))
+	// 	free_and_exit(game, 1, "Failed to alloc mem for grid.\n");
+	// while (*line && *line != '\n')
+	// {
+	// 	if (((row == 0 || row == (*game)->map->h -  1) && *line != '1'
+	// 			&& pos[1] <= (*game)->map->w - 1)
+	// 		|| ((pos[1] == 0 || pos[1] == (*game)->map->w - 1) && *line != '1'))
+	// 			free_and_exit(game, 1, "Map not enclosed by walls.\n");	
+	// 	if (*line != '\n')
+	// 		(*game)->map->grid[row][pos[1]] = *line;
+	// 	else if (*line == '\n')
+	// 	{
+	// 		(*game)->map->grid[row][pos[1]] = '\0';
+	// 		break ;
+	// 	}
+	// 	check_update_element_ctr(game, *line, pos); // TODO: Update map with 0 for player's position.
+	// 	pos[1]++;
+	// 	line++;
+	// }
 }
 
 static void	populate_grid(t_game **game, int fd)
@@ -92,6 +118,7 @@ static void	populate_grid(t_game **game, int fd)
 	size_t	len;
 
 	row = 1;
+	printf("populate grid called\n");
 	while (row < (*game)->map->h)
 	{
 		line = get_next_line(fd);
@@ -106,6 +133,7 @@ static void	populate_grid(t_game **game, int fd)
 		free(line);
 		line = NULL;
 		row++;
+		printf("populating row %d\n", row);
 	}
 	if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
@@ -130,28 +158,48 @@ void	print_map(t_map *map) // from solong
 	}
 }
 
+void	copy_map_to_grid(t_game **game)
+{
+	int		rows;
+	t_list	*curr;	
+
+	rows = 0;
+	curr = (*game)->tmp_list;
+	while (rows < (*game)->map->h)
+	{
+		ft_strlcpy((*game)->map->grid[rows], curr->content, (*game)->map->w);
+		curr = curr->next;
+		rows++;
+	}
+}
+
 void	load_map(char *f_map, t_game **game)
 {
 	char	*line;
 
 	line = NULL;
+	printf("starting load map\n");
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
-	init_game(game, f_map);
-	init_grid(f_map, game);
-	if ((*game)->map->h == 0)
-		free_and_exit(game, 1, "Empty map file provided.\n");
+	printf("f_map is not null\n");
+	printf("done initing game\n");
 	line = get_next_line((*game)->map->fd);
 	populate_row(game, 0, line);
+	printf("done populating the first line\n");
 	free(line);
 	line = NULL;
 	populate_grid(game, (*game)->map->fd);
+	printf("done populating tmp grid\n");
 	close((*game)->map->fd);
+	init_grid(f_map, game);
+	printf("done initing final grid\n");
+	copy_map_to_grid(game);
+	printf("done copying to final grid\n");
+	if ((*game)->map->h == 0)
+		free_and_exit(game, 1, "Empty map file provided.\n");
 	print_map((*game)->map);
 	set_view_dimensions(game);
 	if (!path_check(game))
 		free_and_exit(game, 1, "Map is not solvable.");
 	render_map(game);
 }
-
-

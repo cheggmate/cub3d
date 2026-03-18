@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 16:52:28 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/18 16:35:48 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
+# include "libft.h"
 
 # ifdef __linux__
 #  include <X11/keysym.h>
@@ -143,6 +144,7 @@ typedef struct s_game // from solong
     int         ceiling_colour; // Hexadecimal color
 	int			view_w;
 	int			view_h;
+    t_list      *tmp_list;
 	// double		p_x;  // player current position (x_axis)
 	// double		p_y; // player current position (y_axis)
     // double      p_dir_x;  // x- direction that the player is facing
@@ -198,6 +200,8 @@ int         check_asset_colour(char *f_str, t_game **game);
 int 		move_player(t_game **game, double move_x, double move_y);
 void        *create_window(t_game **game, void *mlx);
 void	    update_player_direction(t_game **game, char c);
-
+t_list	    *create_tmp_list(char *map_row);
+void	    copy_map_to_grid(t_game **game);
+int	        add_row_to_list(t_list *list, char *map_row);
 
 #endif

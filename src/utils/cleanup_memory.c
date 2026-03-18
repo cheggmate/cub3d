@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 16:39:37 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/18 16:57:19 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	free_and_exit(t_game **game, int status, char *msg)
             free((*game)->map->grid[i++]);
         free((*game)->map->grid);
     }
+	if ((*game)->tmp_list)
+		ft_lstclear(&(*game)->tmp_list, free);
 	destroy_images(game);
 	free_mlx(game);
 	free((*game));

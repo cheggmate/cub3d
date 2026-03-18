@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 16:58:42 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/18 17:03:07 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 	while (line)
 	{
 		line_1 = line[0]; 
+		if (line[0] == '\n' || line[0] == '\0')
+		{
+			free(line);
+			line = get_next_line(fd);
+			continue ;
+		}
 		if (!*parsed_map && (ft_strncmp(line, "NO ", 3) == 0 \
 				|| ft_strncmp(line, "SO ", 3) == 0 \
 				|| ft_strncmp(line, "EA ", 3) == 0 \
@@ -49,7 +55,7 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 		else if (!*parsed_map && (ft_strncmp(line, "F ", 2) == 0 \
 				|| ft_strncmp(line, "C ", 2) == 0))
 			check_asset_colour(line, game);
-		else if (ft_strchr("10NSEW ", line_1) == 0)
+		else if (ft_strchr("10NSEW ", line_1) != NULL)
 		{
 			load_map(file, game);
 			*parsed_map = 1; // map must be at the end of the file.
@@ -69,6 +75,9 @@ int parse_cub_file(char *file, t_game **game)
 	if (!file)
 		return (0);
 	fd = open(file, O_RDONLY);
+	printf("before storing fd\n");
+	(*game)->map->fd = fd;
+	printf("after storing fd\n");
 	if (fd < 0)
 		return (close_file(fd), 0);
 	line = get_next_line(fd);
