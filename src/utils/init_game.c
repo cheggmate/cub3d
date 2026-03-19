@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/18 14:29:11 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/19 17:52:40 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ static int	initialise_map_values(t_game **game, char *f_map)
 	(*game)->map = ft_calloc(1, sizeof(t_map));
 	if (!(*game)->map)
 		return (-1);
-	// get_map_edges(game, f_map);
-	// (*game)->map->start = 0;
-	// (*game)->map->p_start_x = 0;
-	// (*game)->map->p_start_y = 0;
 	return (0);
 }
 
@@ -46,20 +42,23 @@ void	init_game(t_game **game, char *f_map)
 		free_and_exit(game, 1, "Invalid map.\n");
 }
 
-void	init_grid(char *f_map, t_game **game)
+void init_grid(t_game **game)
 {
-	int		i;
+    int i;
 
-	i = 0;
-	(*game)->map->fd = open(f_map, O_RDONLY);
-	(*game)->map->grid = ft_calloc(((*game)->map->h + 1), sizeof(char *));
-	if (!(*game)->map->grid)
-		free_and_exit(game, 1, "Failed to alloc mem for grid.\n");
-	while (i < (*game)->map->h)
-	{
-		(*game)->map->grid[i] = ft_calloc(((*game)->map->w + 1), sizeof(char));
-		if (!((*game)->map->grid[i]))
-			free_and_exit(game, 1, "Failed to alloc mem for grid.\n");
-		i++;
-	}
+    // Allocate the array of row pointers
+    (*game)->map->grid = ft_calloc((*game)->map->h + 1, sizeof(char *));
+    if (!(*game)->map->grid)
+        free_and_exit(game, 1, "Failed to allocate grid pointers.\n");
+
+    i = 0;
+    while (i < (*game)->map->h)
+    {
+        (*game)->map->grid[i] = malloc(sizeof(char) * ((*game)->map->w + 1));
+        if (!(*game)->map->grid[i])
+            free_and_exit(game, 1, "Failed to allocate grid row.\n");
+        ft_memset((*game)->map->grid[i], ' ', (*game)->map->w);
+        (*game)->map->grid[i][(*game)->map->w] = '\0'; // Null terminate
+        i++;
+    }
 }

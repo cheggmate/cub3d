@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/18 16:35:48 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/19 17:51:44 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,13 @@ typedef struct s_player
     double  rot_speed;
 }   t_player;
 
-typedef struct s_data {
-    void    *mlx_ptr;
-    void    *win_ptr;
-    t_map   map_info;    // Texture paths, colors, and 2D map
-    t_player player;     // Pos, Dir, Plane
-    t_img    img;        // The frame buffer to push to the window
-} t_data;
+// typedef struct s_data {
+//     void    *mlx_ptr;
+//     void    *win_ptr;
+//     t_map   map_info;    // Texture paths, colors, and 2D map
+//     t_player player;     // Pos, Dir, Plane
+//     t_img    img;        // The frame buffer to push to the window
+// } t_data;
 
 typedef struct s_game // from solong
 {
@@ -145,11 +145,7 @@ typedef struct s_game // from solong
 	int			view_w;
 	int			view_h;
     t_list      *tmp_list;
-	// double		p_x;  // player current position (x_axis)
-	// double		p_y; // player current position (y_axis)
-    // double      p_dir_x;  // x- direction that the player is facing
-    // double      p_dir_y;  // y- direction that the player is facing
-    
+    t_img       img;
 	char		*mp;
     t_player	player;   
 	t_map		*map;
@@ -171,13 +167,13 @@ void		get_map_edges(t_game **game, char *f_map);
 void 		cleanup_game(t_game *game);
 void 		free_checked(int **checked, int height);
 void	    free_array(char **arr);
-void		init_grid( char *f_map, t_game **game);
+void        init_grid(t_game **game);
 void		init_game(t_game **game, char *f_map);
 int			close_window(void *game);
 void		destroy_images(t_game **game);
 int			get_map_height(char	*f_map);
 int			check_asset(char *f_str, t_game **game);
-void		load_map(char *f_map, t_game **game);
+void	    load_map(char *f_map, t_game **game, char *line);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);
 // void		show_collectible(t_game *game);
@@ -201,7 +197,9 @@ int 		move_player(t_game **game, double move_x, double move_y);
 void        *create_window(t_game **game, void *mlx);
 void	    update_player_direction(t_game **game, char c);
 t_list	    *create_tmp_list(char *map_row);
-void	    copy_map_to_grid(t_game **game);
-int	        add_row_to_list(t_list *list, char *map_row);
+void        copy_map_to_grid(t_game **game);
+int	        add_row_to_list(t_list **list, char *map_row);
+int	        populate_row(t_game **game, int row, char *line);
+void	    render_raycast(t_game *game);
 
 #endif

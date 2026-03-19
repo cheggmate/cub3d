@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/18 17:03:07 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/19 17:27:33 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 			check_asset_colour(line, game);
 		else if (ft_strchr("10NSEW ", line_1) != NULL)
 		{
-			load_map(file, game);
+			load_map(file, game, line);
 			*parsed_map = 1; // map must be at the end of the file.
 		}
 		free(line);
@@ -88,5 +88,6 @@ int parse_cub_file(char *file, t_game **game)
 		free(line);
 	if (!check_all_texs_colours_exist(game))
 		return (close_file(fd), free_and_exit(game, 1, "Invalid content in .cub file."), 0);
+	printf("done parsing cub file\n");
 	return (close_file(fd), 1);
 }

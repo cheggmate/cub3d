@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 08:15:32 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 14:41:07 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/19 17:31:33 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,105 +14,94 @@
 #include "libft.h"
 #include "mlx.h"
 
+#include "cub3d.h"
+
 static int is_valid(int x, int y, t_game **game, int **checked)
 {
-    // 1. Check if we are touching the actual array boundaries
+    // 1. Boundary check: Are we outside the allocated grid?
     if (x < 0 || y < 0 || x >= (*game)->map->h || y >= (*game)->map->w)
-        return (-1); // LEAK! Touched the edge of the world
+        return (-1);
 
-    // 2. Check if we hit a space (the void)
-    if ((*game)->map->grid[x][y] == ' ')
-        return (-1); // LEAK! Walkable area is next to a hole
+    // 2. Void check: Are we walking into a 'space' that should be a wall?
+    if ((*game)->map->grid[x][y] == ' ' || (*game)->map->grid[x][y] == '\0')
+        return (-1);
 
-    // 3. If it's a wall, it's a safe boundary (don't queue it, but don't leak)
+    // 3. Wall check: '1' is a safe boundary, but we don't walk through it
     if ((*game)->map->grid[x][y] == '1')
         return (0);
 
-    // 4. If we've already checked this floor tile, ignore it
+    // 4. Visit check: Don't process the same tile twice
     if (checked[x][y])
         return (0);
 
-    // 5. It's a valid, unvisited floor tile (0, N, S, E, or W)
-    return (1);
+    return (1); // Valid floor/player start tile
 }
 
 static int queue_if_valid(t_pos *curr, t_queue *q, t_game **game, int **chkd)
 {
-    int i;
-    int next_x;
-    int next_y;
-    int status;
+    // Static directions: Up, Down, Left, Right
+    static int dir[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    int i = 0;
 
-    i = 0;
     while (i < 4)
     {
-        next_x = curr->x + q->dir[i][0];
-        next_y = curr->y + q->dir[i][1];
-        
-        status = is_valid(next_x, next_y, game, chkd);
+        int nx = curr->x + dir[i][0];
+        int ny = curr->y + dir[i][1];
+        int status = is_valid(nx, ny, game, chkd);
+
         if (status == -1)
-            return (0); // Return "Failure" to the caller
+            return (0); // LEAK DETECTED
         if (status == 1)
         {
-            chkd[next_x][next_y] = 1;
-            q->q[q->back++] = (t_pos){next_x, next_y};
+            chkd[nx][ny] = 1;
+            q->q[q->back++] = (t_pos){nx, ny};
         }
         i++;
     }
-    return (1); // All neighbors are safe or walls
+    return (1);
 }
 
-// static void	init_vals(t_queue *q, int **checked, t_game **game)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	q->dir = ft_calloc(4, sizeof(int *));
-// 	if (!q->dir)
-// 		free_and_exit(game, 1, "Failed to allocate memory.\n");
-// 	while (++i < 4)
-// 		q->dir[i] = ft_calloc(2, sizeof(int));
-// 	i = -1;
-// 	q->dir[0][0] = 0;
-// 	q->dir[0][1] = 1;
-// 	q->dir[1][0] = 1;
-// 	q->dir[1][1] = 0;
-// 	q->dir[2][0] = -1;
-// 	q->dir[2][1] = 0;
-// 	q->dir[3][0] = 0;
-// 	q->dir[3][1] = -1;
-// 	while (++i < (*game)->map->h)
-// 	{
-// 		checked[i] = ft_calloc((*game)->map->w, sizeof(int));
-// 		if (!checked[i])
-// 			free_and_exit(game, 1, "Failed to allocate memory\n");
-// 	}
-// 	q->front = 0;
-// 	q->back = 0;
-// }
-
-int	path_check(t_game **game)
+int path_check(t_game **game)
 {
-	t_queue	*q;
-	int		**checked;
-	t_pos	curr;
+    t_queue *q;
+    int     **checked;
+    int     i;
+    int     result = 1;
 
-	q = (t_queue *)ft_calloc(1, sizeof(t_queue));
-	checked = ft_calloc((*game)->map->h, sizeof(int *));
-	// Set starting point (Cast doubles to int for grid access)
-    int start_x = (int)(*game)->player.pos_x;
-    int start_y = (int)(*game)->player.pos_y;
+    // 1. Allocate BFS Queue and Checked Grid
+    // Size of queue should be at least (width * height)
+    q = ft_calloc(1, sizeof(t_queue) + (sizeof(t_pos) * ((*game)->map->h * (*game)->map->w)));
+    checked = ft_calloc((*game)->map->h, sizeof(int *));
+    if (!q || !checked)
+        return (free(q), free(checked), 0);
+
+    i = -1;
+    while (++i < (*game)->map->h)
+    {
+        checked[i] = ft_calloc((*game)->map->w, sizeof(int));
+        if (!checked[i])
+            return (free_checked(checked, i), free(q), 0);
+    }
+
+    // 2. Start BFS from player position
+    int start_x = (int)(*game)->player.pos_y; // Usually grid[y][x]
+    int start_y = (int)(*game)->player.pos_x;
     
     q->q[q->back++] = (t_pos){start_x, start_y};
     checked[start_x][start_y] = 1;
 
     while (q->front < q->back)
     {
-        curr = q->q[q->front++];
+        t_pos curr = q->q[q->front++];
         if (!queue_if_valid(&curr, q, game, checked))
         {
-            return (free(q), free(checked), 0); // Map is INVALID (it leaked)
+            result = 0; // Map is open!
+            break;
         }
     }
-    return (free(q), free(checked), 1); // Map is VALID (fully enclosed)
+
+    // 3. Cleanup and Return
+    free_checked(checked, (*game)->map->h);
+    free(q);
+    return (result);
 }
