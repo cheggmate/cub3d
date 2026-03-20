@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 14:57:58 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/20 16:19:13 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,6 @@ void	    render_raycast(t_game *game);
 void	    free_fd_map(t_game **game);
 void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
+int         is_map_closed(t_game *game);
 
 #endif
