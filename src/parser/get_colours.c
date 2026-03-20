@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:29:46 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/15 08:54:00 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/20 15:29:13 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ int	save_colour(char **split_f_str, int i, t_game **game) // the i position of t
 	{
 		(*game)->floor_colour = rgb_to_int(i_colour[0], i_colour[1], i_colour[2]);
 		printf("saved floor colour\n");
+		return (free_array(colour), 0);
 	}
 	else if (ft_strncmp(split_f_str[0], "C" , 2) == 0)
 	{
 		(*game)->ceiling_colour = rgb_to_int(i_colour[0], i_colour[1], i_colour[2]);
 		printf("saved ceiling colour\n");
+		return (free_array(colour), 0);
 	}
-	return (free_array(colour), 1);
+	return (free_array(colour), -1); // unknown colour
 }
 
 int	check_asset_colour(char *f_str, t_game **game) // f_str here contains the full line from the .cub file
@@ -64,9 +66,11 @@ int	check_asset_colour(char *f_str, t_game **game) // f_str here contains the fu
 		{
 			if (save_colour(split_f_str, i, game) != 0)
 				return (free_array(split_f_str), -1);
+			break ;
 		}
 		i++;
 	}
-	printf("successfully read the colour %s, %s,%s \n", split_f_str[1], split_f_str[2], split_f_str[3]);
-	return (1);
+	printf("successfully read the colour %s,\n", split_f_str[1]);
+	free_array(split_f_str);
+	return (0);
 }

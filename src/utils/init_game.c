@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/19 17:52:40 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:59:44 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static int	initialise_map_values(t_game **game, char *f_map)
 	return (0);
 }
 
+int	initialise_textures(t_game **game)
+{
+	(*game)->tex_paths = ft_calloc(4, sizeof(char *));
+	if (!(*game)->tex_paths)
+		return (-1);
+	return (0);
+}
+
 void	init_game(t_game **game, char *f_map)
 {
 	*game = ft_calloc(1, sizeof(t_game));
@@ -33,9 +41,9 @@ void	init_game(t_game **game, char *f_map)
 	// 	free_and_exit(game, 1, "Failed to init mlx.\n");
 	(*game)->floor_colour = -1;
 	(*game)->ceiling_colour = -1;
+	if (initialise_textures(game) != 0)
+		free_and_exit(game, 1, "Failed to allow mem for game.\n");
 	(*game)->mp = f_map;
-	// (*game)->v_x = 0;
-	// (*game)->v_y = 0;
 	(*game)->view_w = 0;
 	(*game)->view_h = 0;
 	if (initialise_map_values(game, f_map) == -1)

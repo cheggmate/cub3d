@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/19 17:53:12 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/20 12:30:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 		printf("found '%c' at pos %d\n", c, pos[1]);
 		free_and_exit(game, 1, "Invalid item found in map.\n");
 	}
-	printf("no of start positions: %d\n", (*game)->map->start);
+	// printf("no of start positions: %d\n", (*game)->map->start);
 	if ((*game)->map->start > 1)
 		free_and_exit(game, 1, "More than one start pos found.\n");
 }
@@ -162,14 +162,13 @@ void copy_map_to_grid(t_game **game)
     }
 }
 
-void	load_map(char *f_map, t_game **game, char *line)
+void	load_map(char *f_map, t_game **game)
 {
 	printf("starting load map\n");
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
-	printf("done populating the first line\n");
-	free(line);
-	line = NULL;
+	// free(line);
+	// line = NULL;
 	populate_grid(game, (*game)->map->fd);
 	printf("done populating tmp grid\n");
 	close((*game)->map->fd);

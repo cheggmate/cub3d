@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/19 17:51:44 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/20 14:57:58 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ typedef struct s_game // from solong
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
-	char        *tex_paths[4]; // Stores paths "./textures/north.xpm". has 4 slots
+	char        **tex_paths; // Stores paths "./textures/north.xpm". has 4 slots
     t_texture   textures[4];   // Stores the actual pixel data. has 4 slots
     int         floor_colour;   // Hexadecimal color
     int         ceiling_colour; // Hexadecimal color
@@ -173,7 +173,7 @@ int			close_window(void *game);
 void		destroy_images(t_game **game);
 int			get_map_height(char	*f_map);
 int			check_asset(char *f_str, t_game **game);
-void	    load_map(char *f_map, t_game **game, char *line);
+void	    load_map(char *f_map, t_game **game);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);
 // void		show_collectible(t_game *game);
@@ -201,5 +201,8 @@ void        copy_map_to_grid(t_game **game);
 int	        add_row_to_list(t_list **list, char *map_row);
 int	        populate_row(t_game **game, int row, char *line);
 void	    render_raycast(t_game *game);
+void	    free_fd_map(t_game **game);
+void		free_safely(char **line);
+int	        initialise_textures(t_game **game);
 
 #endif

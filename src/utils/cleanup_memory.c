@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/18 16:57:19 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/20 09:40:51 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,9 @@ void	free_array(char **arr)
 
 void	free_and_exit(t_game **game, int status, char *msg)
 {
-	int	i;
-
 	if (!game)
 		return ;
-	if (game && *game && (*game)->map && (*game)->map->fd > 2)
-	{
-		close((*game)->map->fd);
-		(*game)->map->fd = -1;
-	}
-	if ((*game)->map && (*game)->map->grid)
-    {
-        i = 0;
-        while (i < (*game)->map->h)
-            free((*game)->map->grid[i++]);
-        free((*game)->map->grid);
-    }
+	free_fd_map(game);
 	if ((*game)->tmp_list)
 		ft_lstclear(&(*game)->tmp_list, free);
 	destroy_images(game);

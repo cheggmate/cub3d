@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/18 16:21:36 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/20 09:50:45 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ MLX_LIB     = $(MLX_PATH)/libmlx.a
 
 # Source Files
 SRC         = src/main.c \
-              src/utils/cleanup_file.c \
               src/utils/array_utils.c src/utils/cleanup_memory.c \
+			  src/utils/cleanup_memory2.c \
               src/utils/init_game.c src/utils/init_memory.c \
               src/parser/get_colours.c src/parser/get_map.c \
               src/parser/get_textures.c src/parser/parser.c \
