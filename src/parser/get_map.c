@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 12:30:27 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 16:54:55 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,12 @@ int populate_row(t_game **game, int row, char *line)
     return (0);
 }
 
-static void	populate_grid(t_game **game, int fd)
+static void	populate_grid(t_game **game, int fd, char *line)
 {
-	char	*line;
 	int		row;
 	size_t	len;
 
 	row = 1;
-	line = get_next_line(fd);
 	while (line)
 	{
 		if (!line)
@@ -162,14 +160,14 @@ void copy_map_to_grid(t_game **game)
     }
 }
 
-void	load_map(char *f_map, t_game **game)
+void	load_map(char *f_map, t_game **game, char *line)
 {
 	printf("starting load map\n");
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
 	// free(line);
 	// line = NULL;
-	populate_grid(game, (*game)->map->fd);
+	populate_grid(game, (*game)->map->fd, line);
 	printf("done populating tmp grid\n");
 	close((*game)->map->fd);
 	init_grid(game);
@@ -182,8 +180,8 @@ void	load_map(char *f_map, t_game **game)
 	printf("done printing map\n");
 	set_view_dimensions(game);
 	printf("done setting view dimensions\n");
-	if (!path_check(game))
-		free_and_exit(game, 1, "Map is not solvable.");
+	if (!is_map_closed((*game)))
+		free_and_exit(game, 1, "Map is not closed.");
 	// render_map(game); // old, from solong;
 	// render_raycast(*game); // todo, needs to fix.
 }

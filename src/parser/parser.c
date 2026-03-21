@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 15:48:44 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 16:53:29 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	load_individual_section(char *file, t_game **game, int *parsed_map, c
 	char	line_1;
 
 	line_1 = line[0];
+	printf("line sent to load_individual_section = %s\n", line);
 	if (!*parsed_map && (ft_strncmp(line, "NO ", 3) == 0 \
 			|| ft_strncmp(line, "SO ", 3) == 0 \
 			|| ft_strncmp(line, "EA ", 3) == 0 \
@@ -46,7 +47,7 @@ static int	load_individual_section(char *file, t_game **game, int *parsed_map, c
 		return (check_asset_colour(line, game));
 	else if (ft_strchr("10NSEW ", line_1) != NULL)
 	{
-		load_map(file, game);
+		load_map(file, game, line);
 		*parsed_map = 1; // map must be at the end of the file.
 		return (0);
 	}

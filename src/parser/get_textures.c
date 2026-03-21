@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 15:24:57 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 15:49:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
     int     fd;
     int     pos;
     char    *f_name;
-    // int     pxl_data[3]; // TODO: uncomment later
     int     len;
 
     f_name = split_f_str[i + 1];
@@ -43,16 +42,19 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
     else if (ft_strncmp(split_f_str[i], "WE", 2) == 0) pos = 3;
     else return (-1);
     (*game)->tex_paths[pos] = ft_strdup(f_name);
-    // (*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx_ptr, 
-    //     f_name, &(*game)->textures[pos].width, &(*game)->textures[pos].height); // TODO: uncomment later
-    // if (!(*game)->textures[pos].img)
-    // {
-    //     printf("Error: MLX failed to load texture: %s\n", f_name);
-    //     return (-1);
-    // }
-    // (*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, 
-    //     &pxl_data[0], &pxl_data[1], &pxl_data[2]);
-    
+    if (MODE == 1)  // TODO: remove the if condition (keep code inside before submitting)
+    {
+        int     pxl_data[3];
+        (*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx_ptr, 
+            f_name, &(*game)->textures[pos].width, &(*game)->textures[pos].height); // TODO: uncomment later
+        if (!(*game)->textures[pos].img)
+        {
+            printf("Error: MLX failed to load texture: %s\n", f_name);
+            return (-1);
+        }
+        (*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, 
+            &pxl_data[0], &pxl_data[1], &pxl_data[2]);
+    }
     return (0);
 }
 

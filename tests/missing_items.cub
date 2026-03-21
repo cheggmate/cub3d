@@ -1,7 +1,5 @@
 NO ./textures/collectible.xpm
 SO ./textures/floor.xpm
-WE ./textures/door.xpm
-EA ./textures/wall.xpm
 
 F 220,100,0
 C 225,30,0

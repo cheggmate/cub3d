@@ -5,65 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/18 16:20:51 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 16:20:39 by jotong           ###   ########.fr       */
+/*   Created: 2026/02/18 16:20:51 brow jotong            #+#    #+#             */
+/*   Updated: 2026/03/21 16:18:08 brow jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// validate_map.c: Contains the flood-fill logic to ensure the map is closed.
 
 #include "cub3d.h"
 #include "libft.h"
 #include "mlx.h"
+#include "cub3d.h"
 
-static int is_valid(int x, int y, t_game *game, int **checked)
+static int	is_valid_tile(int r, int c, t_game *game, int **checked)
 {
-	// 1. Boundary check: If we step outside the grid dimensions, the map LEAKS
-	if (y < 0 || x < 0 || y >= game->map->h || x >= game->map->w)
+	if (r < 0 || c < 0 || r >= game->map->h || c >= game->map->w)
 		return (-1);
-
-	// 2. Void check: If a walkable area is next to a 'space', the map LEAKS
-	// Note: using grid[y][x] because y is the row and x is the column
-	if (game->map->grid[y][x] == ' ' || game->map->grid[y][x] == '\0')
+	if (game->map->grid[r][c] == ' ' || game->map->grid[r][c] == '\0')
 		return (-1);
-
-	// 3. Wall/Visited check: We stop at walls ('1') or if we've been here before
-	if (game->map->grid[y][x] == '1' || checked[y][x])
+	if (game->map->grid[r][c] == '1' || checked[r][c])
 		return (0);
-
-	return (1); // This is a valid floor/player tile to explore
+	return (1);
 }
 
-static int explore_neighbors(t_pos *curr, t_queue *q, t_game *game, int **chkd)
+static int	explore_neighbors(t_pos curr, t_queue *q, t_game *game, int **chkd)
 {
-	// Static directions: Up, Down, Left, Right
-	static int dirs[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-	int i = 0;
+	static int	offset[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+	int			i;
+	int			nr;
+	int			nc;
+	int			res;
 
+	i = 0;
 	while (i < 4)
 	{
-		int nx = curr->x + dirs[i][0];
-		int ny = curr->y + dirs[i][1];
-		int res = is_valid(nx, ny, game, chkd);
-
-		if (res == -1) // Found a path to the void!
+		nr = curr.row + offset[i][0];
+		nc = curr.col + offset[i][1];
+		res = is_valid_tile(nr, nc, game, chkd);
+		if (res == -1)
 			return (0);
 		if (res == 1)
 		{
-			chkd[ny][nx] = 1;
-			q->q[q->back++] = (t_pos){nx, ny};
+			chkd[nr][nc] = 1;
+			q->items[q->back++] = (t_pos){nr, nc};
 		}
 		i++;
 	}
 	return (1);
 }
 
-// Helper to safely free the 2D checked array
-// static void free_checked(int **checked, int height)
+// static void	free_checked(int **checked, int height)
 // {
-// 	int i = 0;
+// 	int	i;
+
+// 	i = 0;
 // 	if (!checked)
-// 		return;
+// 		return ;
 // 	while (i < height)
 // 	{
 // 		free(checked[i]);
@@ -72,42 +67,51 @@ static int explore_neighbors(t_pos *curr, t_queue *q, t_game *game, int **chkd)
 // 	free(checked);
 // }
 
-int is_map_closed(t_game *game)
+static int	init_checked_grid(t_game *game, int ***checked)
 {
-	t_queue *q;
-	int     **checked;
-	int     i;
-    int     start_x;
-	int		start_y;
+	int	i;
 
-	// 1. Allocate Queue and Checked Grid
-	// Size the queue buffer to handle the worst-case (every tile is a floor)
-	q = ft_calloc(1, sizeof(t_queue) + (sizeof(t_pos) * (game->map->h * game->map->w)));
-	checked = ft_calloc(game->map->h, sizeof(int *));
-	if (!q || !checked)
-		return (free(q), free(checked), -1);
+	*checked = ft_calloc(game->map->h, sizeof(int *));
+	if (!*checked)
+		return (0);
 	i = 0;
 	while (i < game->map->h)
 	{
-		checked[i] = ft_calloc(game->map->w, sizeof(int));
-		if (!checked[i++])
-			return (free_checked(checked, i - 1), free(q), 0);
-	}
-	start_x = (int)game->player.pos_x;
-	start_y = (int)game->player.pos_y;
-	q->q[q->back++] = (t_pos){start_x, start_y};
-	checked[start_y][start_x] = 1;
-	while (q->front < q->back)
-	{
-		t_pos curr = q->q[q->front++];
-		if (!explore_neighbors(&curr, q, game, checked))
+		(*checked)[i] = ft_calloc(game->map->w, sizeof(int));
+		if (!(*checked)[i])
 		{
+			free_checked(*checked, i);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	is_map_closed(t_game *game)
+{
+	t_queue	q;
+	int		**checked;
+
+	if (!init_checked_grid(game, &checked))
+		return (0);
+	q.items = ft_calloc(game->map->h * game->map->w, sizeof(t_pos));
+	if (!q.items)
+		return (free_checked(checked, game->map->h), 0);
+	q.front = 0;
+	q.back = 0;
+	q.items[q.back++] = (t_pos){(int)game->player.pos_y, (int)game->player.pos_x};
+	checked[(int)game->player.pos_y][(int)game->player.pos_x] = 1;
+	while (q.front < q.back)
+	{
+		if (!explore_neighbors(q.items[q.front++], &q, game, checked))
+		{
+			free(q.items);
 			free_checked(checked, game->map->h);
-			free(q);
-			return (-1);
+			return (0);
 		}
 	}
+	free(q.items);
 	free_checked(checked, game->map->h);
-	free(q);
-	return (0);
+	return (1);
 }

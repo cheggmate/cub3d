@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 16:19:13 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 16:54:06 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 
 # ifndef SPRITE_SIZE
 #  define SPRITE_SIZE 128
+# endif
+
+# ifndef MODE // 1 = school, 2 = home (MLX disabled)
+#  define MODE 1 
 # endif
 
 # include <stdio.h>
@@ -48,12 +52,6 @@
 #  define KEY_ESC 53
 # endif
 
-typedef struct s_pos
-{
-    int x;
-    int y;
-}   t_pos;
-
 typedef struct s_img {
     void    *img_ptr;
     char    *addr;        // The actual raw pixel data
@@ -77,6 +75,12 @@ typedef struct s_ray
     int     step_y;
     int     side; // 0 for NS wall, 1 for EW wall
 }   t_ray;
+
+typedef struct s_pos
+{
+    int col;
+    int row;
+} t_pos;
 
 typedef struct s_map // from solong
 {
@@ -126,14 +130,6 @@ typedef struct s_player
     double  rot_speed;
 }   t_player;
 
-// typedef struct s_data {
-//     void    *mlx_ptr;
-//     void    *win_ptr;
-//     t_map   map_info;    // Texture paths, colors, and 2D map
-//     t_player player;     // Pos, Dir, Plane
-//     t_img    img;        // The frame buffer to push to the window
-// } t_data;
-
 typedef struct s_game // from solong
 {
 	void		*mlx_ptr;
@@ -153,7 +149,7 @@ typedef struct s_game // from solong
 
 typedef struct s_queue // from solong
 {
-	t_pos	q[10000];
+	t_pos	*items;
 	int		front;
 	int		back;
 	int		**dir;
@@ -173,7 +169,7 @@ int			close_window(void *game);
 void		destroy_images(t_game **game);
 int			get_map_height(char	*f_map);
 int			check_asset(char *f_str, t_game **game);
-void	    load_map(char *f_map, t_game **game);
+void	    load_map(char *f_map, t_game **game, char *line);
 void		reload_map(t_game **game, int prev_x, int prev_y);
 void		show_images(t_game *game);
 // void		show_collectible(t_game *game);
@@ -188,7 +184,7 @@ void		set_view_dimensions(t_game **game);
 int			handle_keypress(int keycode, void *game);
 void		check_update_element_ctr(t_game **game, char c, int *pos);
 void		free_and_exit(t_game **game, int status, char *msg);
-int			path_check(t_game **game);
+// int			path_check(t_game **game);
 void		free_mlx(t_game **game);
 int			parse_cub_file(char *file, t_game **game);
 int	        check_asset_tex(char *f_str, t_game **game);
