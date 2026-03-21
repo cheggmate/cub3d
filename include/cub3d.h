@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 18:16:40 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 16:39:33 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # endif
 
 # ifndef MODE // 1 = school, 2 = home (MLX disabled)
-#  define MODE 1 
+#  define MODE 2 
 # endif
 
 # include <stdio.h>
@@ -62,18 +62,22 @@ typedef struct s_img {
 
 typedef struct s_ray
 {
-    double  ray_dir_x;
-    double  ray_dir_y;
-    int     map_x;
-    int     map_y;
-    double  side_dist_x;
+    double  ray_dir_x; // the x coordinate of the direction the ray is pointed in
+    double  ray_dir_y; // the y coordinate of the direction the ray is pointed in
+    int     map_x;  // x coordinate of the square the ray is currently in
+    int     map_y;  // x coordinate of the square the ray is currently in
+    double  side_dist_x; // The distance from the player’s starting position to the very first grid line hit. this is added to delta_dist n the DDA loop to "step" through the map.
     double  side_dist_y;
-    double  delta_dist_x;
+    double  delta_dist_x; // The total distance the ray must travel to move exactly 1 full square in the $x$ or $y$ direction
     double  delta_dist_y;
-    double  wall_dist;
+    double  wall_dist; // final Perpendicular distance from the player to the wall
     int     step_x;
     int     step_y;
     int     side; // 0 for NS wall, 1 for EW wall
+	double  perp_wall_dist; 
+    int     line_height;
+    int     draw_start;
+    int     draw_end;
 }   t_ray;
 
 typedef struct s_pos
@@ -196,16 +200,21 @@ t_list	    *create_tmp_list(char *map_row);
 void        copy_map_to_grid(t_game **game);
 int	        add_row_to_list(t_list **list, char *map_row);
 int	        populate_row(t_game **game, int row, char *line);
-void	    render_raycast(t_game *game);
 void	    free_fd_map(t_game **game);
 void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
 int         is_map_closed(t_game *game);
-void	    render_raycast(t_game *game);
+int	        render_raycast(t_game **game);
 void        calculate_ray(t_game **game, t_ray *ray, int x);
 void        perform_dda(t_game **game, t_ray *ray);
 void	    render_view(t_game **game);
 int	        key_press(int keycode, void *game_in);
 int	        key_release(int keycode, void *game_in);
+void		calculate_wall_dist(t_game *game, t_ray *ray);
+int 		init_ray_dims(t_game **game, t_ray *ray, int x);
+void		render_vertical_line(t_game *game, t_ray *ray, int x);
+void		my_mlx_pixel_put(t_game *game, int x, int y, int color);
+t_texture	*select_texture(t_game *game, t_ray *ray);
+int			get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h);
 
 #endif

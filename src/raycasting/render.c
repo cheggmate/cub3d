@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 17:44:34 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 16:39:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,35 +165,6 @@ void	set_view_dimensions(t_game **game)
 		(*game)->view_h = HEIGHT;
 }
 
-void	show_walls(t_game *game)
-{
-	(void)game;
-// 	void	*wall;
-// 	int		wall_edge;
-
-// 	wall_edge = 32;
-// 	wall1 = mlx_xpm_file_to_image(game->mlx, game->textures[0]->img,
-// 			&wall_edge, &wall_edge);
-// 	game->w_img = wall;
-}
-
-// void	show_exit(t_game *game, int state) // from solong
-// {
-// 	void	*exit;
-// 	int		exit_edge;
-
-// 	exit_edge = 32;
-// 	if (state == 1)
-// 		exit = mlx_xpm_file_to_image(game->mlx, "assets/door.xpm",
-// 				&exit_edge, &exit_edge);
-// 	else
-// 		exit = mlx_xpm_file_to_image(game->mlx, "assets/door_open.xpm",
-// 				&exit_edge, &exit_edge);
-// 	game->e2_img = mlx_xpm_file_to_image(game->mlx, "assets/player_door_c.xpm",
-// 			&exit_edge, &exit_edge);
-// 	game->e_img = exit;
-// }
-
 
 // void	get_map_edges(t_game **game, char *f_map) // from solong
 // {
@@ -224,9 +195,76 @@ void	show_walls(t_game *game)
 // 	close(fd);
 // }
 
-void	render_view(t_game **game)
+void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
-	// render_map(game); // old, from solong;
-	render_raycast(*game); // todo, needs to fix.
+	char	*dst;
+
+	/* 1. Guard against writing outside the image boundaries (Segfault prevention) */
+	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
+		return ;
+
+	/* 2. Calculate the exact memory address of the pixel (x, y) */
+	/* Formula: start_address + (y * line_length) + (x * bytes_per_pixel) */
+	dst = game->img.addr + (y * game->img.line_len + x * (game->img.bpp / 8));
+
+	/* 3. Cast the address to an unsigned int pointer and set the color */
+	*(unsigned int *)dst = color;
+}
+
+// void	render_view(t_game **game)
+// {
+// 	// render_map(game); // old, from solong;
+// 	render_raycast(**game); // todo, needs to fix.
+// }
+
+t_texture	*select_texture(t_game *game, t_ray *ray)
+{
+	/* 1. If side == 0, we hit an East or West facing wall (X-side) */
+	if (ray->side == 0)
+	{
+		/* Ray was moving Right -> hit the West face of a block */
+		if (ray->ray_dir_x > 0)
+			return (&game->tex_west);
+		/* Ray was moving Left -> hit the East face of a block */
+		return (&game->tex_east);
+	}
+	/* 2. If side == 1, we hit a North or South facing wall (Y-side) */
+	else
+	{
+		/* Ray was moving Down -> hit the North face of a block */
+		if (ray->ray_dir_y > 0)
+			return (&game->tex_north);
+		/* Ray was moving Up -> hit the South face of a block */
+		return (&game->tex_south);
+	}
+}
+
+int	get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h)
+{
+	t_texture	*tex;
+	int			tex_y;
+	double		step;
+	double		tex_pos;
+	char		*color_ptr;
+
+	/* 1. Pick the correct texture (North, South, East, or West) */
+	tex = select_texture(game, ray);
+
+	/* 2. Calculate how many texture pixels to skip for every screen pixel */
+	/* We use 1.0 to force double precision */
+	step = 1.0 * tex->height / line_h;
+
+	/* 3. Calculate the starting position in the texture */
+	/* (y - HEIGHT / 2 + line_h / 2) finds the relative position in the wall */
+	tex_pos = (y - HEIGHT / 2 + line_h / 2) * step;
+	
+	/* 4. Get the integer Y coordinate, masking to prevent out-of-bounds */
+	tex_y = (int)tex_pos & (tex->height - 1);
+
+	/* 5. Access the color at (tex_x, tex_y) in the texture's memory */
+	/* Formula: addr + (y * line_len + x * bytes_per_pixel) */
+	color_ptr = tex->addr + (tex_y * tex->line_len + ray->tex_x * (tex->bpp / 8));
+	
+	return (*(unsigned int *)color_ptr);
 }
 

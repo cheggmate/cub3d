@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:13:00 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 17:33:08 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 16:39:26 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "cub3d.h"
 #include "mlx.h"
 
-void	render_raycast(t_game *game)
+int	render_raycast(t_game **game)
 {
 	int		x;
 	t_ray	ray;
@@ -23,11 +23,11 @@ void	render_raycast(t_game *game)
 	while (x < WIDTH)
 	{
 		// 1. Calculate ray position and direction
-		init_ray_dims(game, &ray, x);
+		init_ray_dims(&game, &ray, x);
 		// 2. Calculate step and initial sideDist
-		calculate_step(game, &ray);
+		calculate_ray(&game, &ray, x);
 		// 3. Perform DDA to find the wall
-		perform_dda(game, &ray);
+		perform_dda(&game, &ray);
 		// 4. Calculate distance projected on camera direction
 		calculate_wall_dist(game, &ray);
 		// 5. Draw the vertical line (Ceiling, Wall Texture, Floor)
@@ -35,4 +35,5 @@ void	render_raycast(t_game *game)
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, &game->img, 0, 0);
+	return (0);
 }
