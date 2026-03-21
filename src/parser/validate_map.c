@@ -51,21 +51,6 @@ static int	explore_neighbors(t_pos curr, t_queue *q, t_game *game, int **chkd)
 	return (1);
 }
 
-// static void	free_checked(int **checked, int height)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (!checked)
-// 		return ;
-// 	while (i < height)
-// 	{
-// 		free(checked[i]);
-// 		i++;
-// 	}
-// 	free(checked);
-// }
-
 static int	init_checked_grid(t_game *game, int ***checked)
 {
 	int	i;
