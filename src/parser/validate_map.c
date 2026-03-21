@@ -13,7 +13,6 @@
 #include "cub3d.h"
 #include "libft.h"
 #include "mlx.h"
-#include "cub3d.h"
 
 static int	is_valid_tile(int r, int c, t_game *game, int **checked)
 {
