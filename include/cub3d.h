@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 16:54:06 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 18:16:40 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_img {
     int     bits_per_pixel;
     int     line_length;  // Number of bytes in one row
     int     endian;
-} t_img;
+}   t_img;
 
 typedef struct s_ray
 {
@@ -80,9 +80,9 @@ typedef struct s_pos
 {
     int col;
     int row;
-} t_pos;
+}   t_pos;
 
-typedef struct s_map // from solong
+typedef struct s_map
 {
 	int		h;
 	int		w;
@@ -99,7 +99,7 @@ typedef struct s_texture { // TODO: initialize this
     int     line_len;
     int     bpp;
     int     endian;
-} t_texture;
+}   t_texture;
 
 typedef struct s_player
 {
@@ -118,10 +118,10 @@ typedef struct s_player
     double  plane_y;
 
     // Movement state (Optional, but great for smooth multi-key movement)
-    int     move_up;
-    int     move_down;
-    int     move_left;
-    int     move_right;
+    int     move_up;    // w
+    int     move_down;  // a
+    int     move_left;  // s
+    int     move_right; // d
     int     rotate_left;
     int     rotate_right;
 
@@ -201,5 +201,11 @@ void	    free_fd_map(t_game **game);
 void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
 int         is_map_closed(t_game *game);
+void	    render_raycast(t_game *game);
+void        calculate_ray(t_game **game, t_ray *ray, int x);
+void        perform_dda(t_game **game, t_ray *ray);
+void	    render_view(t_game **game);
+int	        key_press(int keycode, void *game_in);
+int	        key_release(int keycode, void *game_in);
 
 #endif

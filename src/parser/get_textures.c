@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 15:49:43 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 17:20:10 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,16 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
         return (-1);
     }
     close(fd);
-    if (ft_strncmp(split_f_str[i], "NO", 2) == 0) pos = 0;
-    else if (ft_strncmp(split_f_str[i], "SO", 2) == 0) pos = 1;
-    else if (ft_strncmp(split_f_str[i], "EA", 2) == 0) pos = 2;
-    else if (ft_strncmp(split_f_str[i], "WE", 2) == 0) pos = 3;
-    else return (-1);
+    if (ft_strncmp(split_f_str[i], "NO", 2) == 0)
+		pos = 0;
+    else if (ft_strncmp(split_f_str[i], "SO", 2) == 0)
+		pos = 1;
+    else if (ft_strncmp(split_f_str[i], "EA", 2) == 0)
+		pos = 2;
+    else if (ft_strncmp(split_f_str[i], "WE", 2) == 0)
+		pos = 3;
+    else
+		return (-1);
     (*game)->tex_paths[pos] = ft_strdup(f_name);
     if (MODE == 1)  // TODO: remove the if condition (keep code inside before submitting)
     {
@@ -54,6 +59,11 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
         }
         (*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, 
             &pxl_data[0], &pxl_data[1], &pxl_data[2]);
+			if (!(*game)->textures[pos].addr)
+			{
+				printf("Error: MLX faied to get texture data.\n");
+				return (-1);
+			}
     }
     return (0);
 }
@@ -61,10 +71,8 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
 // NO -> 0, SO -> 1, EA -> 2, WE -> 3
 int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full line from the .cub file
 {
-	// int		fd;
 	int		i;
 	char	**split_f_str;
-	// char	*tmp;
 
 	i = 0;
 	split_f_str = ft_split(f_str, ' ');
@@ -76,16 +84,6 @@ int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full 
 			|| ft_strncmp(split_f_str[i], "WE", 2) == 0)
 		{
 			printf("found a texture %s : %s\n", split_f_str[i], split_f_str[i + 1]);
-			// tmp = split_f_str[i + 1];
-			// if (tmp && ft_strncmp(tmp, "./", 2) == 0)
-			// {
-			// 	printf("found the ./\n");
-			// 	split_f_str[i + 1] = ft_strdup(split_f_str[i + 1] + 2); // remove the ./
-			// 	if (!split_f_str[i + 1])
-			// 		return (free_array(split_f_str), -1);
-			// 	free(tmp);
-			// 	printf("final text file is %s")
-			// }
 			if (save_texture(split_f_str, i, game) != 0)
 				return (free_array(split_f_str), -1);
 			break ;

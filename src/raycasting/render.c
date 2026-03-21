@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/17 14:43:45 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 17:44:34 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ int	handle_close(void *game_in) // from solong
 	return (0);
 }
 
-void	render_map(t_game **game) // from solong
-{
-	(*game)->win_ptr = create_window(game, (*game)->mlx_ptr);
-	show_images((*game));
-	// render_viewable_map(game);
-	mlx_key_hook((*game)->win_ptr, handle_keypress, *game);
-	mlx_hook((*game)->win_ptr, 17, 0, handle_close, *game);
-}
+// void	render_map(t_game **game) // from solong
+// {
+// 	(*game)->win_ptr = create_window(game, (*game)->mlx_ptr);
+// 	show_images((*game));
+// 	// render_viewable_map(game);
+// 	mlx_key_hook((*game)->win_ptr, handle_keypress, *game);
+// 	mlx_hook((*game)->win_ptr, 17, 0, handle_close, *game);
+// }
 
 
 // void	calculate_viewable_area(t_game **game) // from solong
@@ -223,3 +223,10 @@ void	show_walls(t_game *game)
 // 	line = NULL;
 // 	close(fd);
 // }
+
+void	render_view(t_game **game)
+{
+	// render_map(game); // old, from solong;
+	render_raycast(*game); // todo, needs to fix.
+}
+

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 17:07:16 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 17:42:53 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,6 @@ void	load_map(char *f_map, t_game **game, char *line)
 	printf("done printing map\n");
 	set_view_dimensions(game);
 	printf("done setting view dimensions\n");
-	if (!is_map_closed((*game)))
-		free_and_exit(game, 1, "Map is not closed.\n");
-	// render_map(game); // old, from solong;
-	// render_raycast(*game); // todo, needs to fix.
+	// if (!is_map_closed((*game)))	// temporarily disable this to proceed with rendering.
+	// 	free_and_exit(game, 1, "Map is not closed.\n");
 }

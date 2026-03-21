@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 16:47:45 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 18:19:24 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ int	main(int argc, char **argv)
 		return (1);
 	printf("cub file ingestion done/n");
 	if (MODE == 1)
+	{
+		mlx_loop_hook(game->mlx_ptr, &render_raycast, &game);
+		mlx_hook(game->win_ptr, 2, 1L << 0, &key_press, &game); // hooks for keys and closing window
+		mlx_hook(game->win_ptr, 3, 1L << 1, &key_release, &game); // hooks for keys and closing window
+		mlx_hook(game->win_ptr, 17, 0, &close_window, &game);
 		mlx_loop(game->mlx_ptr);
+	}
 	free(game);
 	return (0);
 }

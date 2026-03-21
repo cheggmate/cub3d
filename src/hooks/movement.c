@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/18 16:18:28 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/21 18:16:24 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,36 @@ int move_player(t_game **game, double move_x, double move_y)
     return (0);
 }
 
-int	handle_keypress(int keycode, void *game_in)
+int	key_press(int keycode, void *game_in)
 {
-	int		prev_x;
-	int		prev_y;
 	t_game	*game;
 
 	game = (t_game *)game_in;
-	prev_x = game->player.pos_x;
-	prev_y = game->player.pos_y;
 	if (keycode == KEY_ESC)
 		close_window(game);
-	else if (keycode == KEY_W || keycode == KEY_A || keycode == KEY_S
-			|| keycode == KEY_D)
-	{
-		if (game->player.pos_x != prev_x || game->player.pos_y != prev_y)
-			reload_map(&game, prev_x, prev_y);
-	}
+	else if (keycode == KEY_W)
+		game->player.move_up = 1;
+	else if (keycode == KEY_A)
+		game->player.move_left = 1;
+	else if (keycode == KEY_S)
+		game->player.move_down = 1;
+	else if (keycode == KEY_D)
+		game->player.move_right = 1;
+	return (0);
+}
+
+int	key_release(int keycode, void *game_in)
+{
+	t_game	*game;
+
+	game = (t_game *)game_in;
+	if (keycode == KEY_W)
+		game->player.move_up = 0;
+	else if (keycode == KEY_A)
+		game->player.move_left = 0;
+	else if (keycode == KEY_S)
+		game->player.move_down = 0;
+	else if (keycode == KEY_D)
+		game->player.move_right = 0;
 	return (0);
 }
