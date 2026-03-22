@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 14:24:26 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 10:13:12 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include "cub3d.h"
 
-void	move_player(t_game *game, double move_x, double move_y)
+int	move_player(t_game **game, double move_x, double move_y)
 {
 	double	padding;
 
@@ -23,10 +23,10 @@ void	move_player(t_game *game, double move_x, double move_y)
 		padding = 0.1;
 	else
 		padding = -0.1;
-	if (game->map->grid[(int)game->player.pos_y][(int)(game->player.pos_x + move_x + padding)] != '1')
-		game->player.pos_x += move_x;
-	if (game->map->grid[(int)(game->player.pos_y + move_y + padding)][(int)game->player.pos_x] != '1')
-		game->player.pos_y += move_y;
+	if ((*game)->map->grid[(int)(*game)->player.pos_y][(int)((*game)->player.pos_x + move_x + padding)] != '1')
+		(*game)->player.pos_x += move_x;
+	if ((*game)->map->grid[(int)((*game)->player.pos_y + move_y + padding)][(int)(*game)->player.pos_x] != '1')
+		(*game)->player.pos_y += move_y;
 	return (0);
 }
 
@@ -36,7 +36,10 @@ int	key_press(int keycode, void *game_in)
 
 	game = (t_game *)game_in;
 	if (keycode == KEY_ESC)
+	{
+		free_and_exit(&game, 0, "Completed");
 		close_window(game);
+	}
 	else if (keycode == KEY_W)
 		game->player.move_up = 1;
 	else if (keycode == KEY_A)

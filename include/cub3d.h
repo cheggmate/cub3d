@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 16:39:33 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 10:02:15 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 typedef struct s_img {
     void    *img_ptr;
     char    *addr;        // The actual raw pixel data
-    int     bits_per_pixel;
+    int     bpp;
     int     line_length;  // Number of bytes in one row
     int     endian;
 }   t_img;
@@ -78,6 +78,7 @@ typedef struct s_ray
     int     line_height;
     int     draw_start;
     int     draw_end;
+    int     tex_x;
 }   t_ray;
 
 typedef struct s_pos

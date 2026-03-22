@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 17:42:53 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 14:00:20 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static void	populate_grid(t_game **game, int fd, char *line)
 {
 	int		row;
 	size_t	len;
+	char	*next_ptr;
 
 	row = 1;
 	while (line)
@@ -112,11 +113,12 @@ static void	populate_grid(t_game **game, int fd, char *line)
 			len += 1;
 		if (populate_row(game, row, line) != 0)
 			free_and_exit(game, 1, "Issue populating grid.\n");
-		free(line);
-		line = get_next_line(fd);
+		next_ptr = get_next_line(fd);
+        free(line);    // Free the line we just finished with
+        line = next_ptr;
 		row++;
 	}
-	free(line);
+	// free_safely(&line);
 	printf("(*game)->map->w = %d, (*game)->map->h = %d\n", (*game)->map->w , (*game)->map->h);
 	if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
@@ -154,7 +156,12 @@ void copy_map_to_grid(t_game **game)
     {
         content = (char *)curr->content;
         content_len = ft_strlen(content);
-        ft_memcpy((*game)->map->grid[row], content, content_len);
+        int col = 0;
+        while (col < content_len && col < (*game)->map->w)
+        {
+            (*game)->map->grid[row][col] = content[col];
+            col++;
+        }
         curr = curr->next;
         row++;
     }
@@ -162,24 +169,15 @@ void copy_map_to_grid(t_game **game)
 
 void	load_map(char *f_map, t_game **game, char *line)
 {
-	printf("starting load map\n");
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
-	// free(line);
-	// line = NULL;
 	populate_grid(game, (*game)->map->fd, line);
-	printf("done populating tmp grid\n");
 	close((*game)->map->fd);
 	init_grid(game);
-	printf("done initing final grid\n");
 	copy_map_to_grid(game);
-	printf("done copying to final grid\n");
 	if ((*game)->map->h == 0)
 		free_and_exit(game, 1, "Empty map file provided.\n");
-	print_map((*game)->map);
-	printf("done printing map\n");
+	if (!is_map_closed((*game)))
+		free_and_exit(game, 1, "Map is not closed/surrounded by walls.\n");
 	set_view_dimensions(game);
-	printf("done setting view dimensions\n");
-	// if (!is_map_closed((*game)))	// temporarily disable this to proceed with rendering.
-	// 	free_and_exit(game, 1, "Map is not closed.\n");
 }

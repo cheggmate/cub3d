@@ -6,10 +6,9 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 18:19:24 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 13:22:36 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 #include "libft.h"
@@ -23,7 +22,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (write(2, "Error\nincorrect number of inputs!\n", 34), 1);
 	init_game(&game, argv[1]);
-	if (parse_cub_file(argv[1], &game) == 0)
+	if (parse_cub_file(argv[1], &game) != 0)
 		return (1);
 	printf("cub file ingestion done/n");
 	if (MODE == 1)
@@ -34,6 +33,7 @@ int	main(int argc, char **argv)
 		mlx_hook(game->win_ptr, 17, 0, &close_window, &game);
 		mlx_loop(game->mlx_ptr);
 	}
-	free(game);
+	else if (MODE == 2) // putting this temporarily so valgrind doesnt complain. normally the exit button should trigger closure.
+		free_and_exit(&game, 0, "Completed");
 	return (0);
 }

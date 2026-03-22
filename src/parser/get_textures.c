@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 17:20:10 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 09:58:23 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full 
 		}
 		i++;
 	}
+  free_array(split_f_str);
 	return (0);
 }

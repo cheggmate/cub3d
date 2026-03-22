@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 16:39:43 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 09:32:18 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 
 	/* 2. Calculate the exact memory address of the pixel (x, y) */
 	/* Formula: start_address + (y * line_length) + (x * bytes_per_pixel) */
-	dst = game->img.addr + (y * game->img.line_len + x * (game->img.bpp / 8));
+	dst = game->img.addr + (y * game->img.line_length + x * (game->img.bpp / 8));
 
 	/* 3. Cast the address to an unsigned int pointer and set the color */
 	*(unsigned int *)dst = color;
@@ -224,18 +224,18 @@ t_texture	*select_texture(t_game *game, t_ray *ray)
 	{
 		/* Ray was moving Right -> hit the West face of a block */
 		if (ray->ray_dir_x > 0)
-			return (&game->tex_west);
+			return (&game->textures[2]); // west texture
 		/* Ray was moving Left -> hit the East face of a block */
-		return (&game->tex_east);
+		return (&game->textures[2]); // east texture
 	}
 	/* 2. If side == 1, we hit a North or South facing wall (Y-side) */
 	else
 	{
 		/* Ray was moving Down -> hit the North face of a block */
 		if (ray->ray_dir_y > 0)
-			return (&game->tex_north);
+			return (&game->textures[0]); // north texture
 		/* Ray was moving Up -> hit the South face of a block */
-		return (&game->tex_south);
+		return (&game->textures[1]); // south texture
 	}
 }
 
