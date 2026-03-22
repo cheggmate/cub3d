@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 14:13:12 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 15:40:38 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void destroy_images(t_game **game)
 			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[3].img);
 		free_tex_paths(game);
         // TODO: destroy main frame buffer here
-        
         if ((*game)->win_ptr) // check if this is possible for Linux
             mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
     }
@@ -64,7 +63,7 @@ void    free_mlx(t_game **game)
         mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
         (*game)->win_ptr = NULL;
     }
-    mlx_destroy_display((*game)->mlx_ptr); // specific to linux
+	mlx_destroy_display((*game)->mlx_ptr); // specific to linux
     free((*game)->mlx_ptr);
     (*game)->mlx_ptr = NULL;
 }

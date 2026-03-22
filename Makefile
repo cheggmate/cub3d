@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/20 09:50:45 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/22 15:39:10 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,9 +37,19 @@ OBJ         = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
-	@make -C $(MLX_PATH)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_LIB) -lXext -lX11 -lm -lbsd -o $(NAME)
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Linux)
+    # Linux Flags
+    MLX_PATH = ./lib/minilibx-linux
+    MLX_LIB  = $(MLX_PATH)/libmlx.a
+    MLX_FLAGS = -L$(MLX_PATH) -lmlx -lXext -lX11 -lm -lbsd
+else
+    # macOS Flags
+    MLX_PATH = ./lib/minilibx_opengl_20191021
+    MLX_LIB  = $(MLX_PATH)/libmlx.a
+    MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
+endif
 
 $(LIBFT):
 	@make bonus -C lib/libft
