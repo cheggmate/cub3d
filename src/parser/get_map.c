@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 14:00:20 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 15:01:53 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,18 @@ void	update_player_direction(t_game **game, char c)
 
 static void set_player_pos_in_grid_to_zero(t_game **game)
 {
-	t_list	*last;
+    t_list  *node;
+    int     i;
 
-	last = (*game)->tmp_list;
-	while (last->next)
-		last = last->next;
-	((char *)last->content)[(int)(*game)->player.pos_x] = '0';
+    node = (*game)->tmp_list;
+    i = 0;
+    while (node && i < (int)(*game)->player.pos_y)
+    {
+        node = node->next;
+        i++;
+    }
+    if (node)
+        ((char *)node->content)[(int)(*game)->player.pos_x] = '0';
 }
 
 void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
@@ -76,7 +82,7 @@ void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 int populate_row(t_game **game, int row, char *line)
 {
     int     pos[2];
-    char    *ptr; // Use a pointer so we don't lose the start of 'line'
+    char    *ptr;
 
     pos[1] = row;
     if (!(*game)->tmp_list)
@@ -171,12 +177,15 @@ void	load_map(char *f_map, t_game **game, char *line)
 {
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
+	// if (populate_row(game, 0, line) != 0)  // handle first line here
+    //     free_and_exit(game, 1, "Issue populating first row.\n");
 	populate_grid(game, (*game)->map->fd, line);
 	close((*game)->map->fd);
 	init_grid(game);
 	copy_map_to_grid(game);
 	if ((*game)->map->h == 0)
 		free_and_exit(game, 1, "Empty map file provided.\n");
+	print_map((*game)->map);
 	if (!is_map_closed((*game)))
 		free_and_exit(game, 1, "Map is not closed/surrounded by walls.\n");
 	set_view_dimensions(game);
