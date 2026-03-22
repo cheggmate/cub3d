@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 13:39:31 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 14:13:12 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,22 @@
 
 static void free_tex_paths(t_game **game)
 {
-    int i;
+	int i;
 
-    if (!(*game)->tex_paths)
-        return ;
-    i = 0;
-    while (i < 4)
-    {
-        if ((*game)->tex_paths[i])
-            free((*game)->tex_paths[i]);
-        i++;
-    }
-    free((*game)->tex_paths);
-    (*game)->tex_paths = NULL;
+	if (!(*game)->tex_paths)
+		return ;
+	i = 0;
+	while (i < 4)
+	{
+		if ((*game)->tex_paths[i])
+		{
+			free((*game)->tex_paths[i]);
+			(*game)->tex_paths[i] = NULL;
+		}
+		i++;
+	}
+	free((*game)->tex_paths);
+	(*game)->tex_paths = NULL;
 }
 
 void destroy_images(t_game **game)

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 17:03:09 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/21 09:14:52 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 14:12:39 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,11 @@
 #include "libft.h"
 #include "mlx.h"
 
-/*
-** Checks the status of a specific coordinate.
-** Returns:
-** -1 : The tile is outside the grid boundaries (Leak).
-** -2 : The tile is a space or empty char (Leak if reachable by player).
-** 0 : The tile is a wall or already visited (Safe stop).
-** 1 : The tile is a walkable floor/player start (Continue BFS).
-*/
 static int	is_valid_tile(int r, int c, t_game *game, int **checked)
 {
 	if (r < 0 || c < 0 || r >= game->map->h || c >= game->map->w)
 		return (-1);
-	if (game->map->grid[r][c] == ' ' || game->map->grid[r][c] == '\0' \
-		|| game->map->grid[r][c] == '\n')
+	if (game->map->grid[r][c] == ' ' || game->map->grid[r][c] == '\0')
 		return (-2);
 	if (game->map->grid[r][c] == '1' || checked[r][c])
 		return (0);

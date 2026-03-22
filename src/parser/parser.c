@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 14:02:31 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 14:15:04 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int parse_cub_file(char *file, t_game **game)
 	printf("tex 3: %s\n", (*game)->tex_paths[3]);
 	printf("floor colour: %d\n", (*game)->floor_colour);
 	printf("ceiling_colour: %d\n", (*game)->ceiling_colour);
+	print_map((*game)->map);
 	if (check_all_texs_colours_exist(game) != 0)
 		return (close_file(fd), free_and_exit(game, 1, "Invalid content in .cub file.\n"), 0);
 	printf("done parsing cub file\n");
