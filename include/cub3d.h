@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 10:02:15 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/22 15:21:52 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_map
 	char	**grid;
 }	t_map;
 
-typedef struct s_texture { // TODO: initialize this
+typedef struct s_texture {
     void    *img;          // Pointer from mlx_xpm_file_to_image
     char    *addr;         // Pointer from mlx_get_data_addr
     int     width;
