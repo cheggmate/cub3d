@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/22 15:39:10 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/23 12:32:58 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,10 @@ else
     MLX_LIB  = $(MLX_PATH)/libmlx.a
     MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 endif
+
+$(NAME): $(OBJ) $(LIBFT)
+	@make -C $(MLX_PATH)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 
 $(LIBFT):
 	@make bonus -C lib/libft

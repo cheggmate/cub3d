@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 15:01:53 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:18:55 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,21 @@ static void set_player_pos_in_grid_to_zero(t_game **game)
 
     node = (*game)->tmp_list;
     i = 0;
-    while (node && i < (int)(*game)->player.pos_y)
+    while (node && i < (int)(*game)->player.pos_y - 1)
     {
         node = node->next;
         i++;
     }
     if (node)
-        ((char *)node->content)[(int)(*game)->player.pos_x] = '0';
+		((char *)node->content)[(int)(*game)->player.pos_x] = '0';
+        
 }
 
 void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
+		printf("player found: pos_x=%d pos_y=%d char='%c'\n", pos[0], pos[1], c);
 		(*game)->map->start += 1;
 		(*game)->player.pos_x = pos[0];
 		(*game)->player.pos_y = pos[1];
@@ -74,7 +76,6 @@ void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
 		printf("found '%c' at pos %d\n", c, pos[1]);
 		free_and_exit(game, 1, "Invalid item found in map.\n");
 	}
-	// printf("no of start positions: %d\n", (*game)->map->start);
 	if ((*game)->map->start > 1)
 		free_and_exit(game, 1, "More than one start pos found.\n");
 }
@@ -98,6 +99,7 @@ int populate_row(t_game **game, int row, char *line)
         pos[0]++;
     }
     (*game)->map->h += 1;
+	printf("populate_row: row=%d, line='%s'\n", row, line);
     if ((*game)->map->w < pos[0])
         (*game)->map->w = pos[0];
     return (0);

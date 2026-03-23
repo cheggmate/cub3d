@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 14:50:41 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/20 15:30:07 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:17:34 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_list	*create_tmp_list(char *map_row)
 	map_row_dup = ft_strdup(map_row);
 	if (!map_row_dup)
 		return (NULL);
-	printf("replacing '%c'\n", ((char *)map_row_dup)[row_len-1]);
 	if (((char *)map_row_dup)[row_len-1] == '\n')
 		((char *)map_row_dup)[row_len-1] = '\0'; // replace the newline with a null terminator.
 	tmp_list = ft_lstnew(map_row_dup);
@@ -55,7 +54,6 @@ int	add_row_to_list(t_list **list, char *map_row)
 	new_node = ft_lstnew(map_row_dup);
 	if (!new_node)
 		return (free(map_row_dup), -1);
-	// printf("content of new node is '%s'\n", (char *)new_node->content);
 	ft_lstadd_back(list, new_node);
 	return (0);
 }

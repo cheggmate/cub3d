@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 15:40:32 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 14:15:35 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ typedef struct s_ray
 
 typedef struct s_pos
 {
-    int col;
     int row;
+    int col;
 }   t_pos;
 
 typedef struct s_map
