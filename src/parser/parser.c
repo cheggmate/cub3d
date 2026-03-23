@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 14:15:04 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 16:02:58 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static int	check_all_texs_colours_exist(t_game **game)
 	int	i;
 
 	i = 0;
-	while (i < 4) // Fixed: Check all 4 textures
+	while (i < 4)
 	{
 		if (!(*game)->textures[i].img)
 			return (-1);
 		i++;
 	}
+	printf("textures exist\n");
 	if ((*game)->ceiling_colour == -1 || (*game)->floor_colour == -1)
 		return (-1);
 	return (0);

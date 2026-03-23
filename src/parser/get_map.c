@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/23 15:18:55 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:43:31 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void set_player_pos_in_grid_to_zero(t_game **game)
 
     node = (*game)->tmp_list;
     i = 0;
-    while (node && i < (int)(*game)->player.pos_y - 1)
+    while (node && i < (int)(*game)->player.pos_y)
     {
         node = node->next;
         i++;
@@ -60,7 +60,7 @@ static void set_player_pos_in_grid_to_zero(t_game **game)
         
 }
 
-void	check_update_element_ctr(t_game **game, char c, int *pos) // from solong
+void	check_update_element_ctr(t_game **game, char c, int *pos)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
@@ -111,7 +111,7 @@ static void	populate_grid(t_game **game, int fd, char *line)
 	size_t	len;
 	char	*next_ptr;
 
-	row = 1;
+	row = 0;
 	while (line)
 	{
 		if (!line)

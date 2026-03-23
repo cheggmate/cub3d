@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 13:22:36 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:38:45 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ int	main(int argc, char **argv)
 		return (write(2, "Error\nincorrect number of inputs!\n", 34), 1);
 	init_game(&game, argv[1]);
 	if (parse_cub_file(argv[1], &game) != 0)
+	{
+		printf("issue occurred, aborting..");
 		return (1);
+	}
+		
 	printf("cub file ingestion done/n");
 	if (MODE == 1)
 	{
