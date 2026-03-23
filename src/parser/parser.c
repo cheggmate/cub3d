@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/23 16:02:58 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/24 00:06:04 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ int parse_cub_file(char *file, t_game **game)
 		return (close_file(fd), free_and_exit(game, 1, "Invalid content in .cub file.\n"), 0);
 	printf("done parsing cub file\n");
 	close_file(fd);
+	printf("done closing file %d\n", fd);
 	return (0);
 }

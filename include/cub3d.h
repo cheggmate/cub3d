@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/23 15:35:11 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/24 00:27:30 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # endif
 
 # ifndef MODE // 1 = school, 2 = home (MLX disabled)
-#  define MODE 2 
+#  define MODE 1
 # endif
 
 # ifdef __linux__   // 1 for linux, 2 for mac (had to use this because i need to comment out mlx_destroy_display)
@@ -211,7 +211,7 @@ void	    free_fd_map(t_game **game);
 void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
 int         is_map_closed(t_game *game);
-int	        render_raycast(t_game **game);
+int			render_raycast(t_game *game);
 void        calculate_ray(t_game **game, t_ray *ray, int x);
 void        perform_dda(t_game **game, t_ray *ray);
 void	    render_view(t_game **game);

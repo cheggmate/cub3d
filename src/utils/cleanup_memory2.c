@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 16:51:38 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 13:36:04 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/24 00:07:19 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	close_file(int fd)
 {
 	if (fd > 2)
 		close(fd);
+	printf("done closing file\n");
 }
 
 void	free_fd_map(t_game **game)
