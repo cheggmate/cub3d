@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/23 14:15:35 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:35:11 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 
 # ifndef MODE // 1 = school, 2 = home (MLX disabled)
 #  define MODE 2 
+# endif
+
+# ifdef __linux__   // 1 for linux, 2 for mac (had to use this because i need to comment out mlx_destroy_display)
+#  define ENV 1
+# elif __APPLE__
+#  define ENV 2
 # endif
 
 # include <stdio.h>

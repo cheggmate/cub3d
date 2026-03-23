@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 15:40:38 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/23 15:36:40 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void    free_mlx(t_game **game)
         mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
         (*game)->win_ptr = NULL;
     }
-	mlx_destroy_display((*game)->mlx_ptr); // specific to linux
+	if (ENV == 1)
+        mlx_destroy_display((*game)->mlx_ptr); // specific to linux
     free((*game)->mlx_ptr);
     (*game)->mlx_ptr = NULL;
 }
