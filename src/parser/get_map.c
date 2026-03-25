@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/23 15:43:31 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/25 17:24:29 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	check_update_element_ctr(t_game **game, char c, int *pos)
 	{
 		printf("player found: pos_x=%d pos_y=%d char='%c'\n", pos[0], pos[1], c);
 		(*game)->map->start += 1;
-		(*game)->player.pos_x = pos[0];
-		(*game)->player.pos_y = pos[1];
+		(*game)->player.pos_x = (double)pos[0] + 0.5;;
+		(*game)->player.pos_y = (double)pos[1] + 0.5;;
 		set_player_pos_in_grid_to_zero(game);
 		update_player_direction(game, c);
 	}
@@ -190,5 +190,4 @@ void	load_map(char *f_map, t_game **game, char *line)
 	print_map((*game)->map);
 	if (!is_map_closed((*game)))
 		free_and_exit(game, 1, "Map is not closed/surrounded by walls.\n");
-	set_view_dimensions(game);
 }

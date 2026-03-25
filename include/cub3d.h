@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/24 00:27:30 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/25 18:36:54 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 # define CUB3D_H
 
 # ifndef HEIGHT
-#  define HEIGHT 6
+#  define HEIGHT 460
 # endif
 
 # ifndef WIDTH
-#  define WIDTH 15
-# endif
-
-# ifndef SPRITE_SIZE
-#  define SPRITE_SIZE 128
+#  define WIDTH 640
 # endif
 
 # ifndef MODE // 1 = school, 2 = home (MLX disabled)
@@ -191,7 +187,6 @@ void		show_walls(t_game *game);
 void		print_map(t_map *map);
 void		render_map(t_game **game);
 // void		render_viewable_map(t_game **game);
-void		set_view_dimensions(t_game **game);
 int			handle_keypress(int keycode, void *game);
 void		check_update_element_ctr(t_game **game, char c, int *pos);
 void		free_and_exit(t_game **game, int status, char *msg);
@@ -200,7 +195,7 @@ void		free_mlx(t_game **game);
 int			parse_cub_file(char *file, t_game **game);
 int	        check_asset_tex(char *f_str, t_game **game);
 int         check_asset_colour(char *f_str, t_game **game);
-int 		move_player(t_game **game, double move_x, double move_y);
+int 		move_player(t_game **game);
 void        *create_window(t_game **game, void *mlx);
 void	    update_player_direction(t_game **game, char c);
 t_list	    *create_tmp_list(char *map_row);
@@ -212,7 +207,8 @@ void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
 int         is_map_closed(t_game *game);
 int			render_raycast(t_game *game);
-void        calculate_ray(t_game **game, t_ray *ray, int x);
+void        calculate_ray(t_game *game, t_ray *ray, int x);
+void        init_dda(t_game *game, t_ray *ray);
 void        perform_dda(t_game **game, t_ray *ray);
 void	    render_view(t_game **game);
 int	        key_press(int keycode, void *game_in);

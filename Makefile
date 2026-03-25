@@ -6,13 +6,14 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/23 12:32:58 by jotong           ###   ########.fr        #
+#    Updated: 2026/03/25 18:11:00 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME        = cub3d
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -Iinclude -Ilib/libft -Ilib/minilibx-linux
+C_HEADER    = include/cub3d.h
 
 # Paths
 LIBFT       = lib/libft/libft.a
@@ -51,7 +52,7 @@ else
     MLX_FLAGS = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 endif
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) $(C_HEADER)
 	@make -C $(MLX_PATH)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
 

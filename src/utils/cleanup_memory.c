@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:35:10 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/23 15:36:40 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/25 17:26:41 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,25 @@ static void free_tex_paths(t_game **game)
 
 void destroy_images(t_game **game)
 {
-	if ((*game)->mlx_ptr)
+    int i;
+
+    // 1. Destroy the 4 wall textures
+    i = 0;
+    while (i < 4)
     {
-        // Destroy loaded wall textures if they exist
-        if ((*game)->textures[0].img)
-			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[0].img);
-        if ((*game)->textures[1].img)
-			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[1].img);
-		if ((*game)->textures[2].img)
-			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[2].img);
-		if ((*game)->textures[3].img)
-			mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[3].img);
-		free_tex_paths(game);
-        // TODO: destroy main frame buffer here
-        if ((*game)->win_ptr) // check if this is possible for Linux
-            mlx_destroy_window((*game)->mlx_ptr, (*game)->win_ptr);
+        if ((*game)->textures[i].img)
+        {
+            mlx_destroy_image((*game)->mlx_ptr, (*game)->textures[i].img);
+            (*game)->textures[i].img = NULL; // Good practice
+        }
+        i++;
+    }
+    free_tex_paths(game);
+    // 2. Destroy the main "canvas" image
+    if ((*game)->img.img_ptr)
+    {
+        mlx_destroy_image((*game)->mlx_ptr, (*game)->img.img_ptr);
+        (*game)->img.img_ptr = NULL;
     }
 }
 

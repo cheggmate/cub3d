@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 10:13:12 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/25 18:39:09 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,43 @@
 
 #include "cub3d.h"
 
-int	move_player(t_game **game, double move_x, double move_y)
+int move_player(t_game **game)
 {
-	double	padding;
+    double s = 0.1; // speed
+    t_player *p = &(*game)->player;
+    char **grid = (*game)->map->grid;
 
-	padding = 0.1; // buffer so that the player doesnt get too close to the wall
-	if (move_x > 0)
-		padding = 0.1;
-	else
-		padding = -0.1;
-	if ((*game)->map->grid[(int)(*game)->player.pos_y][(int)((*game)->player.pos_x + move_x + padding)] != '1')
-		(*game)->player.pos_x += move_x;
-	if ((*game)->map->grid[(int)((*game)->player.pos_y + move_y + padding)][(int)(*game)->player.pos_x] != '1')
-		(*game)->player.pos_y += move_y;
-	return (0);
+    if (p->move_up)
+    {
+        if (grid[(int)p->pos_y][(int)(p->pos_x + p->dir_x * s)] != '1') p->pos_x += p->dir_x * s;
+        if (grid[(int)(p->pos_y + p->dir_y * s)][(int)p->pos_x] != '1') p->pos_y += p->dir_y * s;
+    }
+    if (p->move_down)
+    {
+        if (grid[(int)p->pos_y][(int)(p->pos_x - p->dir_x * s)] != '1') p->pos_x -= p->dir_x * s;
+        if (grid[(int)(p->pos_y - p->dir_y * s)][(int)p->pos_x] != '1') p->pos_y -= p->dir_y * s;
+    }
+    if (p->move_left) // Strafe Left: uses plane or perp dir
+    {
+        if (grid[(int)p->pos_y][(int)(p->pos_x - p->plane_x * s)] != '1') p->pos_x -= p->plane_x * s;
+        if (grid[(int)(p->pos_y - p->plane_y * s)][(int)p->pos_x] != '1') p->pos_y -= p->plane_y * s;
+    }
+    if (p->move_right) // Strafe Right
+    {
+        if (grid[(int)p->pos_y][(int)(p->pos_x + p->plane_x * s)] != '1') p->pos_x += p->plane_x * s;
+        if (grid[(int)(p->pos_y + p->plane_y * s)][(int)p->pos_x] != '1') p->pos_y += p->plane_y * s;
+    }
+    return (0);
 }
 
 int	key_press(int keycode, void *game_in)
 {
 	t_game	*game;
 
+	printf("test key press\n");
 	game = (t_game *)game_in;
 	if (keycode == KEY_ESC)
-	{
 		free_and_exit(&game, 0, "Completed");
-		close_window(game);
-	}
 	else if (keycode == KEY_W)
 		game->player.move_up = 1;
 	else if (keycode == KEY_A)
@@ -55,6 +66,7 @@ int	key_release(int keycode, void *game_in)
 {
 	t_game	*game;
 
+	printf("test key release\n");
 	game = (t_game *)game_in;
 	if (keycode == KEY_W)
 		game->player.move_up = 0;
