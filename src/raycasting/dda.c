@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:04:57 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 18:41:33 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/25 18:51:13 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void	render_vertical_line(t_game *game, t_ray *ray, int x)
 	// ceiling
 	while (y < ray->draw_start)
 	{
-		my_mlx_pixel_put(game, x, y, game->floor_colour);
+		my_mlx_pixel_put(game, x, y, game->ceiling_colour);
 		y++;
 	}
 	// wall
@@ -189,7 +189,7 @@ void	render_vertical_line(t_game *game, t_ray *ray, int x)
 	// floor
 	while (y < HEIGHT)
 	{
-		my_mlx_pixel_put(game, x, y, game->ceiling_colour);
+		my_mlx_pixel_put(game, x, y, game->floor_colour);
 		y++;
 	}
 }

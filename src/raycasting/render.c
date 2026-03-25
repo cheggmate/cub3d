@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 18:37:55 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/25 19:01:46 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	reload_map(t_game **game, int prev_x, int prev_y)
 	// redraw_player(*game);
 }
 
-void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
+void	my_mlx_pixel_put(t_game *game, int x, int y, int colour)
 {
 	char	*dst;
 
@@ -91,8 +91,8 @@ void	my_mlx_pixel_put(t_game *game, int x, int y, int color)
 	/* Formula: start_address + (y * line_length) + (x * bytes_per_pixel) */
 	dst = game->img.addr + (y * game->img.line_length + x * (game->img.bpp / 8));
 
-	/* 3. Cast the address to an unsigned int pointer and set the color */
-	*(unsigned int *)dst = color;
+	/* 3. Cast the address to an unsigned int pointer and set the colour */
+	*(unsigned int *)dst = colour;
 }
 
 t_texture   *select_texture(t_game *game, t_ray *ray)
@@ -105,10 +105,36 @@ t_texture   *select_texture(t_game *game, t_ray *ray)
     }
     else // Hits Horizontal Wall (North/South)
     {
-        if (ray->ray_dir_y > 0)
+        if (ray->ray_dir_y < 0)
             return (&game->textures[1]); // SO (South face)
         return (&game->textures[0]);      // NO (North face)
     }
+}
+
+static unsigned int	add_shade(char *colour_ptr, t_ray *ray)
+{
+	unsigned int	colour;
+	double			shadow;
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
+
+	colour = *(unsigned int *)colour_ptr;
+	if (ray->side == 1)
+    colour = (colour >> 1) & 8355711; // Darken the RGB bits
+
+	// distance shading
+	shadow = 1.0 / (1.0 + ray->wall_dist * 0.05); // Adjust 0.05 for intensity
+
+    r = (colour >> 16) & 0xFF;
+    g = (colour >> 8) & 0xFF;
+    b = colour & 0xFF;
+
+    r = (unsigned int)(r * shadow);
+    g = (unsigned int)(g * shadow);
+    b = (unsigned int)(b * shadow);
+
+    return ((r << 16) | (g << 8) | b);
 }
 
 int	get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h)
@@ -117,7 +143,7 @@ int	get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h)
 	int			tex_y;
 	double		step;
 	double		tex_pos;
-	char		*color_ptr;
+	char		*colour_ptr;
 
 	/* 1. Pick the correct texture (North, South, East, or West) */
 	tex = select_texture(game, ray);
@@ -133,10 +159,10 @@ int	get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h)
 	/* 4. Get the integer Y coordinate, masking to prevent out-of-bounds */
 	tex_y = (int)tex_pos & (tex->height - 1);
 
-	/* 5. Access the color at (tex_x, tex_y) in the texture's memory */
+	/* 5. Access the colour at (tex_x, tex_y) in the texture's memory */
 	/* Formula: addr + (y * line_len + x * bytes_per_pixel) */
-	color_ptr = tex->addr + (tex_y * tex->line_len + ray->tex_x * (tex->bpp / 8));
+	colour_ptr = tex->addr + (tex_y * tex->line_len + ray->tex_x * (tex->bpp / 8));
 	
-	return (*(unsigned int *)color_ptr);
+	return (add_shade(colour_ptr, ray));
 }
 
