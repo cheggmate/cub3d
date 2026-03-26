@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 17:03:09 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 14:43:53 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:08:15 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,9 @@ int	is_map_closed(t_game *game)
 		if (!explore_neighbors(q.items[q.front++], &q, game, checked))
 		{
 			cleanup_validation(&q, checked, game->map->h);
-			printf("=== map is NOT closed ===\n");
 			return (0);
 		}
 	}
 	cleanup_validation(&q, checked, game->map->h);
-	printf("=== map IS closed ===\n");
 	return (1);
 }

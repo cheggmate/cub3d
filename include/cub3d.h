@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 18:36:54 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:16:39 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ typedef struct s_player
     double  rot_speed;
 }   t_player;
 
-typedef struct s_game // from solong
+typedef struct s_game
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
@@ -154,7 +154,7 @@ typedef struct s_game // from solong
 	t_map		*map;
 }	t_game;
 
-typedef struct s_queue // from solong
+typedef struct s_queue
 {
 	t_pos	*items;
 	int		front;
@@ -166,7 +166,6 @@ void	    close_file(int fd);
 int			arr_in_limit(int n, int min, int max);
 int	        char_arr_size(char **arr);
 void		get_map_edges(t_game **game, char *f_map);
-// void		calculate_viewable_area(t_game **game);
 void 		cleanup_game(t_game *game);
 void 		free_checked(int **checked, int height);
 void	    free_array(char **arr);
@@ -174,23 +173,12 @@ void        init_grid(t_game **game);
 void		init_game(t_game **game, char *f_map);
 int			close_window(void *game);
 void		destroy_images(t_game **game);
-int			get_map_height(char	*f_map);
 int			check_asset(char *f_str, t_game **game);
 void	    load_map(char *f_map, t_game **game, char *line);
-void		reload_map(t_game **game, int prev_x, int prev_y);
-void		show_images(t_game *game);
-// void		show_collectible(t_game *game);
-// void		show_exit(t_game *game, int state);
-void		show_player(t_game *game);
-void		redraw_player(t_game *game);
-void		show_walls(t_game *game);
 void		print_map(t_map *map);
-void		render_map(t_game **game);
-// void		render_viewable_map(t_game **game);
 int			handle_keypress(int keycode, void *game);
 void		check_update_element_ctr(t_game **game, char c, int *pos);
 void		free_and_exit(t_game **game, int status, char *msg);
-// int			path_check(t_game **game);
 void		free_mlx(t_game **game);
 int			parse_cub_file(char *file, t_game **game);
 int	        check_asset_tex(char *f_str, t_game **game);
@@ -202,7 +190,6 @@ t_list	    *create_tmp_list(char *map_row);
 void        copy_map_to_grid(t_game **game);
 int	        add_row_to_list(t_list **list, char *map_row);
 int	        populate_row(t_game **game, int row, char *line);
-void	    free_fd_map(t_game **game);
 void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
 int         is_map_closed(t_game *game);
@@ -210,7 +197,6 @@ int			render_raycast(t_game *game);
 void        calculate_ray(t_game *game, t_ray *ray, int x);
 void        init_dda(t_game *game, t_ray *ray);
 void        perform_dda(t_game **game, t_ray *ray);
-void	    render_view(t_game **game);
 int	        key_press(int keycode, void *game_in);
 int	        key_release(int keycode, void *game_in);
 void		calculate_wall_dist(t_game *game, t_ray *ray);

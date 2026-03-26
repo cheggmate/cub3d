@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 17:24:29 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:16:26 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,12 @@ static void	populate_grid(t_game **game, int fd, char *line)
         line = next_ptr;
 		row++;
 	}
-	// free_safely(&line);
 	printf("(*game)->map->w = %d, (*game)->map->h = %d\n", (*game)->map->w , (*game)->map->h);
 	if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
 }
 
-void	print_map(t_map *map) // from solong
+void	print_map(t_map *map)
 {
 	int	i;
 	int	j;
@@ -179,8 +178,6 @@ void	load_map(char *f_map, t_game **game, char *line)
 {
 	if (!f_map)
 		free_and_exit(game, 1, "failed to allocate memory.\n");
-	// if (populate_row(game, 0, line) != 0)  // handle first line here
-    //     free_and_exit(game, 1, "Issue populating first row.\n");
 	populate_grid(game, (*game)->map->fd, line);
 	close((*game)->map->fd);
 	init_grid(game);

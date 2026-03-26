@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 16:51:38 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/24 00:07:19 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 14:16:10 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,6 @@ void	close_file(int fd)
 	if (fd > 2)
 		close(fd);
 	printf("done closing file\n");
-}
-
-void	free_fd_map(t_game **game)
-{
-	int	i;
-
-	if (game && *game && (*game)->map && (*game)->map->fd > 2)
-	{
-		close((*game)->map->fd);
-		(*game)->map->fd = -1;
-	}
-	if ((*game)->map && (*game)->map->grid)
-    {
-        i = 0;
-        while (i < (*game)->map->h)
-            free((*game)->map->grid[i++]);
-        free((*game)->map->grid);
-		free((*game)->map);
-		(*game)->map = NULL;
-    }
 }
 
 void	free_safely(char **line)
