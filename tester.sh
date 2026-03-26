@@ -37,4 +37,10 @@ run_test "Missing required elements" "$TEST_DIR/missing_items.cub"
 # 3. Invalid texture path
 run_test "Invalid texture path" "$TEST_DIR/invalid_texture.cub"
 
+# 4. Invalid item in map
+run_test "Invalid item in map" "$TEST_DIR/invalid_item_in_map.cub"
+
+# 5. Map not closed
+run_test "Map not closed" "$TEST_DIR/map_not_closed.cub"
+
 echo "============== DONE ==================="

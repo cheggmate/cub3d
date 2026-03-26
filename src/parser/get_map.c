@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 22:27:31 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 23:08:10 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_update_element_ctr(t_game **game, char c, int *pos)
 {
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
-		printf("player found: pos_x=%d pos_y=%d char='%c'\n", pos[0], pos[1], c);
+		// printf("player found: pos_x=%d pos_y=%d char='%c'\n", pos[0], pos[1], c);
 		(*game)->map->start += 1;
 		(*game)->player.pos_x = (double)pos[0] + 0.5;;
 		(*game)->player.pos_y = (double)pos[1] + 0.5;;
@@ -73,7 +73,7 @@ void	check_update_element_ctr(t_game **game, char c, int *pos)
 	}
 	else if (!(c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == ' '))
 	{
-		printf("found '%c' at pos %d\n", c, pos[1]);
+		// printf("found '%c' at pos %d\n", c, pos[1]);
 		free_and_exit(game, 1, "Invalid item found in map.\n");
 	}
 	if ((*game)->map->start > 1)

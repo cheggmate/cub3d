@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 14:14:04 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/27 01:08:38 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "mlx.h"
 
-int	close_window(void *game) // from solong
+int	close_window(void *game)
 {
 	t_game	*game_tmp;
 
@@ -31,7 +31,7 @@ int	close_window(void *game) // from solong
 	return (0);
 }
 
-void	*create_window(t_game **game, void *mlx) // from solong
+void	*create_window(t_game **game, void *mlx)
 {
 	int		width;
 	int		height;
@@ -113,10 +113,12 @@ int	get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h)
 
 	tex = select_texture(game, ray);
 	step = 1.0 * tex->height / line_h;
-	tex_pos = (y - HEIGHT / 2 + line_h / 2) * step;
+	tex_pos = ((double)y - (double)HEIGHT / 2 + (double)line_h / 2) * step;
 	tex_y = (int)tex_pos & (tex->height - 1);
 	colour_ptr = tex->addr + (tex_y * tex->line_len + ray->tex_x * (tex->bpp / 8));
-	
-	return (add_shade(colour_ptr, ray));
+
+    return (add_shade(colour_ptr, ray));
+	// return (add_shade(colour_ptr, ray));
+	// return (*(unsigned int *)colour_ptr);
 }
 

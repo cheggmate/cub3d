@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:04:57 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 18:51:13 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/27 01:04:07 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,14 @@ void init_dda(t_game *game, t_ray *ray)
 void    calculate_ray(t_game *game, t_ray *ray, int x)
 {
     double camera_x;
-    
-    // 1. Direction and Position
+
     camera_x = 2 * x / (double)WIDTH - 1;
     ray->ray_dir_x = game->player.dir_x + game->player.plane_x * camera_x;
     ray->ray_dir_y = game->player.dir_y + game->player.plane_y * camera_x;
     ray->map_x = (int)game->player.pos_x;
     ray->map_y = (int)game->player.pos_y;
-
-    // 2. Delta Distance
     ray->delta_dist_x = (ray->ray_dir_x == 0) ? 1e30 : fabs(1 / ray->ray_dir_x);
     ray->delta_dist_y = (ray->ray_dir_y == 0) ? 1e30 : fabs(1 / ray->ray_dir_y);
-
-    // 3. Step and Initial Side Distance
     if (ray->ray_dir_x < 0) {
         ray->step_x = -1;
         ray->side_dist_x = (game->player.pos_x - ray->map_x) * ray->delta_dist_x;
@@ -81,16 +76,13 @@ void    perform_dda(t_game **game, t_ray *ray)
             ray->map_y += ray->step_y;
             ray->side = 1;
         }
-        // SAFETY: Check map boundaries to prevent infinite loops/segfaults
         if (ray->map_y < 0 || ray->map_x < 0 || 
             ray->map_y >= (*game)->map->h || ray->map_x >= (*game)->map->w)
             break;
 		cell = (*game)->map->grid[ray->map_y][ray->map_x];
         if (cell == '1' || cell == ' ' || cell == '\0')
             hit = 1;
-	    
-		
-		fflush(stdout); // This pushes the text to the terminal IMMEDIATELY
+		fflush(stdout);
     }
 }
 
@@ -98,20 +90,11 @@ int    init_ray_dims(t_game **game, t_ray *ray, int x)
 {
 	double	camera_x;
 
-	/* 1. Camera X is the x-coordinate on the camera plane (-1 to 1) */
-	/* 0 is left, WIDTH/2 is center (0), WIDTH is right (1) */
 	camera_x = 2 * x / (double)WIDTH - 1;
-
-	/* 2. Ray direction: Player direction + (Plane * CameraX) */
 	ray->ray_dir_x = (*game)->player.dir_x + (*game)->player.plane_x * camera_x;
 	ray->ray_dir_y = (*game)->player.dir_y + (*game)->player.plane_y * camera_x;
-
-	/* 3. The current square of the map the ray is in */
 	ray->map_x = (int)(*game)->player.pos_x;
 	ray->map_y = (int)(*game)->player.pos_y;
-
-	/* 4. Delta Dist: distance the ray has to travel to go from 1 x-side 
-	   to the next x-side (or y-side to y-side) */
 	if (ray->ray_dir_x == 0)
 		ray->delta_dist_x = 1e30; // "Infinity" if ray is parallel to X
 	else
@@ -159,34 +142,43 @@ void calculate_wall_dist(t_game *game, t_ray *ray)
 	wall_x -= floor(wall_x);
 
 	// Assuming your texture width is 64
-	ray->tex_x = (int)(wall_x * 64.0);
+
+	// 1. Where on the wall did the ray hit? (0.0 to 1.0)
+	if (ray->side == 0)
+		wall_x = game->player.pos_y + ray->wall_dist * ray->ray_dir_y;
+	else
+		wall_x = game->player.pos_x + ray->wall_dist * ray->ray_dir_x;
+
+	// 2. Get the fractional part (0.5 means center of the tile)
+	wall_x -= floor(wall_x);
+
+	// 3. Map it to your texture width (e.g., 64)
+	ray->tex_x = (int)(wall_x * (double)64); // Replace 64 with your actual tex->width
+
+	// 4. Flip to prevent mirroring
 	if (ray->side == 0 && ray->ray_dir_x > 0)
-	    ray->tex_x = 64 - ray->tex_x - 1;
+		ray->tex_x = 64 - ray->tex_x - 1;
 	if (ray->side == 1 && ray->ray_dir_y < 0)
-	    ray->tex_x = 64 - ray->tex_x - 1;
+		ray->tex_x = 64 - ray->tex_x - 1;
 }
 
 void	render_vertical_line(t_game *game, t_ray *ray, int x)
 {
 	int	y;
+	int color ;
 
 	y = 0;
-
-	// ceiling
 	while (y < ray->draw_start)
 	{
 		my_mlx_pixel_put(game, x, y, game->ceiling_colour);
 		y++;
 	}
-	// wall
 	while (y < ray->draw_end)
 	{
-		// Use ray->line_height from the struct
-		int color = get_texture_pixel(game, ray, y, ray->line_height);
+		color = get_texture_pixel(game, ray, y, ray->line_height);
 		my_mlx_pixel_put(game, x, y, color);
 		y++;
 	}
-	// floor
 	while (y < HEIGHT)
 	{
 		my_mlx_pixel_put(game, x, y, game->floor_colour);

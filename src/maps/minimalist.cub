@@ -1,7 +1,7 @@
-NO ./textures/collectible.xpm
-SO ./textures/floor.xpm
-WE ./textures/door.xpm
-EA ./textures/wall.xpm
+NO ./textures/Asset1.xpm
+SO ./textures/Asset2.xpm
+WE ./textures/Asset4.xpm
+EA ./textures/Asset3.xpm
 
 F 220,100,0
 C 225,30,0
