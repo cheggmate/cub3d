@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/22 09:58:23 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 22:30:12 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	check_asset_tex(char *f_str, t_game **game) // f_str here contains the full 
 			|| ft_strncmp(split_f_str[i], "EA", 2) == 0
 			|| ft_strncmp(split_f_str[i], "WE", 2) == 0)
 		{
-			printf("found a texture %s : %s\n", split_f_str[i], split_f_str[i + 1]);
 			if (save_texture(split_f_str, i, game) != 0)
 				return (free_array(split_f_str), -1);
 			break ;

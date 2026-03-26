@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/24 00:06:04 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 22:28:11 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,13 @@ int parse_cub_file(char *file, t_game **game)
 	if (!file)
 		return (0);
 	fd = open(file, O_RDONLY);
-	printf("before storing fd\n");
 	(*game)->map->fd = fd;
-	printf("after storing fd\n");
 	if (fd < 0)
 		return (close_file(fd), 0);
 	check_and_store_texs_and_colours(file, game, fd, &parsed_map);
-	printf("tex 0: %s\n", (*game)->tex_paths[0]);
-	printf("tex 1: %s\n", (*game)->tex_paths[1]);
-	printf("tex 2: %s\n", (*game)->tex_paths[2]);
-	printf("tex 3: %s\n", (*game)->tex_paths[3]);
-	printf("floor colour: %d\n", (*game)->floor_colour);
-	printf("ceiling_colour: %d\n", (*game)->ceiling_colour);
 	print_map((*game)->map);
 	if (check_all_texs_colours_exist(game) != 0)
 		return (close_file(fd), free_and_exit(game, 1, "Invalid content in .cub file.\n"), 0);
-	printf("done parsing cub file\n");
 	close_file(fd);
-	printf("done closing file %d\n", fd);
 	return (0);
 }

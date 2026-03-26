@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 14:16:26 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 22:27:31 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int populate_row(t_game **game, int row, char *line)
         pos[0]++;
     }
     (*game)->map->h += 1;
-	printf("populate_row: row=%d, line='%s'\n", row, line);
     if ((*game)->map->w < pos[0])
         (*game)->map->w = pos[0];
     return (0);

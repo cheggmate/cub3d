@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:13:00 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 14:10:55 by jotong           ###   ########.fr       */
+/*   Updated: 2026/03/26 22:24:14 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ int	render_raycast(t_game *game)
 		render_vertical_line(game, &ray, x);
 		x++;
 	}
-	int y;
-	y = 0;
-	while (y < HEIGHT)
-    {
-        if (y < HEIGHT / 2)
-            my_mlx_pixel_put(game, x, y, 0x0000FF); // Blue Ceiling
-        else
-            my_mlx_pixel_put(game, x, y, 0x555555); // Grey Floor
-        y++;
-    }
+	// int y;
+	// y = 0;
+	// while (y < HEIGHT)
+    // {
+    //     if (y < HEIGHT / 2)
+    //         my_mlx_pixel_put(game, x, y, 0x0000FF); // Blue Ceiling
+    //     else
+    //         my_mlx_pixel_put(game, x, y, 0x555555); // Grey Floor
+    //     y++;
+    // }
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img.img_ptr, 0, 0);
 	return (0);
 }
