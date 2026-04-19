@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:04:57 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/27 01:04:07 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/19 16:39:30 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ void    perform_dda(t_game **game, t_ray *ray)
             break;
 		cell = (*game)->map->grid[ray->map_y][ray->map_x];
         if (cell == '1' || cell == ' ' || cell == '\0')
-            hit = 1;
-		fflush(stdout);
+            hit = 1;	    
+		
+		// fflush(stdout); // This pushes the text to the terminal IMMEDIATELY
     }
 }
 
@@ -106,60 +107,92 @@ int    init_ray_dims(t_game **game, t_ray *ray, int x)
 	return (0);
 }
 
+// void calculate_wall_dist(t_game *game, t_ray *ray)
+// {
+// 	(void)game;
+// 	double	wall_x;
+//     if (ray->side == 0)
+//         ray->wall_dist = (ray->side_dist_x - ray->delta_dist_x);
+//     else
+//         ray->wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+
+//     // IMPORTANT: Protection against division by zero or near-zero
+//     if (ray->wall_dist <= 0)
+//         ray->wall_dist = 0.1;
+
+//     ray->line_height = (int)(HEIGHT / ray->wall_dist);
+    
+//     // If line_height is bigger than the screen, CAP IT for the loop
+//     if (ray->line_height > 5000) 
+//         ray->line_height = 5000;
+//     // Calculate where to start and end drawing the line
+//     ray->draw_start = -ray->line_height / 2 + HEIGHT / 2;
+//     if (ray->draw_start < 0) 
+//         ray->draw_start = 0;
+//     ray->draw_end = ray->line_height / 2 + HEIGHT / 2;
+//     if (ray->draw_end >= HEIGHT)
+// 		ray->draw_end = HEIGHT - 1;
+	
+	
+// 	if (ray->side == 0)
+// 	    wall_x = game->player.pos_y + ray->wall_dist * ray->ray_dir_y;
+// 	else
+// 	    wall_x = game->player.pos_x + ray->wall_dist * ray->ray_dir_x;
+	
+	
+// 	wall_x -= floor(wall_x);
+
+// 	// Assuming your texture width is 64
+// 	ray->tex_x = (int)(wall_x * 64.0);
+// 	if (ray->side == 0 && ray->ray_dir_x > 0)
+// 	    ray->tex_x = 64 - ray->tex_x - 1;
+// 	if (ray->side == 1 && ray->ray_dir_y < 0)
+// 	    ray->tex_x = 64 - ray->tex_x - 1;
+// }
+
 void calculate_wall_dist(t_game *game, t_ray *ray)
 {
-	(void)game;
-	double	wall_x;
+    double      wall_x;
+    t_texture   *tex;
+
+    // Calculate distance projected on camera direction
     if (ray->side == 0)
         ray->wall_dist = (ray->side_dist_x - ray->delta_dist_x);
     else
         ray->wall_dist = (ray->side_dist_y - ray->delta_dist_y);
 
-    // IMPORTANT: Protection against division by zero or near-zero
+    // Protection against division by zero for line_height
     if (ray->wall_dist <= 0)
         ray->wall_dist = 0.1;
 
     ray->line_height = (int)(HEIGHT / ray->wall_dist);
-    
-    // If line_height is bigger than the screen, CAP IT for the loop
-    if (ray->line_height > 5000) 
-        ray->line_height = 5000;
+
     // Calculate where to start and end drawing the line
     ray->draw_start = -ray->line_height / 2 + HEIGHT / 2;
     if (ray->draw_start < 0) 
         ray->draw_start = 0;
     ray->draw_end = ray->line_height / 2 + HEIGHT / 2;
     if (ray->draw_end >= HEIGHT)
-		ray->draw_end = HEIGHT - 1;
-	
-	
-	if (ray->side == 0)
-	    wall_x = game->player.pos_y + ray->wall_dist * ray->ray_dir_y;
-	else
-	    wall_x = game->player.pos_x + ray->wall_dist * ray->ray_dir_x;
-	
-	
-	wall_x -= floor(wall_x);
+        ray->draw_end = HEIGHT - 1;
 
-	// Assuming your texture width is 64
+    // 1. Determine which texture to use to get its width
+    tex = select_texture(game, ray);
 
-	// 1. Where on the wall did the ray hit? (0.0 to 1.0)
-	if (ray->side == 0)
-		wall_x = game->player.pos_y + ray->wall_dist * ray->ray_dir_y;
-	else
-		wall_x = game->player.pos_x + ray->wall_dist * ray->ray_dir_x;
+    // 2. Where exactly on the wall did the ray hit?
+    if (ray->side == 0)
+        wall_x = game->player.pos_y + ray->wall_dist * ray->ray_dir_y;
+    else
+        wall_x = game->player.pos_x + ray->wall_dist * ray->ray_dir_x;
+    wall_x -= floor(wall_x);
 
-	// 2. Get the fractional part (0.5 means center of the tile)
-	wall_x -= floor(wall_x);
+    // 3. Map hit position to texture X coordinate
+    ray->tex_x = (int)(wall_x * (double)tex->width);
 
-	// 3. Map it to your texture width (e.g., 64)
-	ray->tex_x = (int)(wall_x * (double)64); // Replace 64 with your actual tex->width
-
-	// 4. Flip to prevent mirroring
-	if (ray->side == 0 && ray->ray_dir_x > 0)
-		ray->tex_x = 64 - ray->tex_x - 1;
-	if (ray->side == 1 && ray->ray_dir_y < 0)
-		ray->tex_x = 64 - ray->tex_x - 1;
+    // 4. Flip texture to prevent mirroring
+    if (ray->side == 0 && ray->ray_dir_x > 0)
+        ray->tex_x = tex->width - ray->tex_x - 1;
+    if (ray->side == 1 && ray->ray_dir_y < 0)
+        ray->tex_x = tex->width - ray->tex_x - 1;
 }
 
 void	render_vertical_line(t_game *game, t_ray *ray, int x)
