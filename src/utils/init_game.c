@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 15:02:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/20 14:46:17 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ int	initialise_textures(t_game **game)
 	(*game)->tex_paths = ft_calloc(4, sizeof(char *));
 	if (!(*game)->tex_paths)
 		return (-1);
+	(*game)->player.move_up = 0;
+	(*game)->player.move_down = 0;
+	(*game)->player.move_left = 0;
+	(*game)->player.move_right = 0;
+	(*game)->player.rotate_left = 0;
+	(*game)->player.rotate_right = 0;
 	return (0);
 }
 
