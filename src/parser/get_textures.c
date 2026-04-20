@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 23:05:07 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/20 15:39:08 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
     {
         int     pxl_data[3];
         (*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx_ptr, 
-            f_name, &(*game)->textures[pos].width, &(*game)->textures[pos].height); // TODO: uncomment later
+            f_name, &(*game)->textures[pos].width, &(*game)->textures[pos].height);
+        printf("tex width: %i, tex height: %i\n", (*game)->textures[pos].width, (*game)->textures[pos].height);
         if (!(*game)->textures[pos].img)
         {
             printf("Error: MLX failed to load texture: %s\n", f_name);
