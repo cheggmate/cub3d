@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/19 16:31:06 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/20 14:02:46 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	key_press(int keycode, void *game_in)
 {
 	t_game	*game;
 
-	printf("test key press\n");
 	game = (t_game *)game_in;
 	if (keycode == KEY_ESC)
 		free_and_exit(&game, 0, "Completed");
@@ -59,10 +58,10 @@ int	key_press(int keycode, void *game_in)
 		game->player.move_down = 1;
 	else if (keycode == KEY_D)
 		game->player.move_right = 1;
-	if (keycode == KEY_LEFT)
-        game->player.rotate_left = 1;
-    else if (keycode == KEY_RIGHT)
-        game->player.rotate_right = 1;
+	else if (keycode == KEY_LEFT)
+		game->player.rotate_left = 1;
+	else if (keycode == KEY_RIGHT)
+		game->player.rotate_right = 1;
 	return (0);
 }
 
@@ -70,7 +69,6 @@ int	key_release(int keycode, void *game_in)
 {
 	t_game	*game;
 
-	printf("test key release\n");
 	game = (t_game *)game_in;
 	if (keycode == KEY_W)
 		game->player.move_up = 0;
@@ -80,9 +78,9 @@ int	key_release(int keycode, void *game_in)
 		game->player.move_down = 0;
 	else if (keycode == KEY_D)
 		game->player.move_right = 0;
-	if (keycode == KEY_LEFT)
-        game->player.rotate_left = 0;
-    else if (keycode == KEY_RIGHT)
-        game->player.rotate_right = 0;
+	else if (keycode == KEY_LEFT)
+		game->player.rotate_left = 0;
+	else if (keycode == KEY_RIGHT)
+		game->player.rotate_right = 0;
 	return (0);
 }

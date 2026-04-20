@@ -1,4 +1,4 @@
-#include <math.h>
+#include "cub3d.h"
 
 void rotate_player(t_game *game, double speed)
 {

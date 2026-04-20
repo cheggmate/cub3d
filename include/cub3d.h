@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/19 16:30:21 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/20 13:56:16 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,16 @@
 #  define KEY_S XK_s
 #  define KEY_D XK_d
 #  define KEY_ESC XK_Escape
+#  define KEY_LEFT 65361
+#  define KEY_RIGHT 65363
 # elif __APPLE__
 #  define KEY_W 13
 #  define KEY_A 0
 #  define KEY_S 1
 #  define KEY_D 2
 #  define KEY_ESC 53
+#  define KEY_LEFT 123
+#  define KEY_RIGHT 124
 # endif
 
 typedef struct s_img {
@@ -205,5 +209,6 @@ void		render_vertical_line(t_game *game, t_ray *ray, int x);
 void		my_mlx_pixel_put(t_game *game, int x, int y, int color);
 t_texture	*select_texture(t_game *game, t_ray *ray);
 int			get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h);
+int         handle_rotation(t_game *game);
 
 #endif
