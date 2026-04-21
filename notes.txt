@@ -13,3 +13,37 @@
 /src/hooks/
 - movement.c: Logic for updating player coordinates (W, A, S, D).
 - rotation.c: Logic for updating the player's direction vector and camera plane.
+
+
+To successfully validate your **cub3D** project, you must ensure your parser and engine handle a wide variety of misconfigurations. [cite_start]According to the project subject, any misconfiguration must result in the program exiting properly and returning "Error\n" followed by an explicit message[cite: 1354].
+
+### 1. File and Path Errors
+* [cite_start]**Invalid Extension**: Testing with files that do not end in `.cub` (e.g., `map.txt` or `map.cub.rtf`)[cite: 1287].
+* [cite_start]**Non-existent File**: Attempting to open a file that does not exist or for which you lack read permissions[cite: 1271].
+* [cite_start]**Missing Texture Files**: Providing a valid path in the `.cub` file, but the actual `.xpm` file is missing or corrupted[cite: 1354].
+* [cite_start]**Folder as Map**: Passing a directory path instead of a file path as the program argument[cite: 1271].
+
+### 2. Configuration Element Errors
+* [cite_start]**Missing Elements**: A `.cub` file missing one or more required textures (NO, SO, WE, EA) or colors (F, C)[cite: 1305, 1322, 1328].
+* [cite_start]**Duplicate Elements**: Providing the same identifier twice (e.g., two `NO` texture lines)[cite: 1354].
+* [cite_start]**Invalid Identifiers**: Using incorrect type identifiers (e.g., `North` instead of `NO` or `Floor` instead of `F`)[cite: 1305].
+* [cite_start]**Out-of-Order Map**: Placing map content before the texture or color definitions[cite: 1297].
+* [cite_start]**Incorrect RGB Values**: Providing colors outside the `[0, 255]` range, using non-numeric characters, or providing more/fewer than three values[cite: 1325, 1332].
+
+### 3. Map Content Errors
+* [cite_start]**Invalid Characters**: Including characters in the map other than `0`, `1`, `N`, `S`, `E`, `W`, or spaces[cite: 1288].
+* [cite_start]**Multiple Spawns**: Providing more than one player start position (e.g., an `N` and an `E` on the same map)[cite: 1288].
+* [cite_start]**Missing Spawn**: A map with no player start position at all[cite: 1288].
+* [cite_start]**Open Map**: Any part of the map that is not completely surrounded by walls (`1`), including gaps that lead to the "outside" of the grid[cite: 1295].
+* [cite_start]**Empty Lines in Map**: Including an empty line within the map content, which your parser must handle or reject based on whether it breaks the map structure[cite: 1299, 1300].
+
+### 4. Technical and Execution Errors
+* [cite_start]**Memory Leaks**: All heap-allocated memory must be freed, especially when exiting due to one of the errors listed above[cite: 1198].
+* [cite_start]**Unexpected Quits**: The program must never experience a segmentation fault, bus error, or double free, even with the most "nasty" map mistakes[cite: 1196, 1374].
+* [cite_start]**Invalid Window Handling**: Changing window focus, minimizing, or resizing must not crash the program or break the rendering[cite: 1275].
+* [cite_start]**Unclean Exit**: Pressing `ESC` or clicking the red cross must close the window and free all resources cleanly[cite: 1284, 1285].
+
+### 5. Norm and Makefile Compliance
+* [cite_start]**Norm Errors**: Any code, including bonus files, that does not comply with the school Norm will result in a 0[cite: 1194, 1195].
+* [cite_start]**Makefile Rules**: The Makefile must contain `$(NAME)`, `all`, `clean`, `fclean`, and `re`, and must not perform unnecessary relinking[cite: 1201, 1200].
+* [cite_start]**Compilation Flags**: Failure to use `-Wall -Wextra -Werror` during compilation[cite: 1199].
