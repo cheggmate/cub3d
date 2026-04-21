@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:23:30 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/19 16:37:55 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/21 15:38:32 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,23 @@ int	get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h)
 	char		*colour_ptr;
 
 	tex = select_texture(game, ray);
+	
+	// How much to increase the texture coordinate per screen pixel 
 	step = 1.0 * tex->height / line_h;
+	
+	// Starting texture coordinate 
 	tex_pos = ((double)y - (double)HEIGHT / 2 + (double)line_h / 2) * step;
-	tex_y = (int)tex_pos & (tex->height - 1);
+	
+	// Use modulo instead of bitwise & to handle all texture heights 
+	tex_y = (int)tex_pos % tex->height; 
+	
+	// Safety check: ensure tex_y is not negative to prevent segfaults 
+	if (tex_y < 0)
+		tex_y = 0;
+
+	// Calculate memory offset using the correct texture data 
 	colour_ptr = tex->addr + (tex_y * tex->line_len + ray->tex_x * (tex->bpp / 8));
+
     return (add_shade(colour_ptr, ray));
-	// return (add_shade(colour_ptr, ray));
-	// return (*(unsigned int *)colour_ptr);
 }
 
