@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 23:06:48 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/21 15:42:55 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int parse_cub_file(char *file, t_game **game)
 	fd = open(file, O_RDONLY);
 	(*game)->map->fd = fd;
 	if (fd < 0)
-		return (close_file(fd), 0);
+		return (close_file(fd), 1);
 	check_and_store_texs_and_colours(file, game, fd, &parsed_map);
 	// print_map((*game)->map);
 	if (check_all_texs_colours_exist(game) != 0)
