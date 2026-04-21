@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/20 15:39:08 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/21 15:54:07 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,25 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
     if (MODE == 1)  // TODO: remove the if condition (keep code inside before submitting)
     {
         int     pxl_data[3];
-        (*game)->textures[pos].img = mlx_xpm_file_to_image((*game)->mlx_ptr, 
-            f_name, &(*game)->textures[pos].width, &(*game)->textures[pos].height);
-        printf("tex width: %i, tex height: %i\n", (*game)->textures[pos].width, (*game)->textures[pos].height);
-        if (!(*game)->textures[pos].img)
-        {
-            printf("Error: MLX failed to load texture: %s\n", f_name);
-            return (-1);
-        }
-        (*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, 
-            &pxl_data[0], &pxl_data[1], &pxl_data[2]);
-			if (!(*game)->textures[pos].addr)
-			{
-				printf("Error: MLX faied to get texture data.\n");
-				return (-1);
-			}
+        t_texture *tex = &(*game)->textures[pos];
+
+		tex->img = mlx_xpm_file_to_image((*game)->mlx_ptr, f_name, &tex->width, &tex->height);
+		if (!tex->img)
+			return (printf("Error: MLX failed to load texture: %s\n", f_name), -1);
+
+		// Standard MiniLibX order: img, bits_per_pixel, line_length, endian
+		tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len, &tex->endian);
+
+		if (!tex->addr)
+			return (printf("Error: MLX failed to get texture data.\n"), -1);
+        // (*game)->textures[pos].addr = mlx_get_data_addr((*game)->textures[pos].img, 
+        //     &pxl_data[0], &pxl_data[1], &pxl_data[2]);
+		tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len, &tex->endian);
+		if (!(*game)->textures[pos].addr)
+		{
+			printf("Error: MLX faied to get texture data.\n");
+			return (-1);
+		}
     }
     return (0);
 }
