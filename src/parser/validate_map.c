@@ -6,18 +6,13 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 17:03:09 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 14:08:15 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 20:48:13 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 #include "mlx.h"
-
-static int	is_floor(char c)
-{
-	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
 
 static int	init_checked_grid(t_game *game, int ***checked)
 {
@@ -56,29 +51,25 @@ static void	cleanup_validation(t_queue *q, int **checked, int height)
 	}
 }
 
-static int	check_tile(int nr, int nc, t_game *game, int **chkd, t_queue *q)
+static int	check_tile(int *n, t_game *game, int **chkd, t_queue *q)
 {
-	char	cell;
+	char	c;
 
-	if (nr < 0 || nc < 0 || nr >= game->map->h || nc >= game->map->w)
+	if (n[0] < 0 || n[1] < 0 || n[0] >= game->map->h || n[1] >= game->map->w)
 	{
 		printf("FAIL: out of bounds at [%d][%d] (map is %dx%d)\n",
-			nr, nc, game->map->h, game->map->w);
+			n[0], n[1], game->map->h, game->map->w);
 		return (0);
 	}
-	cell = game->map->grid[nr][nc];
-	if (cell == ' ' || cell == '\0')
-	{
-		printf("FAIL: space/null at [%d][%d] (neighbor of a floor tile)\n", nr, nc);
-		printf("      grid[%d] = '%s'\n", nr, game->map->grid[nr]);
+	c = game->map->grid[n[0]][n[1]];
+	if (c == ' ' || c == '\0')
 		return (0);
-	}
-	if (cell == '1' || chkd[nr][nc])
+	if (c == '1' || chkd[n[0]][n[1]])
 		return (1);
-	if (is_floor(cell))
+	if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
-		chkd[nr][nc] = 1;
-		q->items[q->back++] = (t_pos){nr, nc};
+		chkd[n[0]][n[1]] = 1;
+		q->items[q->back++] = (t_pos){n[0], n[1]};
 	}
 	return (1);
 }
@@ -87,12 +78,14 @@ static int	explore_neighbors(t_pos curr, t_queue *q, t_game *game, int **chkd)
 {
 	static int	offset[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 	int			i;
+	int			row_with_offset[2];
 
 	i = 0;
 	while (i < 4)
 	{
-		if (!check_tile(curr.row + offset[i][0], curr.col + offset[i][1],
-				game, chkd, q))
+		row_with_offset[0] = curr.row + offset[i][0];
+		row_with_offset[1] = curr.col + offset[i][1];
+		if (!check_tile(row_with_offset, game, chkd, q))
 			return (0);
 		i++;
 	}
@@ -120,10 +113,7 @@ int	is_map_closed(t_game *game)
 	while (q.front < q.back)
 	{
 		if (!explore_neighbors(q.items[q.front++], &q, game, checked))
-		{
-			cleanup_validation(&q, checked, game->map->h);
-			return (0);
-		}
+			return (cleanup_validation(&q, checked, game->map->h), 0);
 	}
 	cleanup_validation(&q, checked, game->map->h);
 	return (1);

@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/03/25 18:11:00 by jotong           ###   ########.fr        #
+#    Updated: 2026/04/24 21:33:39 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,15 @@ MLX_LIB     = $(MLX_PATH)/libmlx.a
 SRC         = src/main.c \
               src/utils/array_utils.c src/utils/cleanup_memory.c \
 			  src/utils/cleanup_memory2.c \
-              src/utils/init_game.c src/utils/init_memory.c \
+              src/utils/init_game.c \
               src/parser/get_colours.c src/parser/get_map.c \
               src/parser/get_textures.c src/parser/parser.c \
-              src/parser/path_check.c src/parser/validate_map.c \
+              src/parser/get_map2.c src/parser/validate_map.c \
 			  src/parser/get_tmp_map.c \
               src/raycasting/dda.c src/raycasting/engine.c \
+              src/raycasting/dda2.c \
               src/raycasting/render.c \
+              src/raycasting/window_management.c \
               src/hooks/movement.c src/hooks/rotation.c
 
 OBJ_DIR     = obj

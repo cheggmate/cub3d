@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 14:50:41 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 17:05:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 20:30:31 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ t_list	*create_tmp_list(char *map_row)
 	map_row_dup = ft_strdup(map_row);
 	if (!map_row_dup)
 		return (NULL);
-	if (((char *)map_row_dup)[row_len-1] == '\n')
-		((char *)map_row_dup)[row_len-1] = '\0'; // replace the newline with a null terminator.
+	if (((char *)map_row_dup)[row_len - 1] == '\n')
+		((char *)map_row_dup)[row_len - 1] = '\0';
 	tmp_list = ft_lstnew(map_row_dup);
-	// printf("content of new node is '%s'\n", (char *)tmp_list->content);
 	return (tmp_list);
 }
 
@@ -34,8 +33,8 @@ int	add_row_to_list(t_list **list, char *map_row)
 {
 	char	*map_row_dup;
 	int		row_len;
-	t_list *new_node;
-	
+	t_list	*new_node;
+
 	row_len = ft_strlen(map_row);
 	if (!map_row)
 		return (0);
@@ -47,8 +46,8 @@ int	add_row_to_list(t_list **list, char *map_row)
 		return (0);
 	}
 	map_row_dup = ft_strdup(map_row);
-	if (((char *)map_row_dup)[row_len-1] == '\n')
-		((char *)map_row_dup)[row_len-1] = '\0'; // replace the newline with a null terminator.
+	if (((char *)map_row_dup)[row_len - 1] == '\n')
+		((char *)map_row_dup)[row_len - 1] = '\0';
 	if (!map_row_dup)
 		return (-1);
 	new_node = ft_lstnew(map_row_dup);
@@ -57,4 +56,3 @@ int	add_row_to_list(t_list **list, char *map_row)
 	ft_lstadd_back(list, new_node);
 	return (0);
 }
-

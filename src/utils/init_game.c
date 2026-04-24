@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/18 16:33:35 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 18:46:13 by jotong           ###   ########.fr       */
+/*   Created: 2026/04/24 21:26:45 by jotong            #+#    #+#             */
+/*   Updated: 2026/04/24 21:28:20 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ void	init_game(t_game **game, char *f_map)
 	*game = ft_calloc(1, sizeof(t_game));
 	if (!(*game))
 		free_and_exit(game, 1, "Failed to alloc mem for game.\n");
-	if (MODE == 1) 	// TODO: remove outer if later
-	{
-		(*game)->mlx_ptr = mlx_init();
-		if (!(*game)->mlx_ptr)
-			free_and_exit(game, 1, "Failed to init mlx.\n");
-	}
+	(*game)->mlx_ptr = mlx_init();
+	if (!(*game)->mlx_ptr)
+		free_and_exit(game, 1, "Failed to init mlx.\n");
 	(*game)->win_ptr = NULL;
 	(*game)->floor_colour = -1;
 	(*game)->ceiling_colour = -1;
@@ -60,23 +57,21 @@ void	init_game(t_game **game, char *f_map)
 		free_and_exit(game, 1, "Invalid map.\n");
 }
 
-void init_grid(t_game **game)
+void	init_grid(t_game **game)
 {
-    int i;
+	int	i;
 
-    // Allocate the array of row pointers
-    (*game)->map->grid = ft_calloc((*game)->map->h + 1, sizeof(char *));
-    if (!(*game)->map->grid)
-        free_and_exit(game, 1, "Failed to allocate grid pointers.\n");
-
-    i = 0;
-    while (i < (*game)->map->h)
-    {
-        (*game)->map->grid[i] = malloc(sizeof(char) * ((*game)->map->w + 1));
-        if (!(*game)->map->grid[i])
-            free_and_exit(game, 1, "Failed to allocate grid row.\n");
-        ft_memset((*game)->map->grid[i], ' ', (*game)->map->w);
-        (*game)->map->grid[i][(*game)->map->w] = '\0'; // Null terminate
-        i++;
-    }
+	(*game)->map->grid = ft_calloc((*game)->map->h + 1, sizeof(char *));
+	if (!(*game)->map->grid)
+		free_and_exit(game, 1, "Failed to allocate grid pointers.\n");
+	i = 0;
+	while (i < (*game)->map->h)
+	{
+		(*game)->map->grid[i] = malloc(sizeof(char) * ((*game)->map->w + 1));
+		if (!(*game)->map->grid[i])
+			free_and_exit(game, 1, "Failed to allocate grid row.\n");
+		ft_memset((*game)->map->grid[i], ' ', (*game)->map->w);
+		(*game)->map->grid[i][(*game)->map->w] = '\0';
+		i++;
+	}
 }

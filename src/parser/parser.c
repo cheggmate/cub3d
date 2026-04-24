@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 19:59:14 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 20:29:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,24 @@
 #include "cub3d.h"
 #include "libft.h"
 
-static int	load_individual_section(char *file, t_game **game, int *parsed_map, char *line)
+static int	load_individual_section(char *file, t_game **game, int *parsed_map,
+	char *line)
 {
 	char	line_1;
 
 	line_1 = line[0];
-	if (!*parsed_map && (ft_strncmp(line, "NO ", 3) == 0 \
-			|| ft_strncmp(line, "SO ", 3) == 0 \
-			|| ft_strncmp(line, "EA ", 3) == 0 \
+	if (!*parsed_map && (ft_strncmp(line, "NO ", 3) == 0
+			|| ft_strncmp(line, "SO ", 3) == 0
+			|| ft_strncmp(line, "EA ", 3) == 0
 			|| ft_strncmp(line, "WE ", 3) == 0))
-			return (check_asset_tex(line, game));
-	else if (!*parsed_map && (ft_strncmp(line, "F ", 2) == 0 \
+		return (check_asset_tex(line, game));
+	else if (!*parsed_map && (ft_strncmp(line, "F ", 2) == 0
 			|| ft_strncmp(line, "C ", 2) == 0))
 		return (check_asset_colour(line, game));
 	else if (!*parsed_map && ft_strchr("10NSEW ", line_1) != NULL)
 	{
 		load_map(file, game, line);
-		*parsed_map = 1; // map must be at the end of the file.
+		*parsed_map = 1;
 		return (0);
 	}
 	return (-1);
@@ -58,7 +59,7 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 				int fd, int *parsed_map)
 {
 	char	*line;
-	
+
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -73,9 +74,9 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 	}
 }
 
-int parse_cub_file(char *file, t_game **game)
+int	parse_cub_file(char *file, t_game **game)
 {
-	int 	fd;
+	int		fd;
 	int		parsed_map;
 
 	parsed_map = 0;
@@ -86,9 +87,9 @@ int parse_cub_file(char *file, t_game **game)
 	if (fd < 0)
 		return (close_file(fd), 1);
 	check_and_store_texs_and_colours(file, game, fd, &parsed_map);
-	// print_map((*game)->map);
 	if (check_all_texs_colours_exist(game) != 0)
-		return (close_file(fd), free_and_exit(game, 1, "Invalid content in .cub file.\n"), 0);
+		return (close_file(fd), free_and_exit(game, 1,
+				"Invalid content in .cub file.\n"), 0);
 	close_file(fd);
 	return (0);
 }

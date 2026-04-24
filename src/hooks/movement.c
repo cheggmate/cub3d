@@ -6,41 +6,38 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/20 14:02:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 20:15:37 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// movement.c: Logic for updating player coordinates (W, A, S, D).
-
 #include "cub3d.h"
 
-int move_player(t_game **game)
+static void	update_pos(t_player *p, char **grid, double dx, double dy)
 {
-    double s = 0.1; // speed
-    t_player *p = &(*game)->player;
-    char **grid = (*game)->map->grid;
+	if (grid[(int)p->pos_y][(int)(p->pos_x + dx)] != '1')
+		p->pos_x += dx;
+	if (grid[(int)(p->pos_y + dy)][(int)p->pos_x] != '1')
+		p->pos_y += dy;
+}
 
-    if (p->move_up)
-    {
-        if (grid[(int)p->pos_y][(int)(p->pos_x + p->dir_x * s)] != '1') p->pos_x += p->dir_x * s;
-        if (grid[(int)(p->pos_y + p->dir_y * s)][(int)p->pos_x] != '1') p->pos_y += p->dir_y * s;
-    }
-    if (p->move_down)
-    {
-        if (grid[(int)p->pos_y][(int)(p->pos_x - p->dir_x * s)] != '1') p->pos_x -= p->dir_x * s;
-        if (grid[(int)(p->pos_y - p->dir_y * s)][(int)p->pos_x] != '1') p->pos_y -= p->dir_y * s;
-    }
-    if (p->move_left) // Strafe Left: uses plane or perp dir
-    {
-        if (grid[(int)p->pos_y][(int)(p->pos_x - p->plane_x * s)] != '1') p->pos_x -= p->plane_x * s;
-        if (grid[(int)(p->pos_y - p->plane_y * s)][(int)p->pos_x] != '1') p->pos_y -= p->plane_y * s;
-    }
-    if (p->move_right) // Strafe Right
-    {
-        if (grid[(int)p->pos_y][(int)(p->pos_x + p->plane_x * s)] != '1') p->pos_x += p->plane_x * s;
-        if (grid[(int)(p->pos_y + p->plane_y * s)][(int)p->pos_x] != '1') p->pos_y += p->plane_y * s;
-    }
-    return (0);
+int	move_player(t_game **game)
+{
+	double		s;
+	t_player	*p;
+	char		**grid;
+
+	s = 0.1;
+	p = &(*game)->player;
+	grid = (*game)->map->grid;
+	if (p->move_up)
+		update_pos(p, grid, p->dir_x * s, p->dir_y * s);
+	if (p->move_down)
+		update_pos(p, grid, -p->dir_x * s, -p->dir_y * s);
+	if (p->move_left)
+		update_pos(p, grid, -p->plane_x * s, -p->plane_y * s);
+	if (p->move_right)
+		update_pos(p, grid, p->plane_x * s, p->plane_y * s);
+	return (0);
 }
 
 int	key_press(int keycode, void *game_in)
