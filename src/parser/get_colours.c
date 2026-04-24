@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:29:46 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 23:07:40 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 13:08:29 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ int	save_colour(char **split_f_str, int i, t_game **game) // the i position of t
 		return (free_array(colour), -1);
 	if (ft_strncmp(split_f_str[0], "F" , 2) == 0)
 	{
+		if ((*game)->floor_colour != -1)
+			return (free_array(colour), -1);
 		(*game)->floor_colour = rgb_to_int(i_colour[0], i_colour[1], i_colour[2]);
 		return (free_array(colour), 0);
 	}
 	else if (ft_strncmp(split_f_str[0], "C" , 2) == 0)
 	{
+		if ((*game)->ceiling_colour != -1)
+			return (free_array(colour), -1);
 		(*game)->ceiling_colour = rgb_to_int(i_colour[0], i_colour[1], i_colour[2]);
 		return (free_array(colour), 0);
 	}

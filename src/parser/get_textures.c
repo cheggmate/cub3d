@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 07:05:04 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 13:02:07 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int  save_texture(char **split_f_str, int i, t_game **game)
     else if (ft_strncmp(split_f_str[i], "WE", 2) == 0)
 		pos = 3;
     else
+		return (-1);
+	if ((*game)->tex_paths[pos] != NULL)
 		return (-1);
     (*game)->tex_paths[pos] = ft_strdup(f_name);
     if (MODE == 1)  // TODO: remove the if condition (keep code inside before submitting)
