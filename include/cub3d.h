@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/20 13:56:16 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 10:46:23 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ typedef struct s_ray
     double  delta_dist_x; // The total distance the ray must travel to move exactly 1 full square in the $x$ or $y$ direction
     double  delta_dist_y;
     double  wall_dist; // final Perpendicular distance from the player to the wall
-    int     step_x;
-    int     step_y;
+    int     step_x; // direction to move through the grid (x-axis)
+    int     step_y; // direction to move through the grid (y-axis)
     int     side; // 0 for NS wall, 1 for EW wall
 	double  perp_wall_dist; 
     int     line_height;
