@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/26 23:08:10 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 17:07:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void	populate_grid(t_game **game, int fd, char *line)
 	char	*next_ptr;
 
 	row = 0;
-	while (line)
+	while (line && line[0] != '\n')
 	{
 		if (!line)
 			break ;

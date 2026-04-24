@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:29:46 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 13:08:29 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 18:03:33 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	check_asset_colour(char *f_str, t_game **game) // f_str here contains the fu
 
 	i = 0;
 	split_f_str = ft_split(f_str, ' ');
+	if (char_arr_size(split_f_str))
 	while (split_f_str[i])
 	{
 		if (ft_strncmp(split_f_str[i], "F", 1) == 0

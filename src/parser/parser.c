@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/21 15:42:55 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 15:21:18 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	load_individual_section(char *file, t_game **game, int *parsed_map, c
 	else if (!*parsed_map && (ft_strncmp(line, "F ", 2) == 0 \
 			|| ft_strncmp(line, "C ", 2) == 0))
 		return (check_asset_colour(line, game));
-	else if (ft_strchr("10NSEW ", line_1) != NULL)
+	else if (!*parsed_map && ft_strchr("10NSEW ", line_1) != NULL)
 	{
 		load_map(file, game, line);
 		*parsed_map = 1; // map must be at the end of the file.
