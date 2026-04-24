@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/03/25 18:06:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 18:36:56 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (write(2, "Error\nincorrect number of inputs!\n", 34), 1);
 	init_game(&game, argv[1]);
-	create_window(&game, game->mlx_ptr);
 	if (parse_cub_file(argv[1], &game) != 0)
 	{
 		printf("issue occurred, aborting..");
 		return (1);
 	}
 	printf("cub file ingestion done\n");
+	create_window(&game, game->mlx_ptr);
 	if (MODE == 1)
 	{
 		game->img.img_ptr = mlx_new_image(game->mlx_ptr, WIDTH, HEIGHT);

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:19:02 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 10:46:23 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 19:32:44 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,6 @@ t_list	    *create_tmp_list(char *map_row);
 void        copy_map_to_grid(t_game **game);
 int	        add_row_to_list(t_list **list, char *map_row);
 int	        populate_row(t_game **game, int row, char *line);
-void		free_safely(char **line);
 int	        initialise_textures(t_game **game);
 int         is_map_closed(t_game *game);
 int			render_raycast(t_game *game);

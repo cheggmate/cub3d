@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 17:07:27 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 18:34:06 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,11 @@ static void	populate_grid(t_game **game, int fd, char *line)
         line = next_ptr;
 		row++;
 	}
-	printf("(*game)->map->w = %d, (*game)->map->h = %d\n", (*game)->map->w , (*game)->map->h);
+	if (line)
+	{
+		free(line);
+		line = NULL;
+	}
 	if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
 }
