@@ -6,15 +6,15 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 19:08:01 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 18:27:10 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 19:51:01 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+# ifndef MAX_LINE
+#  define MAX_LINE 8192
 # endif
 
 # include <stdio.h>

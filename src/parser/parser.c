@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 19:32:02 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/24 19:59:14 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,26 +59,17 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 {
 	char	*line;
 	
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		if (line[0] == '\n' || line[0] == '\0')
 		{
-			if (line)
-			{
-				free(line);
-				line = NULL;
-			}
+			line = get_next_line(fd);
 			continue ;
 		}
-		if (load_individual_section(file, game, parsed_map, line) != 0)
+		else if (load_individual_section(file, game, parsed_map, line) != 0)
 			free_and_exit(game, 1, "Invalid/missing item in cub file.\n");
-		// if (*parsed_map) // Stop immediately once map is found/freed
-		// 	return ;
-		if (line)
-		{
-			free(line);
-			line = NULL;
-		}
+		line = get_next_line(fd);
 	}
 }
 

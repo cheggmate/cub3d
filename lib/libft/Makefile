@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ksng <ksng@student.42.fr>                  +#+  +:+       +#+         #
+#    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 23:37:08 by jotong            #+#    #+#              #
-#    Updated: 2025/11/14 19:55:46 by ksng             ###   ########.fr        #
+#    Updated: 2026/04/24 19:37:32 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAG 		= -Wall -Wextra -Werror
+FLAG 		= -Wall -Wextra -Werror -g
 
 NAME 		= libft.a
 
