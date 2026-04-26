@@ -209,5 +209,9 @@ t_texture	*select_texture(t_game *game, t_ray *ray);
 int			get_texture_pixel(t_game *game, t_ray *ray, int y, int line_h);
 int			handle_rotation(t_game *game);
 void		set_ray(t_game *game, t_ray **ray);
+int			init_checked_grid(t_game *game, int ***checked);
+int			check_tile(int n[2], t_game *game, int **chkd, t_queue *q);
+int			explore_neighbors(t_pos curr, t_queue *q, t_game *game, int **chkd);
+int 		run_bfs_from_pos(t_game *game, int start_y, int start_x, int **chkd);
 
 #endif

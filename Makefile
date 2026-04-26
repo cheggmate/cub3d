@@ -6,7 +6,7 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/04/24 21:33:39 by jotong           ###   ########.fr        #
+#    Updated: 2026/04/27 00:13:27 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC         = src/main.c \
               src/parser/get_colours.c src/parser/get_map.c \
               src/parser/get_textures.c src/parser/parser.c \
               src/parser/get_map2.c src/parser/validate_map.c \
-			  src/parser/get_tmp_map.c \
+			  src/parser/validate_map2.c src/parser/get_tmp_map.c \
               src/raycasting/dda.c src/raycasting/engine.c \
               src/raycasting/dda2.c \
               src/raycasting/render.c \

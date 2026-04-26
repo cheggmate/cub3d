@@ -6,11 +6,9 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 20:35:14 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/27 00:29:14 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// get_map.c: Reads the map into a 2D array (char **map).
 
 #include "cub3d.h"
 #include "libft.h"
