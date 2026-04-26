@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 20:29:27 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/26 21:00:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	check_all_texs_colours_exist(t_game **game)
 			return (-1);
 		i++;
 	}
-	printf("textures exist\n");
 	if ((*game)->ceiling_colour == -1 || (*game)->floor_colour == -1)
 		return (-1);
 	return (0);
@@ -69,7 +68,7 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 			continue ;
 		}
 		else if (load_individual_section(file, game, parsed_map, line) != 0)
-			free_and_exit(game, 1, "Invalid/missing item in cub file.\n");
+			free_and_exit(game, 1, "Error in the cub file.\n");
 		line = get_next_line(fd);
 	}
 }
