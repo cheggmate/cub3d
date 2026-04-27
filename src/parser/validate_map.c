@@ -6,14 +6,13 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 17:03:09 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 00:13:10 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:49:54 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
 #include "mlx.h"
-
 
 static int	process_map_tile(t_game *game, int y, int x, int **chkd)
 {

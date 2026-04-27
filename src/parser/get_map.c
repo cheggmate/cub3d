@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 22:15:24 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:53:47 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	check_for_next_lines(t_game **game, int fd, char *line)
 	while (line)
 	{
 		if (line[0] != '\n' && line[0] != '\0')
-			free_and_exit(game, 1, "Content found after map or empty line in map.\n");
+			free_and_exit(game, 1, "Error with content in map.\n");
 		line = get_next_line(fd);
 	}
 }
