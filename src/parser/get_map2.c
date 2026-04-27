@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 08:15:32 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 22:14:46 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 00:22:10 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	load_map(char *f_map, t_game **game, char *line)
 	if ((*game)->map->h == 0)
 		free_and_exit(game, 1, "Empty map file provided.\n");
 	print_map((*game)->map);
-	printf("h = %d\n", (*game)->map->h);
 	if (!is_map_closed((*game)))
 		free_and_exit(game, 1, "Map is not closed/surrounded by walls.\n");
 }

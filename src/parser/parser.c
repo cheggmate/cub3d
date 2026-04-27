@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 21:39:27 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 00:47:49 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 				int fd, int *parsed_map)
 {
 	char	*line;
+	size_t	len;
 
 	line = get_next_line(fd);
 	while (line)
 	{
+		len = ft_strlen(line);
+		if (len > 0 && line[len - 1] == '\n')
+			line[len - 1] = '\0';
 		if (line[0] == '\n' || line[0] == '\0')
 		{
 			line = get_next_line(fd);
@@ -67,6 +71,7 @@ static void	check_and_store_texs_and_colours(char *file, t_game **game,
 		}
 		else if (load_individual_section(file, game, parsed_map, line) != 0)
 			free_and_exit(game, 1, "Error in the cub file.\n");
+		ft_memset(line, 0, MAX_LINE);
 		line = get_next_line(fd);
 	}
 }

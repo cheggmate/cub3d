@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 20:15:37 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 00:56:30 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ static void	update_pos(t_player *p, char **grid, double dx, double dy)
 		p->pos_y += dy;
 }
 
-int	move_player(t_game **game)
+int	move_player(t_game *game)
 {
 	double		s;
 	t_player	*p;
 	char		**grid;
 
 	s = 0.1;
-	p = &(*game)->player;
-	grid = (*game)->map->grid;
+	p = &game->player;
+	grid = game->map->grid;
 	if (p->move_up)
 		update_pos(p, grid, p->dir_x * s, p->dir_y * s);
 	if (p->move_down)

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:29:46 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 20:51:36 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 00:22:55 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ int	check_asset_colour(char *f_str, t_game **game)
 
 	i = 0;
 	split_f_str = ft_split(f_str, ' ');
+	if (char_arr_size(split_f_str) != 2)
+	{
+		free_array(split_f_str);
+		return (-1);
+	}
 	if (char_arr_size(split_f_str))
 	{
 		while (split_f_str[i])

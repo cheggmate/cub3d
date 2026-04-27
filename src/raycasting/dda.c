@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:04:57 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 21:23:31 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 01:15:43 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,6 @@ void	calculate_ray(t_game *game, t_ray *ray, int x)
 	else
 		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 	set_ray(game, &ray);
-}
-
-void	perform_dda(t_game **game, t_ray *ray)
-{
-	char	cell;
-	int		hit;
-
-	hit = 0;
-	while (hit == 0)
-	{
-		if (ray->side_dist_x < ray->side_dist_y)
-		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if (ray->map_y < 0 || ray->map_x < 0
-			|| ray->map_y >= (*game)->map->h || ray->map_x >= (*game)->map->w)
-			break ;
-		cell = (*game)->map->grid[ray->map_y][ray->map_x];
-		if (cell == '1' || cell == ' ' || cell == '\0')
-			hit = 1;
-	}
 }
 
 int	init_ray_dims(t_game **game, t_ray *ray, int x)
