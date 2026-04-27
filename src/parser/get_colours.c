@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:29:46 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/28 00:22:55 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 01:24:12 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,28 @@ int	save_colour(char **split_f_str, int i, t_game **game)
 int	check_asset_colour(char *f_str, t_game **game)
 {
 	int		i;
-	char	**split_f_str;
+	char	**s;
 
 	i = 0;
-	split_f_str = ft_split(f_str, ' ');
-	if (char_arr_size(split_f_str) != 2)
+	s = ft_split(f_str, ' ');
+	if (!s || char_arr_size(s) != 2)
 	{
-		free_array(split_f_str);
+		free_array(s);
 		return (-1);
 	}
-	if (char_arr_size(split_f_str))
+	while (s[i])
 	{
-		while (split_f_str[i])
+		if (ft_strncmp(s[i], "F", 1) == 0 || ft_strncmp(s[i], "C", 1) == 0)
 		{
-			if (ft_strncmp(split_f_str[i], "F", 1) == 0
-				|| ft_strncmp(split_f_str[i], "C", 1) == 0)
+			if (save_colour(s, i, game) != 0)
 			{
-				if (save_colour(split_f_str, i, game) != 0)
-					return (free_array(split_f_str), -1);
-				break ;
+				free_array(s);
+				return (-1);
 			}
-			i++;
+			break ;
 		}
+		i++;
 	}
-	free_array(split_f_str);
+	free_array(s);
 	return (0);
 }
