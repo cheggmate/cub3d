@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 08:15:32 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 00:28:00 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:14:46 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,32 @@ void	load_map(char *f_map, t_game **game, char *line)
 	printf("h = %d\n", (*game)->map->h);
 	if (!is_map_closed((*game)))
 		free_and_exit(game, 1, "Map is not closed/surrounded by walls.\n");
+}
+
+void	update_player_direction(t_game **game, char c)
+{
+	if (c == 'N' || c == 'S')
+	{
+		(*game)->player.dir_x = 0;
+		(*game)->player.dir_y = 1;
+		(*game)->player.plane_x = -0.66;
+		(*game)->player.plane_y = 0;
+		if (c == 'N')
+		{
+			(*game)->player.dir_y *= -1;
+			(*game)->player.plane_x *= -1;
+		}
+	}
+	else if (c == 'E' || c == 'W')
+	{
+		(*game)->player.dir_x = 1;
+		(*game)->player.dir_y = 0;
+		(*game)->player.plane_x = 0;
+		(*game)->player.plane_y = 0.66;
+		if (c == 'W')
+		{
+			(*game)->player.dir_x *= -1;
+			(*game)->player.plane_y *= -1;
+		}
+	}
 }

@@ -6,40 +6,12 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 00:29:14 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:15:24 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "libft.h"
-
-void	update_player_direction(t_game **game, char c)
-{
-	if (c == 'N' || c == 'S')
-	{
-		(*game)->player.dir_x = 0;
-		(*game)->player.dir_y = 1;
-		(*game)->player.plane_x = -0.66;
-		(*game)->player.plane_y = 0;
-		if (c == 'N')
-		{
-			(*game)->player.dir_y *= -1;
-			(*game)->player.plane_x *= -1;
-		}
-	}
-	else if (c == 'E' || c == 'W')
-	{
-		(*game)->player.dir_x = 1;
-		(*game)->player.dir_y = 0;
-		(*game)->player.plane_x = 0;
-		(*game)->player.plane_y = 0.66;
-		if (c == 'W')
-		{
-			(*game)->player.dir_x *= -1;
-			(*game)->player.plane_y *= -1;
-		}
-	}
-}
 
 static void	set_player_pos_in_grid_to_zero(t_game **game)
 {
@@ -98,6 +70,17 @@ int	populate_row(t_game **game, int row, char *line)
 	return (0);
 }
 
+static void	check_for_next_lines(t_game **game, int fd, char *line)
+{
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (line[0] != '\n' && line[0] != '\0')
+			free_and_exit(game, 1, "Content found after map or empty line in map.\n");
+		line = get_next_line(fd);
+	}
+}
+
 void	populate_grid(t_game **game, int fd, char *line)
 {
 	int		row;
@@ -118,6 +101,7 @@ void	populate_grid(t_game **game, int fd, char *line)
 		line = next_ptr;
 		row++;
 	}
+	check_for_next_lines(game, fd, line);
 	if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
 		free_and_exit(game, 1, "Map too small, impossible to win.\n");
 }

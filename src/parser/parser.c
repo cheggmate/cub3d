@@ -6,11 +6,9 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 16:01:43 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 00:36:07 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/27 21:39:27 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// parser.c: Orchestrates the reading of the .cub file.
 
 #include "cub3d.h"
 #include "libft.h"
