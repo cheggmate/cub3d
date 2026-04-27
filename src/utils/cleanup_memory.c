@@ -90,6 +90,11 @@ void	free_and_exit(t_game **game, int status, char *msg)
 {
 	if (!game || !*game)
 		exit(status);
+	if (*game && (*game)->map && (*game)->map->fd > 0)
+	{
+		close((*game)->map->fd);
+		(*game)->map->fd = -1;
+	}
 	if ((*game)->map && (*game)->map->grid)
 		free_array((*game)->map->grid);
 	if ((*game)->map)
