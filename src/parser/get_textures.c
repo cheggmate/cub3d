@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:22:37 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/28 00:23:10 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 17:18:59 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ static int	init_tex_path(t_game **game, char *f_name, int pos)
 		f_name[len - 1] = '\0';
 	fd = open(f_name, O_RDONLY);
 	if (fd < 0)
-	{
-		printf("Error: Cannot open texture file: [%s]\n", f_name);
 		return (-1);
-	}
 	close(fd);
 	if ((*game)->tex_paths[pos] != NULL)
 		return (-1);
