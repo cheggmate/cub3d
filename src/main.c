@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:38:44 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/28 01:29:32 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/28 17:20:49 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	}
 	init_game(&game, argv[1]);
 	if (parse_cub_file(argv[1], &game) != 0)
-		free_and_exit(&game, 1, "Issue occurred, aborting..");
+		free_and_exit(&game, 1, "Issue occurred, aborting..\n");
 	create_window(&game, game->mlx_ptr);
 	game->img.img_ptr = mlx_new_image(game->mlx_ptr, WIDTH, HEIGHT);
 	if (!game->img.img_ptr)
