@@ -1,0 +1,14 @@
+NO ./textures/Asset1.xpm
+SO ./textures/Asset2.xpm
+WE ./textures/Asset4.xpm
+EA ./textures/Asset3.xpm
+
+F 40,40,40
+C 200,200,200
+
+     11111
+     10001
+1111110001
+1000000001
+1000E11111
+111111

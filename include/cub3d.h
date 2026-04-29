@@ -27,6 +27,10 @@
 #  define ENV 2
 # endif
 
+# ifndef BUFFER
+#  define BUFFER 0.1
+# endif
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stddef.h>
@@ -212,6 +216,7 @@ void		set_ray(t_game *game, t_ray **ray);
 int			init_checked_grid(t_game *game, int ***checked);
 int			check_tile(int n[2], t_game *game, int **chkd, t_queue *q);
 int			explore_neighbors(t_pos curr, t_queue *q, t_game *game, int **chkd);
-int 		run_bfs_from_pos(t_game *game, int start_y, int start_x, int **chkd);
+int			run_bfs_from_pos(t_game *game, int start_y,
+				int start_x, int **chkd);
 
 #endif

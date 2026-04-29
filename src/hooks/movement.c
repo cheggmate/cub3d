@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/22 10:14:08 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/28 00:56:30 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/29 13:47:24 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,26 @@
 
 static void	update_pos(t_player *p, char **grid, double dx, double dy)
 {
-	if (grid[(int)p->pos_y][(int)(p->pos_x + dx)] != '1')
-		p->pos_x += dx;
-	if (grid[(int)(p->pos_y + dy)][(int)p->pos_x] != '1')
-		p->pos_y += dy;
+	if (dx > 0)
+	{
+		if (grid[(int)p->pos_y][(int)(p->pos_x + dx + BUFFER)] != '1')
+			p->pos_x += dx;
+	}
+	else
+	{
+		if (grid[(int)p->pos_y][(int)(p->pos_x + dx - BUFFER)] != '1')
+			p->pos_x += dx;
+	}
+	if (dy > 0)
+	{
+		if (grid[(int)(p->pos_y + dy + BUFFER)][(int)p->pos_x] != '1')
+			p->pos_y += dy;
+	}
+	else
+	{
+		if (grid[(int)(p->pos_y + dy - BUFFER)][(int)p->pos_x] != '1')
+			p->pos_y += dy;
+	}
 }
 
 int	move_player(t_game *game)
