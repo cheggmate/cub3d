@@ -6,11 +6,11 @@
 #    By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/15 14:54:57 by jotong            #+#    #+#              #
-#    Updated: 2026/04/27 00:13:27 by jotong           ###   ########.fr        #
+#    Updated: 2026/04/29 17:07:51 by jotong           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME        = cub3d
+NAME        = cub3D
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror -Iinclude -Ilib/libft -Ilib/minilibx-linux
 C_HEADER    = include/cub3d.h
