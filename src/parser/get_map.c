@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 16:25:26 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/27 22:53:47 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:19:02 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ void	populate_grid(t_game **game, int fd, char *line)
 		row++;
 	}
 	check_for_next_lines(game, fd, line);
-	if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
-		free_and_exit(game, 1, "Map too small, impossible to win.\n");
+	// if ((*game)->map->w <= 4 || (*game)->map->h <= 4)
+	// 	free_and_exit(game, 1, "Map too small, impossible to win.\n");
 }

@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 20:54:36 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/24 20:54:51 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/29 14:12:15 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	close_window(void *game)
 	if (game_tmp && game_tmp->mlx_ptr && game_tmp->win_ptr)
 	{
 		mlx_destroy_window(game_tmp->mlx_ptr, game_tmp->win_ptr);
-		ft_printf("freeing memory after destroying window\n");
 		game_tmp->win_ptr = NULL;
 	}
 	free_and_exit(&game_tmp, 0, "Window closed.");

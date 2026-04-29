@@ -6,7 +6,7 @@
 /*   By: jotong <jotong@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/01 14:29:46 by jotong            #+#    #+#             */
-/*   Updated: 2026/04/28 01:24:12 by jotong           ###   ########.fr       */
+/*   Updated: 2026/04/29 16:17:50 by jotong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,26 @@ static int	rgb_to_int(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
+static int	is_digit(char *rgb_val)
+{
+	int		i;
+
+	i = 0;
+	while (rgb_val[i])
+	{
+		if (rgb_val[i] < '0' || rgb_val[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 static int	parse_rgb(char *str, int *rgb)
 {
 	char	**split;
 	int		i;
 
+	if (str[0] == ',' || str[ft_strlen(str) - 1] == ',')
+		return (-1);
 	split = ft_split(str, ',');
 	if (!split || char_arr_size(split) != 3)
 	{
@@ -33,7 +48,7 @@ static int	parse_rgb(char *str, int *rgb)
 	while (i < 3)
 	{
 		rgb[i] = ft_atoi(split[i]);
-		if (!arr_in_limit(rgb[i], 0, 255))
+		if (!arr_in_limit(rgb[i], 0, 255) || !is_digit(split[i]))
 		{
 			free_array(split);
 			return (-1);
